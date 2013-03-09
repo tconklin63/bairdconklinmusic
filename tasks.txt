@@ -1,3 +1,7 @@
-Add header to layout
 Play with color schemes
-Setup dev environment on personal laptop
+Add search field to header
+Add menu names to header
+Create user model and schema
+Flesh out home page
+*Add header to layout
+*Setup dev environment on personal laptop
