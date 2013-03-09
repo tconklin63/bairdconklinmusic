@@ -1,7 +1,11 @@
 Play with color schemes
-Add menu names to header
 Create user model and schema
-Flesh out home page
+Fix dropdown Account menu so it works
+Add more to home page
+Create sign up and sign in pages
+Create composition model and schema (or some other name for a piece of music)
+*Flesh out home page
+*Add menu names to header
 *Add search field to header
 *Setup dev environment on HP laptop
 *Add header to layout
