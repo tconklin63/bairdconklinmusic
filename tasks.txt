@@ -4,6 +4,8 @@ Fix dropdown Account menu so it works
 Add more to home page
 Create sign up and sign in pages
 Create composition model and schema (or some other name for a piece of music)
+Create contact us page
+Create browse page or add browsing to bottom of home page
 *Flesh out home page
 *Add menu names to header
 *Add search field to header
