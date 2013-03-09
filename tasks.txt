@@ -1,7 +1,8 @@
 Play with color schemes
-Add search field to header
 Add menu names to header
 Create user model and schema
 Flesh out home page
+*Add search field to header
+*Setup dev environment on HP laptop
 *Add header to layout
 *Setup dev environment on personal laptop
