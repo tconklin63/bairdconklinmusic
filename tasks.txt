@@ -1,5 +1,6 @@
 TODO:
-Play with color schemes
+Integrate authlogic gem  for user registration and login
+Play with color schemes (use customize on Twitter Bootstrap site)
 Create user model and schema
 Add more to home page
 Create sign up and sign in pages
@@ -8,11 +9,11 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Make dropdown work on hover
 *Fix dropdown Account menu so it works
-*Male dropdown work on hover
 *Flesh out home page
 *Add menu names to header
 *Add search field to header
-*Setup dev environment on HP laptop
 *Add header to layout
+*Setup dev environment on HP laptop
 *Setup dev environment on personal laptop
