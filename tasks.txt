@@ -8,11 +8,11 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Fix dropdown Account menu so it works
+*Male dropdown work on hover
 *Flesh out home page
 *Add menu names to header
 *Add search field to header
 *Setup dev environment on HP laptop
 *Add header to layout
 *Setup dev environment on personal laptop
-*Fix dropdown Account menu so it works
-*Mane dropdown work on hover
