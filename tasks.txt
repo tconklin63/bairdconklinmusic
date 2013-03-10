@@ -13,6 +13,7 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Create session object and controller
 *Create user model and schema
 *Make dropdown work on hover
 *Fix dropdown Account menu so it works
