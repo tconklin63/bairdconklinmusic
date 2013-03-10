@@ -5,7 +5,14 @@ class UsersController < ApplicationController
   end
   
   def create
-    redirect_to root_url # TODO: creat and login user and redirect to user landing page
+    logger.debug "inside create"
+    if User.create(params[:user])
+      logger.debug "user saved"
+      redirect_to root_url # TODO: creat and login user and redirect to user landing page
+    else
+      logger.debug "user not saved"
+      render new_user_path
+    end
   end
 
 end
