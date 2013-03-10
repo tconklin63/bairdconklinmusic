@@ -1,7 +1,11 @@
 TODO:
+Create blue host account and reserve bairdconklinmusic.com
+Deploy app to blue host with password protection
+Add admin attribute to user.
+Add "What's New" section to home page.
+Add "About Us" section to home page.
 Integrate authlogic gem  for user registration and login
 Play with color schemes (use customize on Twitter Bootstrap site)
-Create user model and schema
 Add more to home page
 Create sign up and sign in pages
 Create composition model and schema (or some other name for a piece of music)
@@ -9,6 +13,7 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Create user model and schema
 *Make dropdown work on hover
 *Fix dropdown Account menu so it works
 *Flesh out home page
