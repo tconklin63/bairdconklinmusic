@@ -5,12 +5,10 @@ class UsersController < ApplicationController
   end
   
   def create
-    logger.debug "inside create"
-    if User.create(params[:user])
-      logger.debug "user saved"
-      redirect_to root_url # TODO: creat and login user and redirect to user landing page
+    @user = User.new(params[:user])
+    if @user.save
+      redirect_to root_url # TODO: create and login user and redirect to user landing page
     else
-      logger.debug "user not saved"
       render new_user_path
     end
   end
