@@ -1,4 +1,5 @@
 class UserSessionsController < ApplicationController
+
   def new
     @user_session = UserSession.new
   end
@@ -16,4 +17,5 @@ class UserSessionsController < ApplicationController
     current_user_session.destroy
     redirect_to :root
   end
+
 end
