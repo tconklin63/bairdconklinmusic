@@ -1,4 +1,6 @@
 TODO:
+Add an edit user page.
+Display error messages for failed login attempts.
 Add forgot password functionality (http://www.aidanf.net/rails_user_authentication_tutorial)
 Add links to sign in for sign up and vice versa
 Display validation errors for failed login
