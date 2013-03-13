@@ -1,16 +1,70 @@
 class UsersController < ApplicationController
   
+  before_filter :login_required, :only=>['welcome', 'change_password', 'hidden']
+
   def new
     @user = User.new
   end
-  
+
   def create
     @user = User.new(params[:user])
-    if @user.save
-      redirect_to root_url # TODO: create and login user and redirect to user landing page
-    else
-      render new_user_path
+    if request.post?  
+      if @user.save
+        session[:user] = User.authenticate(@user.email, @user.password)
+        flash[:message] = "Signup successful"
+        redirect_to root_url        
+      else
+        flash[:warning] = "Signup unsuccessful"
+        render 'new'
+      end
     end
+  end
+
+  def login
+    if request.post?
+      if session[:user] = User.authenticate(params[:email], params[:password])
+        flash[:message]  = "Login successful"
+        redirect_to root_url # change to user landing page
+      else
+        flash[:warning] = "Login unsuccessful"
+        render 'login'
+      end
+    end
+  end
+
+  def logout
+    session[:user] = nil
+    flash[:message] = 'Logged out'
+    redirect_to root_url
+  end
+
+  #need to implement mailer before uncommenting
+  #def forgot_password
+  #  if request.post?
+  #    u= User.find_by_email(params[:user][:email])
+  #    if u and u.send_new_password
+  #      flash[:message]  = "A new password has been sent by email."
+  #      redirect_to :action=>'login'
+  #    else
+  #      flash[:warning]  = "Couldn't send password"
+  #    end
+  #  end
+  #end
+
+  def change_password
+    @user=session[:user]
+    if request.post?
+      @user.update_attributes(:password=>params[:user][:password], :password_confirmation => params[:user][:password_confirmation])
+      if @user.save
+        flash[:message]="Password Changed"
+      end
+    end
+  end
+
+  def welcome
+  end
+
+  def hidden
   end
 
 end

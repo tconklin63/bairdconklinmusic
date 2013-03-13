@@ -1,18 +1,21 @@
 TODO:
+Add forgot password functionality (http://www.aidanf.net/rails_user_authentication_tutorial)
+Add links to sign in for sign up and vice versa
 Display validation errors for failed login
 Create blue host account and reserve bairdconklinmusic.com
 Deploy app to blue host with password protection
 Add "What's New" section to home page.
 Add "About Us" section to home page.
-Integrate authlogic gem  for user registration and login
-Play with color schemes (use customize on Twitter Bootstrap site)
 Add more to home page
-Create sign in page
 Create composition model and schema (or some other name for a piece of music)
 Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Encrypt Passwords
+*Create sign in page
+*Play with color schemes (use customize on Twitter Bootstrap site)
+*Integrate authlogic gem  for user registration and login (decided not to use authlogic)
 *Fixed redirect on failed user save
 *Added create account page
 *Create session object and controller

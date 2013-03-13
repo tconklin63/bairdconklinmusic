@@ -8,21 +8,34 @@
       <li><a href="#">Browse</a></li>
     </ul>
     <ul class="nav pull-right">
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          Account
-         <% end %>
-          <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-          <li>
-            <a href="<%=new_user_path%>">Create</a>
-          </li>
-          <li>
-            <a href="#">Sign In</a>
-          </li>
-        </ul>
-      </li>
+      <% if @user %>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <%= @user.name %>
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="<%=logout_users_path%>">Sign Out</a>
+            </li>
+          </ul>
+        </li>
+      <% else %>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            Account
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="<%=new_user_path%>">Create</a>
+            </li>
+            <li>
+              <a href="<%=login_users_path%>">Sign In</a>
+            </li>
+          </ul>
+        </li>
+      <% end %>
       <li><a href="#">Contact Us</a></li>
     </ul>
   </div>

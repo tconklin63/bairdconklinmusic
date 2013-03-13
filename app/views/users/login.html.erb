@@ -1,0 +1,13 @@
+<div class="row-fluid">
+  <div class="span4 offset4 well text-center">
+    <h3>Sign In</h3>
+    <%= form_tag login_users_path, :method => 'post' do |f| %>
+      <%= text_field_tag 'email', '', :placeholder => "Email" %>
+      <%= password_field_tag 'password', '', :placeholder => "Password" %>
+      <div class="controls text-right">
+        <%= link_to "cancel", root_url %>
+        <%= submit_tag "Sign In", :class => "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

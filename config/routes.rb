@@ -2,7 +2,13 @@ Bairdconklinmusic::Application.routes.draw do
   
   root to: 'static_pages#home'
   
-  resources :users
+  resources :users do
+    collection do
+      get :login
+      post :login
+      get :logout
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
