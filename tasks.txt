@@ -14,6 +14,7 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Added menu item for admin users
 *Encrypt Passwords
 *Create sign in page
 *Play with color schemes (use customize on Twitter Bootstrap site)
