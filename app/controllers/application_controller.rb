@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @user = session[:user]
+    @current_user = session[:user]
   end
 
   def redirect_to_stored
