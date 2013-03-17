@@ -24,5 +24,12 @@ class ApplicationController < ActionController::Base
       redirect_to :controller=>'user', :action=>'welcome'
     end
   end
+  
+  def admin_required
+    if !@current_user.admin
+      flash[:error] = "Unauthorized!"
+      redirect_to root_url
+    end
+  end
 
 end

@@ -128,3 +128,8 @@ div.field_with_errors input {
 body {
   background-color: LightSteelBlue
 }
+
+#flash_messages {
+  text-align: center;
+  color: red
+}

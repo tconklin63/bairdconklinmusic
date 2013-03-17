@@ -1,0 +1,13 @@
+<div class="row-fluid">
+  <div class="span8 offset2 well">
+    <h2 class="text-center">Manage Compositions</h2>
+    <% if @compositions && @compositions.size > 0 %>
+    List not yet implemented
+    <% else %>
+    No Compositions Found
+    <% end %>
+    <div class="controls text-right">
+      <%= link_to "Create New Composition", new_composition_path, :class => "btn btn-primary" %>
+    </div>
+  </div>
+</div>

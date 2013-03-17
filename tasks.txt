@@ -9,11 +9,11 @@ Deploy app to blue host with password protection
 Add "What's New" section to home page.
 Add "About Us" section to home page.
 Add more to home page
-Create composition model and schema (or some other name for a piece of music)
 Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Create composition model and schema (or some other name for a piece of music)
 *Added menu item for admin users
 *Encrypt Passwords
 *Create sign in page
