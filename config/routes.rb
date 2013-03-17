@@ -9,6 +9,8 @@ Bairdconklinmusic::Application.routes.draw do
       get :logout
     end
   end
+  
+  resources :compositions
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

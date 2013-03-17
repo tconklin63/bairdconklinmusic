@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130313180536) do
+ActiveRecord::Schema.define(:version => 20130316031710) do
+
+  create_table "compositions", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "voicing"
+    t.string   "sheet_music_url"
+    t.string   "recording_url"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"
