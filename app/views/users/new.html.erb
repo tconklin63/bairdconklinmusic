@@ -6,7 +6,10 @@
       <%= f.text_field :name, :placeholder => "Full Name" %>
       <%= f.text_field :email, :placeholder => "Email" %>
       <%= f.password_field :password, :placeholder => "Password" %>
-      <%= f.password_field :password_confirmation, :placeholder => "Confirm Password" %>
+      <%= f.password_field :password_confirmation, :placeholder => "Confirm Password" %><br/><br/>
+      <div class="text-left">
+        Already have an account? <%= link_to "sign in", login_users_path %>
+      </div>
       <div class="controls text-right">
         <%= link_to "cancel", root_url %>
         <%= f.submit "Save", :class => "btn btn-primary" %>

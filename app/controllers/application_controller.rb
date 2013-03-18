@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
       return true
     end
     flash[:warning]='Please login to continue'
-    session[:return_to]=request.request_uri
-    redirect_to :controller => "user", :action => "login"
+    session[:return_to]=request.original_url
+    redirect_to login_users_path
     return false 
   end
 
@@ -19,9 +19,9 @@ class ApplicationController < ActionController::Base
   def redirect_to_stored
     if return_to = session[:return_to]
       session[:return_to]=nil
-      redirect_to_url(return_to)
+      redirect_to return_to
     else
-      redirect_to :controller=>'user', :action=>'welcome'
+      redirect_to root_url
     end
   end
   

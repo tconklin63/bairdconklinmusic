@@ -1,9 +1,9 @@
 TODO:
+Add file upload for mp3 and PDFs
+Add Edit Composition page
+Add Create Composition page
 Add an edit user page.
-Display error messages for failed login attempts.
 Add forgot password functionality (http://www.aidanf.net/rails_user_authentication_tutorial)
-Add links to sign in for sign up and vice versa
-Display validation errors for failed login
 Create blue host account and reserve bairdconklinmusic.com
 Deploy app to blue host with password protection
 Add "What's New" section to home page.
@@ -13,6 +13,8 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Add links to sign in for sign up and vice versa
+*Display validation errors for failed login
 *Create composition model and schema (or some other name for a piece of music)
 *Added menu item for admin users
 *Encrypt Passwords

@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     if request.post?
       if session[:user] = User.authenticate(params[:email], params[:password])
         flash[:message]  = "Login successful"
-        redirect_to root_url # change to user landing page
+        redirect_to_stored
       else
         flash[:warning] = "Login unsuccessful"
         render 'login'
