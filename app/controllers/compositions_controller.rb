@@ -8,7 +8,7 @@ class CompositionsController < ApplicationController
   end
   
   def new
-    
+    @composition = Composition.new
   end
   
   def create
