@@ -8,6 +8,7 @@ gem 'rails', '3.2.11'
 gem 'sqlite3'
 gem 'dynamic_form'
 gem 'capistrano'
+gem 'therubyracer'
 
 # Gems used only for assets and not required
 # in production environments by default.
