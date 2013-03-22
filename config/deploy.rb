@@ -40,7 +40,7 @@ namespace :deploy do
 end
 
 # Clean-up old releases
-after "deploy:restart", "deploy:cleanup", "deploy:assets"
+after "deploy:restart", "deploy:cleanup", "assets:precompile"
 
 #set :application, "set your application name here"
 #set :repository,  "set your repository location here"
