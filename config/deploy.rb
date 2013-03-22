@@ -40,13 +40,8 @@ namespace :deploy do
 end
 
 # Clean-up old releases
-after "deploy:restart", "deploy:cleanup"
+after "deploy:restart", "deploy:cleanup", "deploy:assets"
 
-# Precompile assets
-after "deploy:cleanup" do
-  run "cd /home3/#{user}/rails_apps/#{application}/current; bundle exec rake assets:precompile"
-end
- 
 #set :application, "set your application name here"
 #set :repository,  "set your repository location here"
 
