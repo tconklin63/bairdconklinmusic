@@ -42,9 +42,8 @@ end
 # Clean-up old releases
 after "deploy:restart", "deploy:cleanup"
 
-after 'deploy:update_code' do
- run "cd /home3/#{user}/rails_apps/#{application}/current; bundle exec rake assets:precompile"
-end
+# Precompile assets
+run "cd /home3/#{user}/rails_apps/#{application}/current; bundle exec rake assets:precompile"
  
 #set :application, "set your application name here"
 #set :repository,  "set your repository location here"
