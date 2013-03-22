@@ -12,7 +12,7 @@ class UsersController < ApplicationController
       if @user.save
         session[:user] = User.authenticate(@user.email, @user.password)
         flash[:message] = "Signup successful"
-        redirect_to root_url        
+        redirect_to '/'        
       else
         flash[:warning] = "Signup unsuccessful"
         render 'new'
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   def logout
     session[:user] = nil
     flash[:message] = 'Logged out'
-    redirect_to root_url
+    redirect_to '/'
   end
 
   #need to implement mailer before uncommenting
