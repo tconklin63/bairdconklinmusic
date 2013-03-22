@@ -1,4 +1,7 @@
 TODO:
+Configure to use MySql or figure out how to administer sqlite3.
+Change sign in to link
+Add create account button to home page
 Add file upload for mp3 and PDFs
 Add Edit Composition page
 Add Create Composition page
@@ -13,6 +16,7 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Figure out how to deploy to Blue Host
 *Add links to sign in for sign up and vice versa
 *Display validation errors for failed login
 *Create composition model and schema (or some other name for a piece of music)

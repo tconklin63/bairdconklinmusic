@@ -39,6 +39,19 @@ namespace :deploy do
   end
 end
 
+namespace :shared do
+  desc "Link a shared database directory"
+  task :database do
+    run %{
+      for FILE in $(ls #{shared_path}/db/*.sqlite3);
+      do
+        ln -sf #{shared_path}/db/$(basename $FILE) #{release_path}/db/$(basename $FILE);
+      done
+    }
+  end
+end
+
+
 # Clean-up old releases
 after "deploy:restart", "deploy:cleanup"
 
