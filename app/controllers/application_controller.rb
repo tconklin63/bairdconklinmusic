@@ -21,14 +21,14 @@ class ApplicationController < ActionController::Base
       session[:return_to]=nil
       redirect_to return_to
     else
-      redirect_to root_url
+      redirect_to "/"
     end
   end
   
   def admin_required
     if !@current_user.admin
       flash[:error] = "Unauthorized!"
-      redirect_to root_url
+      redirect_to "/"
     end
   end
 

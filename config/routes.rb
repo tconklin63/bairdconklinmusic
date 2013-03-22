@@ -1,6 +1,6 @@
 Bairdconklinmusic::Application.routes.draw do
   
-  root to: 'static_pages#home'
+  match '/' => 'static_pages#home'
   
   resources :users do
     collection do
