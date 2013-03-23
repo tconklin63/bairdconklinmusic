@@ -37,6 +37,10 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{File.join(current_path, 'tmp', 'restart.txt')}"
   end
+  
+  task :precompile do
+    run "cd /home3/#{user}/rails_apps/#{application}/current; bundle exec rake assets:precompile "
+  end
 end
 
 namespace :shared do
@@ -53,7 +57,7 @@ end
 
 
 # Clean-up old releases
-after "deploy:restart", "deploy:cleanup", "shared:database"
+after "deploy:restart", "deploy:cleanup", "deploy:precompile", "shared:database"
 
 #set :application, "set your application name here"
 #set :repository,  "set your repository location here"
