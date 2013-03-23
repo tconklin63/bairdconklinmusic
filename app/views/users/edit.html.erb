@@ -1,1 +1,18 @@
-edit.html
+<div class="row-fluid">
+  <div class="span4 offset4 well text-center">
+    <h3>Edit Account</h3>
+    <%= form_for @user do |f| %>
+      <%= f.error_messages %><br/>
+      <%= f.text_field :name, :placeholder => "Full Name" %>
+      <%= f.text_field :email, :placeholder => "Email" %>
+      <%= f.password_field :password, :placeholder => "Password" %>
+      <%= f.password_field :password_confirmation, :placeholder => "Confirm Password" %><br/>
+      Admin
+      <%= f.check_box :admin %><br/><br/>
+      <div class="controls text-right">
+        <%= link_to "cancel", "/" %>
+        <%= f.submit "Save", :class => "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
