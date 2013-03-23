@@ -39,7 +39,7 @@ namespace :deploy do
   end
   
   task :precompile do
-    run "cd /home3/#{user}/rails_apps/#{application}/current; bundle exec rake assets:precompile "
+    run "pwd "
   end
 end
 
