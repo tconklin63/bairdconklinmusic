@@ -53,7 +53,7 @@ end
 
 
 # Clean-up old releases
-after "deploy:restart", "deploy:cleanup"
+after "deploy:restart", "deploy:cleanup", "shared:database"
 
 #set :application, "set your application name here"
 #set :repository,  "set your repository location here"
