@@ -19,6 +19,22 @@ class UsersController < ApplicationController
       end
     end
   end
+  
+  def edit
+    @user = User.find(params[:id])
+  end
+  
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(params[:user])
+      if @user == current_user
+        session[:user] = @user        
+      end
+      redirect_to '/'
+    else
+      render 'edit'
+    end
+  end
 
   def login
     if request.post?
