@@ -3,7 +3,7 @@
     <h3>Sign In</h3>
     <%= render :partial => 'shared/flash_messages'%>
     <%= form_tag login_users_path, :method => 'post' do |f| %>
-      <%= text_field_tag 'email', '', :placeholder => "Email" %>
+      <%= text_field_tag 'email', '', :placeholder => "Email" %><br/>
       <%= password_field_tag 'password', '', :placeholder => "Password" %><br/><br/>
       <div class="text-left">
         Need an account? <%= link_to "create account", new_user_path %>

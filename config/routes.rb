@@ -8,6 +8,9 @@ Bairdconklinmusic::Application.routes.draw do
       post :login
       get :logout
     end
+    member do
+      delete :delete
+    end
   end
   
   resources :compositions

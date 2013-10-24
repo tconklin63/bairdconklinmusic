@@ -1,0 +1,22 @@
+<div class="row-fluid">
+  <div class="span8 offset2 well">
+    <h2 class="text-center">Manage Users</h2>
+    <% if @user_list && @user_list.size > 0 %>
+      <% @user_list.each do |user| %>
+        <%=user.name%> <%=user.email%>
+        <% if user.admin %>
+          admin
+        <% end %>
+        <a href="<%=edit_user_path(user)%>">edit</a> 
+        <%= link_to "delete", { :action => "delete", :id => user.id },
+          :confirm => "Are you sure you want to delete this user?", :method => :delete %><br/>
+      <% end %>
+    <% else %>
+    No Users Found
+    <% end %>
+    <div class="controls text-right">
+      <%= link_to "cancel", "/" %>
+      <%= link_to "Create New User", new_user_path, :class => "btn btn-primary" %>
+    </div>
+  </div>
+</div>

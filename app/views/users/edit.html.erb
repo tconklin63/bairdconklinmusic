@@ -3,16 +3,22 @@
     <h3>Edit Account</h3>
     <%= form_for @user do |f| %>
       <%= f.error_messages %><br/>
-      <%= f.text_field :name, :placeholder => "Full Name" %>
-      <%= f.text_field :email, :placeholder => "Email" %>
-      <%= f.password_field :password, :placeholder => "Password" %>
-      <%= f.password_field :password_confirmation, :placeholder => "Confirm Password" %><br/>
+      <%= f.text_field :name, :placeholder => "Full Name" %><br/>
+      <%= f.text_field :email, :placeholder => "Email" %><br/>
+      <% if @user == @current_user%>
+        <%= f.password_field :password, :placeholder => "Password" %><br/>
+        <%= f.password_field :password_confirmation, :placeholder => "Confirm Password" %><br/>
+      <% end %>
       <% if @current_user.admin || @current_user.email == 'tconklin63@gmail.com'%>
       Admin
       <%= f.check_box :admin %><br/><br/>
       <% end %>
       <div class="controls text-right">
-        <%= link_to "cancel", "/" %>
+        <% if @current_user && @user == @current_user %>
+          <%= link_to "cancel", "/" %>
+        <% else %>
+          <%= link_to "cancel", :users %>
+        <% end %>
         <%= f.submit "Save", :class => "btn btn-primary" %>
       </div>
     <% end %>

@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
   
   before_filter :login_required, :only=>['welcome', 'change_password', 'hidden']
+  before_filter :admin_required, :only=>[:index]
+
+  def index
+    @user_list = User.order(:name).all
+  end
 
   def new
     @user = User.new
@@ -8,14 +13,24 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    if request.post?  
-      if @user.save
-        session[:user] = User.authenticate(@user.email, @user.password)
-        flash[:message] = "Signup successful"
-        redirect_to '/'        
+    if request.post?
+      if current_user && current_user.admin
+        if @user.save
+          flash[:message] = "User creation successful"
+          redirect_to :users
+        else
+          flash[:warning] = "User creation unsuccessful"
+          render 'new'
+        end
       else
-        flash[:warning] = "Signup unsuccessful"
-        render 'new'
+        if @user.save
+          session[:user] = User.authenticate(@user.email, @user.password)
+          flash[:message] = "Signup successful"
+          redirect_to '/'        
+        else
+          flash[:warning] = "Signup unsuccessful"
+          render 'new'
+        end
       end
     end
   end
@@ -24,13 +39,31 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
   
+  def delete
+    @user = User.find(params[:id])
+    if current_user.admin && current_user != @user
+      User.find(params[:id]).destroy
+      redirect_to :users
+    else
+      flash[:error] = "Unauthorized!"
+      redirect_to "/"
+    end
+  end
+  
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(params[:user])
+    if current_user.admin && current_user != @user
+      @user.update_attribute(:name, params[:user][:name])
+      @user.update_attribute(:email, params[:user][:email])
+      @user.update_attribute(:admin, params[:user][:admin])
+      redirect_to :users
+    elsif @user.update_attributes(params[:user])
       if @user == current_user
-        session[:user] = @user        
+        session[:user] = @user
+        redirect_to '/'
+      else
+        redirect_to :users
       end
-      redirect_to '/'
     else
       render 'edit'
     end
