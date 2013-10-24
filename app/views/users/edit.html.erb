@@ -7,8 +7,10 @@
       <%= f.text_field :email, :placeholder => "Email" %>
       <%= f.password_field :password, :placeholder => "Password" %>
       <%= f.password_field :password_confirmation, :placeholder => "Confirm Password" %><br/>
+      <% if @current_user.admin || @current_user.email == 'tconklin63@gmail.com'%>
       Admin
       <%= f.check_box :admin %><br/><br/>
+      <% end %>
       <div class="controls text-right">
         <%= link_to "cancel", "/" %>
         <%= f.submit "Save", :class => "btn btn-primary" %>
