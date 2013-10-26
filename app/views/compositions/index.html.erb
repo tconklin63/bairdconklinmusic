@@ -2,9 +2,17 @@
   <div class="span8 offset2 well">
     <h2 class="text-center">Manage Compositions</h2>
     <% if @compositions && @compositions.size > 0 %>
-    List not yet implemented
+      <% @compositions.each do |composition| %>
+        <%=composition.name%> 
+        <%=composition.description%> 
+        <%=composition.voicing%> 
+        <%=composition.sheet_music_url%> 
+        <%=composition.recording_url%>
+        <%= link_to "delete", { :action => "delete", :id => composition.id },
+          :confirm => "Are you sure you want to delete this composistion?", :method => :delete %><br/>
+      <% end %>
     <% else %>
-    No Compositions Found
+      No Compositions Found
     <% end %>
     <div class="controls text-right">
       <%= link_to "cancel", "/" %>

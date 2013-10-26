@@ -1,11 +1,20 @@
 <div class="row-fluid">
   <div class="span6 offset3 well">
     <h2 class="text-center">Create Composition</h2>
+    <%= @composition.name %>
+    <%= @composition.description %>
+    <%= @composition.voicing %>
+    <%= @composition.sheet_music_url %>
+    <%= @composition.recording_url %>
     <%= form_for @composition do |f| %>
       <%= f.error_messages %><br/>
       <%= f.text_field :name, :placeholder => "Title", :class => "input-xxlarge" %>
       <%= f.text_area :description, :placeholder => "Description", :class => "input-xxlarge", :rows => 5 %>
-      <%= f.text_field :voicing, :placeholder => "Voicing or Instrumentation", :class => "input-xxlarge" %>
+      <%= f.text_field :voicing, :placeholder => "Voicing or Instrumentation", :class => "input-xxlarge" %><br/>
+      <%= f.label :sheet_music, "Upload Sheet Music"%>
+      <%= f.file_field :sheet_music %>
+      <%= f.label :recording, "Upload Recording"%>
+      <%= f.file_field :recording %>
       <div class="controls text-right">
         <%= link_to "cancel", compositions_path %>
         <%= f.submit "Save", :class => "btn btn-primary" %>

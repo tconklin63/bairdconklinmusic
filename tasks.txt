@@ -1,14 +1,12 @@
 TODO:
-Add admin page for viewing and editing all users - in progress
-Allow admin user to update user without entering password
-For admin user editing a different user, cancel should take user back to manage users page
-Add Cancel button on Manage Compositions and Manage Users pages that goes back to home page
-Fix layout on Signin and Signup pages
+Delete uploaded files when deleting composition
+Add Edit Composition page
+Don't allow overwriting a file for a composision (maybe use directory structure)
+Add Composer, Lyricist, and Category to composition
+Add a table to make Manage Users and Manage Compositions pages look nice
 Configure to use MySql or figure out how to administer sqlite3.
 Change sign in to link
 Add create account button to home page
-Add file upload for mp3 and PDFs
-Add Edit Composition page
 Add forgot password functionality (http://www.aidanf.net/rails_user_authentication_tutorial)
 Add "What's New" section to home page.
 Add "About Us" section to home page.
@@ -17,6 +15,13 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Add delete composition action
+*Add file upload for mp3 and PDFs
+*For admin user editing a different user, cancel should take user back to manage users page
+*Add Cancel button on Manage Compositions and Manage Users pages that goes back to home page
+*Fix layout on Signin and Signup pages
+*Add admin page for viewing and editing all users
+*Allow admin user to update user without entering password
 *If Admin user creates a user, do not immediately login as that user.
 *Add text to "What's New" explaining that the website is in progress
 *Deploy app to blue host with password protection
