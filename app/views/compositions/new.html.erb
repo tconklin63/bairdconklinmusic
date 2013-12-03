@@ -9,8 +9,12 @@
     <%= form_for @composition do |f| %>
       <%= f.error_messages %><br/>
       <%= f.text_field :name, :placeholder => "Title", :class => "input-xxlarge" %>
+      <%= f.text_field :composer, :placeholder => "Composer", :class => "input-xxlarge" %>
+      <%= f.text_field :lyricist, :placeholder => "Lyricist", :class => "input-xxlarge" %>
       <%= f.text_area :description, :placeholder => "Description", :class => "input-xxlarge", :rows => 5 %>
-      <%= f.text_field :voicing, :placeholder => "Voicing or Instrumentation", :class => "input-xxlarge" %><br/>
+      <%= f.text_field :voicing, :placeholder => "Voicing or Instrumentation", :class => "input-xxlarge" %>
+      <%= f.text_field :category, :placeholder => "Category", :class => "input-xxlarge" %>
+      <br/>
       <%= f.label :sheet_music, "Upload Sheet Music"%>
       <%= f.file_field :sheet_music %>
       <%= f.label :recording, "Upload Recording"%>
