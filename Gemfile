@@ -7,7 +7,7 @@ gem 'rails', '3.2.11'
 
 gem 'sqlite3'
 gem 'dynamic_form'
-gem 'capistrano'
+gem 'capistrano', '2.15.5'
 
 group :production do
   gem 'therubyracer'
