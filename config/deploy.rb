@@ -39,7 +39,7 @@ namespace :deploy do
   end
   
   task :precompile do
-    run "cd rails_apps/#{application}/current; rake assets:precompile "
+    run "cd /home3/#{user}/rails_apps/#{application}/current; rake assets:precompile "
   end
 end
 
