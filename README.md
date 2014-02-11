@@ -4,6 +4,8 @@ From the local project run:
 
 ```
 $ cap deploy
+
+$ cap deploy:migrate
 ```
 
 Login to Blue Host using:
