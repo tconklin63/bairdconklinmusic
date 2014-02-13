@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_filter :admin_required, :only=>[:index]
 
   def index
-    @user_list = User.order(:name).all
+    @user_list = User.all.order_by([:name, :asc])
   end
 
   def new

@@ -17,7 +17,7 @@ set :use_sudo, false
 set :scm, :git
  
 # master is our default git branch
-set :branch, "master"
+set :branch, "mongo"
  
 # Use local git repository
 set :repository, "."
