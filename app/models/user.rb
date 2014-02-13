@@ -1,4 +1,13 @@
-class User < ActiveRecord::Base
+class User
+  include Mongoid::Document
+  
+  field :name, type: String
+  field :password, type: String
+  field :password_confirmation, type: String
+  field :email, type: String
+  field :salt, type: String
+  field :admin, type: Boolean
+  field :encrypted_password, type: String
   
   validates_length_of :name, :within => 3..40
   validates_length_of :password, :within => 5..40
@@ -13,7 +22,7 @@ class User < ActiveRecord::Base
   attr_accessor :password, :password_confirmation
 
   def self.authenticate(email, pass)
-    u=find(:first, :conditions=>["email = ?", email])
+    u=User.where(:email => email).first
     return nil if u.nil?
     return u if User.encrypt(pass, u.salt)==u.encrypted_password
     nil

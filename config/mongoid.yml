@@ -1,0 +1,59 @@
+defaults: &defaults
+  host: localhost
+  sessions:
+    default:
+      database: music
+      hosts:
+        - localhost:27017
+  options:
+    allow_dynamic_fields: false
+    scope_overwrite_exception: true
+    use_activesupport_time_zone: false
+    use_utc: true
+
+development:
+  <<: *defaults
+  database: music_dev
+
+test:
+  <<: *defaults
+  database: music_test
+
+production:
+  # This starts the session configuration settings. You may have as
+  # many sessions as you like, but you must have at least 1 named
+  # 'default'.
+  sessions:
+    # Define the default session.
+    default:
+      # A session can have any number of hosts. Usually 1 for a single
+      # server setup, and at least 3 for a replica set. Hosts must be
+      # an array of host:port pairs. This session is single server.
+      hosts:
+        - localhost:27017
+      # Define the default database name.
+      database: music_production
+    # This defines a secondary session at a replica set.
+    #replica_set:
+      # This configuration is a 3 node replica set.
+      #hosts:
+      #  - mongo1.socialu.com:27017
+      #  - mongo2.socialu.com:27017
+      #  - mongo3.socialu.com:27017
+    #  database: socialu_production
+      # We can set session specific options, like reads executing
+      # on secondary nodes, and defaulting the session to safe mode.
+      #options:
+      #  consistency: :eventual
+      #  safe: true
+    # This defines a tertiary session at a Mongos fronted shard.
+    #shard:
+      # This configuration is a Mongos shard server.
+      #hosts:
+      #  - mongos.socialu.com:27017
+      #database: socialu
+  options:
+    allow_dynamic_fields: false
+    scope_overwrite_exception: true
+    use_activesupport_time_zone: false
+    use_utc: true

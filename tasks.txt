@@ -1,4 +1,7 @@
 TODO:
+Switch to using Mongo rather than sqlite
+  -configure mongoid.yml
+  -install mongoid
 Delete uploaded files when deleting composition
 Add Edit Composition page
 Don't allow overwriting a file for a composision (maybe use directory structure)
@@ -15,6 +18,7 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Get MongoDB running on Blue Host
 *Add delete composition action
 *Add file upload for mp3 and PDFs
 *For admin user editing a different user, cancel should take user back to manage users page

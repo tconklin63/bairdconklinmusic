@@ -5,8 +5,11 @@ gem 'rails', '3.2.11'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+#gem 'sqlite3'
 gem 'dynamic_form'
+gem 'bson_ext', '~> 1.8.5'
+gem 'mongo', '1.8.5'
+gem 'mongoid', '~> 3.1.2'
 gem 'capistrano', '2.15.5'
 
 group :production do
