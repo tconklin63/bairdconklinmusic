@@ -21,7 +21,7 @@ $ cd rails_apps/conklinbairdmusic/current
 
 $ bundle install
 
-$ bundle exec rake db:migrate
+$ bundle exec rake db:migrate (not necessary with mongo)
 
 $ bundle exec rake assets:precompile
 ```
