@@ -17,7 +17,7 @@ $ ssh bairdcon@bairdconklinmusic.com
 From the ssh commandline on Blue Host run the following:
 
 ```
-$ cd rails_apps/conklinbairdmusic/current
+$ cd rails_apps/bairdcoinklinmusic/current
 
 $ bundle install
 
