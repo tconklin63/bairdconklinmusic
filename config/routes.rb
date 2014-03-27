@@ -18,6 +18,12 @@ Bairdconklinmusic::Application.routes.draw do
       delete :delete
     end
   end
+  
+  resources :categories do
+    member do
+      delete :delete
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

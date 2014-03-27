@@ -1,0 +1,13 @@
+<div class="row-fluid">
+  <div class="span6 offset3 well">
+    <h2 class="text-center">Create Category</h2>
+    <%= form_for @category do |f| %>
+      <%= f.error_messages %><br/>
+      <%= f.text_field :name, :placeholder => "Category Name", :class => "input-xxlarge" %>
+      <div class="controls text-right">
+        <%= link_to "cancel", categories_path %>
+        <%= f.submit "Save", :class => "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
