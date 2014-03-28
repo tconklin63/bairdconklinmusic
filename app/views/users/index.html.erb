@@ -2,15 +2,29 @@
   <div class="span8 offset2 well">
     <h2 class="text-center">Manage Users</h2>
     <% if @user_list && @user_list.size > 0 %>
+      <table class='table table-striped'>
+      	<tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Admin</th>
+          <th>Actions</th>
+      	</tr>
       <% @user_list.each do |user| %>
-        <%=user.name%> <%=user.email%>
+        <tr>
+          <td><%=user.name%></td>
+          <td><%=user.email%></td>
+          <td>
         <% if user.admin %>
-          admin
+          X
         <% end %>
+          </td>
+          <td>
         <a href="<%=edit_user_path(user)%>">edit</a> 
         <%= link_to "delete", { :action => "delete", :id => user.id },
-          :confirm => "Are you sure you want to delete this user?", :method => :delete %><br/>
+          :confirm => "Are you sure you want to delete this user?", :method => :delete %>
+          </td>
       <% end %>
+      </table>
     <% else %>
     No Users Found
     <% end %>
