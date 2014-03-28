@@ -1,6 +1,6 @@
 TODO:
+Use icons for edit and delete
 Format index page for compositions
-Format index page for categories
 Add Edit Category page
 Add Category as drop-down list for composition page
 Add Edit Composition page
@@ -16,6 +16,7 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Format index page for categories
 *Format index page for users
 *Add Composer, Lyricist, and Category to composition
 *Test uploads after deployment
