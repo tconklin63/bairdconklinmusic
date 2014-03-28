@@ -1,11 +1,11 @@
 TODO:
+Make voicing a drop down list like categories
+Add label for categories on create composition page
 Use icons for edit and delete
 Format index page for compositions
 Add Edit Category page
-Add Category as drop-down list for composition page
 Add Edit Composition page
 Don't allow overwriting a file for a composision (maybe use directory structure)
-Add a table to make Manage Users and Manage Compositions pages look nice
 Change sign in to link
 Add create account button to home page
 Add forgot password functionality (http://www.aidanf.net/rails_user_authentication_tutorial)
@@ -16,6 +16,7 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Add Category as drop-down list for composition page
 *Format index page for categories
 *Format index page for users
 *Add Composer, Lyricist, and Category to composition
