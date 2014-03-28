@@ -34,4 +34,6 @@ Bairdconklinmusic::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  
+  UPLOAD_DIR = Rails.root.join('uploads')
 end

@@ -14,12 +14,12 @@ class CompositionsController < ApplicationController
   def create
     @composition = Composition.new(params[:composition])
     if params[:composition][:sheet_music]
-      File.open(Rails.root.join('public', 'uploads', params[:composition][:sheet_music].original_filename), 'wb') do |file|
+      File.open(File.join(UPLOAD_DIR, params[:composition][:sheet_music].original_filename), 'wb') do |file|
         file.write(params[:composition][:sheet_music].read)
       end
     end
     if params[:composition][:recording]
-      File.open(Rails.root.join('public', 'uploads', params[:composition][:recording].original_filename), 'wb') do |file|
+      File.open(File.join(UPLOAD_DIR, params[:composition][:recording].original_filename), 'wb') do |file|
         file.write(params[:composition][:recording].read)
       end
     end
@@ -36,8 +36,8 @@ class CompositionsController < ApplicationController
   def delete
     if current_user.admin
       composition = Composition.find(params[:id])
-      FileUtils.rm_f(Rails.root + "public/uploads/" + composition.sheet_music_url)
-      FileUtils.rm_f(Rails.root + "public/uploads/" + composition.recording_url)
+      FileUtils.rm_f(File.join(UPLOAD_DIR, composition.sheet_music_url))
+      FileUtils.rm_f(File.join(UPLOAD_DIR, composition.recording_url))
       composition.destroy
       redirect_to :compositions
     else

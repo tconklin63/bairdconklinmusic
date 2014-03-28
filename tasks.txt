@@ -1,7 +1,11 @@
 TODO:
+Test uploads after deployment
+Resolve upload issue
+Format index page for compositions
+Format index page for users
+Format index page for categories
 Add Edit Category page
 Add Category as drop-down list for composition page
-Delete uploaded files when deleting composition
 Add Edit Composition page
 Don't allow overwriting a file for a composision (maybe use directory structure)
 Add Composer, Lyricist, and Category to composition
@@ -16,6 +20,7 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Delete uploaded files when deleting composition
 *Add create category page
 *Add delete composition action
 *Add file upload for mp3 and PDFs
