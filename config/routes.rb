@@ -1,6 +1,7 @@
 Bairdconklinmusic::Application.routes.draw do
   
   match '/' => 'static_pages#home'
+  match '/bairdconklinmath/' => 'static_pages#math'
   
   resources :users do
     collection do
