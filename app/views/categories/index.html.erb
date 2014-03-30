@@ -13,6 +13,7 @@
           <td>
             <%= link_to "delete", { :action => "delete", :id => category.id },
               :confirm => "Are you sure you want to delete this category?", :method => :delete %>
+            <%= link_to "edit", { :action => "edit", :id => category.id } %>
           </td>
         </tr>
         <% end %>
