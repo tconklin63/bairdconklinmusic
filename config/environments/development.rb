@@ -36,4 +36,5 @@ Bairdconklinmusic::Application.configure do
   config.assets.debug = true
   
   UPLOAD_DIR = Rails.root.join('uploads')
+  HOST = 'localhost:3000'
 end
