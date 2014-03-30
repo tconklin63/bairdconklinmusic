@@ -3,7 +3,6 @@ Make voicing a drop down list like categories
 Add label for categories on create composition page
 Use icons for edit and delete
 Format index page for compositions
-Add Edit Category page
 Add Edit Composition page
 Don't allow overwriting a file for a composision (maybe use directory structure)
 Change sign in to link
@@ -16,6 +15,7 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Add Edit Category page
 *Add Category as drop-down list for composition page
 *Format index page for categories
 *Format index page for users
