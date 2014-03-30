@@ -54,11 +54,11 @@ function isNumeric(input) {
 function findPrimes(upper, lower) {
   var primes = new Array();
   var sieve = new Array();
-  for (var i=2; i<upper; i++) {
+  for (var i=2; i<=upper; i++) {
     primes[i-2] =  i;
   }
-  var sqrtUpper = Math.floor(Math.sqrt(upper)+1);
-  for (var i=2; i<sqrtUpper; i++) {
+  var sqrtUpper = Math.floor(Math.sqrt(upper));
+  for (var i=2; i<=sqrtUpper; i++) {
     sieve[i-2] = i;
   }
   while (sieve.length > 0) {
