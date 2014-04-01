@@ -1,6 +1,5 @@
 TODO:
-Make voicing a drop down list like categories
-Add label for categories on create composition page
+Allow multiple voicings for each composition
 Use icons for edit and delete
 Format index page for compositions
 Add Edit Composition page
@@ -15,6 +14,8 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Make voicing a drop down list like categories
+*Add label for categories on create composition page
 *Add Edit Category page
 *Add Category as drop-down list for composition page
 *Format index page for categories
