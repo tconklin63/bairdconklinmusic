@@ -12,8 +12,10 @@
       <%= f.text_field :composer, :placeholder => "Composer", :class => "input-xxlarge" %>
       <%= f.text_field :lyricist, :placeholder => "Lyricist", :class => "input-xxlarge" %>
       <%= f.text_area :description, :placeholder => "Description", :class => "input-xxlarge", :rows => 5 %>
-      <%= f.text_field :voicing, :placeholder => "Voicing or Instrumentation", :class => "input-xxlarge" %>
+      <%= f.label :category, "Category "%>
       <%= f.select :category, options_from_collection_for_select(Category.find(:all, :order => :name), :id, :name) %>
+      <%= f.label :voicing, "Voicing or Instrumentation "%>
+      <%= f.select :voicing, options_from_collection_for_select(Voicing.find(:all, :order => :name), :id, :name) %>
       <br/>
       <%= f.label :sheet_music, "Upload Sheet Music"%>
       <%= f.file_field :sheet_music %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140308220557) do
+ActiveRecord::Schema.define(:version => 20140331200638) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -41,6 +41,12 @@ ActiveRecord::Schema.define(:version => 20140308220557) do
     t.boolean  "admin"
     t.string   "persistence_token"
     t.string   "salt"
+  end
+
+  create_table "voicings", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end

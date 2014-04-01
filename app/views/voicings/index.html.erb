@@ -1,0 +1,29 @@
+<div class="row-fluid">
+  <div class="span8 offset2 well">
+    <h2 class="text-center">Manage Voicing and Instrumentation</h2>
+    <% if @voicings && @voicings.size > 0 %>
+      <table class='table table-striped table-bordered'>
+        <tr>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+        <% @voicings.each do |voicing| %>
+        <tr>
+          <td><%=voicing.name%></td>
+          <td>
+            <%= link_to "delete", { :action => "delete", :id => voicing.id },
+              :confirm => "Are you sure you want to delete this voicing or instrumention?", :method => :delete %>
+            <%= link_to "edit", { :action => "edit", :id => voicing.id } %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    <% else %>
+      No Voicing or Instrumentation Found
+    <% end %>
+    <div class="controls text-right">
+      <%= link_to "cancel", "/" %>
+      <%= link_to "Add Voicing or Instrumentation", new_voicing_path, :class => "btn btn-primary" %>
+    </div>
+  </div>
+</div>
