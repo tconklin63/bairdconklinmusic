@@ -1,0 +1,26 @@
+<div class="row-fluid">
+  <div class="span6 offset3 well">
+    <h2 class="text-center">Edit Composition</h2>
+    <%= form_for @composition do |f| %>
+      <%= f.error_messages %><br/>
+      <%= f.text_field :name, :placeholder => "Title", :class => "input-xxlarge" %>
+      <%= f.text_field :composer, :placeholder => "Composer", :class => "input-xxlarge" %>
+      <%= f.text_field :lyricist, :placeholder => "Lyricist", :class => "input-xxlarge" %>
+      <%= f.text_area :description, :placeholder => "Description", :class => "input-xxlarge", :rows => 5 %>
+      <%= f.label :category, "Category "%>
+      <%= f.select :category, options_from_collection_for_select(Category.find(:all, :order => :name), :id, :name, @composition.category) %>
+      <%= f.label :voicing, "Voicing or Instrumentation "%>
+      <%= f.select :voicing, options_from_collection_for_select(Voicing.find(:all, :order => :name), :id, :name, @composition.voicing) %>
+      <br/>
+      <%= f.label :sheet_music, "Upload Sheet Music"%>
+      <%= f.file_field :sheet_music %>
+      <%= f.label :recording, "Upload Recording"%>
+      <%= f.file_field :recording %>
+      <div class="controls text-right">
+        <%= link_to "cancel", compositions_path %>
+        <%= f.submit "Save", :class => "btn btn-primary" %>
+        <%= f.submit "Publish", :class => "btn btn-success" %>
+      </div>
+    <% end %>
+  </div>
+</div>

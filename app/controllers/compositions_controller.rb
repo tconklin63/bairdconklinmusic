@@ -33,6 +33,14 @@ class CompositionsController < ApplicationController
     redirect_to :compositions
   end
   
+  def edit
+    @composition = Composition.find(params[:id])
+  end
+  
+  def update
+    redirect_to :compositions
+  end
+  
   def delete
     if current_user.admin
       composition = Composition.find(params[:id])
