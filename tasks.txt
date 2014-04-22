@@ -14,6 +14,8 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Extract JavaScript from prime number generator
+*Add prime factorization page
 *Add Edit Composition page
 *Format index page for compositions
 *Make voicing a drop down list like categories

@@ -4,6 +4,7 @@ Bairdconklinmusic::Application.routes.draw do
   
   match '/bairdconklinmath' => 'static_pages#math'
   match '/bairdconklinmath/mathtools/primes' => 'mathtools#primes'
+  match '/bairdconklinmath/mathtools/factor' => 'mathtools#factor'
   
   resources :users do
     collection do

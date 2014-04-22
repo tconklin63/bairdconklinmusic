@@ -1,0 +1,17 @@
+<div class="row-fluid">
+  <div class="span8 offset2 well">
+    <%= render :partial => 'shared/flash_messages'%>
+    <h2 class="text-center">Prime Factorization</h2>
+      <table style="table">
+        <tr>
+          <td>Number to Factor <input id="number" type="text" width=5/></td>
+        </tr>
+        <tr>
+          <td style="text-align: left;"><input type="button" value="Factor" onclick="factor();"/></td>
+        </tr>
+        <tr>
+          <td id="results">&nbsp;</td>
+        </tr>
+      </table>
+  </div>
+</div>
