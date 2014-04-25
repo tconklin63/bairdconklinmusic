@@ -1,10 +1,13 @@
 Bairdconklinmusic::Application.routes.draw do
   
-  match '/' => 'static_pages#home'
-  
+  # Baird-Conklin Math
   match '/bairdconklinmath' => 'static_pages#math'
   match '/bairdconklinmath/mathtools/primes' => 'mathtools#primes'
   match '/bairdconklinmath/mathtools/factor' => 'mathtools#factor'
+  match '/bairdconklinmath/games/reversi' => 'games#reversi'
+  
+  # Baird-Conklin Music
+  match '/' => 'static_pages#home'
   
   resources :users do
     collection do

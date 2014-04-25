@@ -1,0 +1,17 @@
+<div class="row-fluid">
+  <div class="span6 offset3 well">
+    <%= render :partial => 'shared/flash_messages'%>
+    <h2 class="text-center">Reversi</h2>
+    <a href='#' onclick='newGame();'>New Game</a><br/>
+    <div class='message text-center' id='message'>&nbsp;</div>
+    <div class='error text-center' id='alertMessage'>&nbsp;</div>
+    <div class="text-center">
+      <canvas id="myCanvas" width="400" height="400" style="border:2px solid #000000;"></canvas>
+    </div>
+    <%= link_to 'back', '/bairdconklinmath' %>
+  </div>
+</div>
+<script>
+initReversi();
+</script>
+
