@@ -46,6 +46,7 @@ function newGame() {
   board[4][3] = -1;
   turn = 1;
   displayMessage('White, your move.');
+  displayAlertMessage('&nbsp;');
   drawBoard();
 }
 
@@ -70,10 +71,10 @@ function processMouseClick(event) {
   displayAlertMessage('&nbsp;');
   var x = Math.floor((event.pageX - canvas.offsetLeft - 3)/50);
   var y = Math.floor((event.pageY - canvas.offsetTop - 3)/50);
-  if (board[x][y] != 0) {
-    displayAlertMessage('Not a valid move!');
-  } else {
+  if (legalMove(x, y)) {
     board[x][y] = turn;
+    flipPieces(x, y);
+    // check for valid moves before switching players
     turn = -turn;
     if (turn == 1) {
       displayMessage('White, your move.');
@@ -81,6 +82,8 @@ function processMouseClick(event) {
       displayMessage('Black, your move.');
     }
     drawBoard();
+  } else {
+    displayAlertMessage('Not a valid move!');
   }
 }
 
@@ -90,6 +93,48 @@ function displayMessage(text) {
 
 function displayAlertMessage(text) {
   document.getElementById('alertMessage').innerHTML = text;
+}
+
+function flipPieces(x, y) {
+  if (checkN(x, y)) {
+    flipN(x, y);
+  }
+  if (checkNW(x, y)) {
+    flipNW(x, y);
+  }
+  if (checkW(x, y)) {
+    flipW(x, y);
+  }
+  if (checkSW(x, y)) {
+    flipSW(x, y);
+  }
+  if (checkS(x, y)) {
+    flipS(x, y);
+  }
+  if (checkSE(x, y)) {
+    flipSE(x, y);
+  }
+  if (checkE(x, y)) {
+    flipE(x, y);
+  }
+  if (checkNE(x, y)) {
+    flipNE(x, y);
+  }
+  //updateScore();
+}
+
+function legalMove(x, y) {
+  if (board[x][y] != 0) {
+    return false;
+  }
+  return checkN(x, y) ||
+         checkNW(x, y) ||
+         checkW(x, y) ||
+         checkSW(x, y) ||
+         checkS(x, y) ||
+         checkSE(x, y) ||
+         checkE(x, y) ||
+         checkNE(x, y);
 }
 
 function checkN(x, y) {
@@ -165,5 +210,297 @@ function checkW(x, y) {
   return false;
 }
 
+function checkSW(x, y) {
+  if ((x < 2) || (y > 5)) {
+    return false;
+  }
+  if (board[(x - 1)][(y + 1)] != -turn) {
+    return false;
+  }
+  if (x < 7 - y) {
+    var i = 2;
+    while (i < x + 1) {
+      if (board[(x - i)][(y + i)] == turn) {
+        return true;
+      }
+      if (board[(x - i)][(y + i)] == 0) {
+        return false;
+      }
+      i++;
+    }
+  } else {
+    var i = 2;
+    while (i < 8 - y) {
+      if (board[(x - i)][(y + i)] == turn) {
+        return true;
+      }
+      if (board[(x - i)][(y + i)] == 0) {
+        return false;
+      }
+      i++;
+    }
+  }
+  return false;
+}
 
+function checkS(x, y) {
+  if (y > 5) {
+    return false;
+  }
+  if (board[x][(y + 1)] != -turn) {
+    return false;
+  }
+  var i = 2;
+  while (i < 8 - y) {
+    if (board[x][(y + i)] == turn) {
+      return true;
+    }
+    if (board[x][(y + i)] == 0) {
+      return false;
+    }
+    i++;
+  }
+  return false;
+}
 
+function checkSE(x, y) {
+  if ((x > 5) || (y > 5)) {
+    return false;
+  }
+  if (board[(x + 1)][(y + 1)] != -turn) {
+    return false;
+  }
+  if (x > y) {
+    var i = 2;
+    while (i < 8 - x) {
+      if (board[(x + i)][(y + i)] == turn) {
+        return true;
+      }
+      if (board[(x + i)][(y + i)] == 0) {
+        return false;
+      }
+      i++;
+    }
+  } else {
+    var i = 2;
+    while (i < 8 - y) {
+      if (board[(x + i)][(y + i)] == turn) {
+        return true;
+      }
+      if (board[(x + i)][(y + i)] == 0) {
+        return false;
+      }
+      i++;
+    }
+  }
+  return false;
+}
+
+function checkE(x, y) {
+  if (x > 5) {
+    return false;
+  }
+  if (board[(x + 1)][y] != -turn) {
+    return false;
+  }
+  var i = 2;
+  while (i < 8 - x) {
+    if (board[(x + i)][y] == turn) {
+      return true;
+    }
+    if (board[(x + i)][y] == 0) {
+      return false;
+    }
+    i++;
+  }
+  return false;
+}
+
+function checkNE(x, y) {
+  if ((x > 5) || (y < 2)) {
+    return false;
+  }
+  if (board[(x + 1)][(y - 1)] != -turn) {
+    return false;
+  }
+  if (7 - x < y) {
+    var i = 2;
+    while (i < 8 - x) {
+      if (board[(x + i)][(y - i)] == turn) {
+        return true;
+      }
+      if (board[(x + i)][(y - i)] == 0) {
+        return false;
+      }
+      i++;
+    }
+  } else {
+    var i = 2;
+    while (i < y + 1) {
+      if (board[(x + i)][(y - i)] == turn) {
+        return true;
+      }
+      if (board[(x + i)][(y - i)] == 0) {
+        return false;
+      }
+      i++;
+    }
+  }
+  return false;
+}
+
+function flipN(x, y) {
+  var i = y - 1;
+  while (i > 0) {
+    if (board[x][i] == turn) {
+      break;
+    }
+    if (board[x][i] == -turn) {
+      board[x][i] = turn;
+    }
+    i--;
+  }
+}
+
+function flipNW(x, y) {
+  if (x < y) {
+    var i = 1;
+    while (i < x) {
+      if (board[(x - i)][(y - i)] == turn) {
+        break;
+      }
+      if (board[(x - i)][(y - i)] == -turn) {
+        board[(x - i)][(y - i)] = turn;
+      }
+      i++;
+    }
+  } else {
+    var i = 1;
+    while (i < y) {
+      if (board[(x - i)][(y - i)] == turn) {
+        break;
+      }
+      if (board[(x - i)][(y - i)] == -turn) {
+        board[(x - i)][(y - i)] = turn;
+      }
+      i++;
+    }
+  }
+}
+
+function flipW(x, y) {
+  var i = x - 1;
+  while (i > 0) {
+    if (board[i][y] == turn) {
+      break;
+    }
+    if (board[i][y] == -turn) {
+      board[i][y] = turn;
+    }
+    i--;
+  }
+}
+
+function flipSW(x, y) {
+  if (x < 7 - y) {
+    var i = 1;
+    while (i < x) {
+      if (board[(x - i)][(y + i)] == turn) {
+        break;
+      }
+      if (board[(x - i)][(y + i)] == -turn) {
+        board[(x - i)][(y + i)] = turn;
+      }
+      i++;
+    }
+  } else {
+    var i = 1;
+    while (i < 8 - y) {
+      if (board[(x - i)][(y + i)] == turn) {
+        break;
+      }
+      if (board[(x - i)][(y + i)] == -turn) {
+        board[(x - i)][(y + i)] = turn;
+      }
+      i++;
+    }
+  }
+}
+
+function flipS(x, y) {
+  var i = y + 1;
+  while (i < 8) {
+    if (board[x][i] == turn) {
+      break;
+    }
+    if (board[x][i] == -turn) {
+      board[x][i] = turn;
+    }
+    i++;
+  }
+}
+
+function flipSE(x, y) {
+  if (x > y) {
+    var i = 1;
+    while (i < 8 - x) {
+      if (board[(x + i)][(y + i)] == turn) {
+        break;
+      }
+      if (board[(x + i)][(y + i)] == -turn) {
+        board[(x + i)][(y + i)] = turn;
+      }
+      i++;
+    }
+  } else {
+    var i = 1;
+    while (i < 8 - y) {
+      if (board[(x + i)][(y + i)] == turn) {
+        break;
+      }
+      if (board[(x + i)][(y + i)] == -turn) {
+        board[(x + i)][(y + i)] = turn;
+      }
+      i++;
+    }
+  }
+}
+
+function flipE(x, y) {
+  var i = x + 1;
+  while (i < 8) {
+    if (board[i][y] == turn) {
+      break;
+    }
+    if (board[i][y] == -turn) {
+      board[i][y] = turn;
+    }
+    i++;
+  }
+}
+
+function flipNE(x, y) {
+  if (7 - x < y) {
+    var i = 1;
+    while (i < 8 - x) {
+      if (board[(x + i)][(y - i)] == turn) {
+        break;
+      }
+      if (board[(x + i)][(y - i)] == -turn) {
+        board[(x + i)][(y - i)] = turn;
+      }
+      i++;
+    }
+  } else {
+    var i = 1;
+    while (i < y) {
+      if (board[(x + i)][(y - i)] == turn) {
+        break;
+      }
+      if (board[(x + i)][(y - i)] == -turn) {
+        board[(x + i)][(y - i)] = turn;
+      }
+      i++;
+    }
+  }
+}
