@@ -24,10 +24,6 @@ $ bundle install
 $ bundle exec rake db:migrate RAILS_ENV=production
 
 $ bundle exec rake assets:precompile RAILS_ENV=production
-
-$ cd public
-
-$ ln -s /home3/bairdcon/muchadopodcast muchadopodcast
 ```
 
 

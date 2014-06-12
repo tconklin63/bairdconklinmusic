@@ -8,7 +8,6 @@ Bairdconklinmusic::Application.routes.draw do
   
   # Baird-Conklin Music
   match '/' => 'static_pages#home'
-  match '/index.html' => 'static_pages#home'
   
   resources :users do
     collection do
