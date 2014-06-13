@@ -48,6 +48,7 @@ function newGame() {
   displayMessage('White, your move.');
   displayAlertMessage('&nbsp;');
   drawBoard();
+  updateScore();
 }
 
 function drawPiece(ctx,x,y,color) {
@@ -120,7 +121,7 @@ function flipPieces(x, y) {
   if (checkNE(x, y)) {
     flipNE(x, y);
   }
-  //updateScore();
+  updateScore();
 }
 
 function legalMove(x, y) {
@@ -503,4 +504,20 @@ function flipNE(x, y) {
       i++;
     }
   }
+}
+
+function updateScore() {
+	var whiteScore = 0;
+	var blackScore = 0;
+	for (var i=0; i<8; i++) {
+		for (var j=0; j<8; j++) {
+			if (board[i][j] == 1) {
+				whiteScore++
+			}
+			if (board[i][j] == -1) {
+				blackScore++
+			}
+		}
+	}
+	document.getElementById('score').innerHTML = 'White='+whiteScore+', Black='+blackScore;
 }
