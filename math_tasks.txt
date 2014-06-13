@@ -1,0 +1,8 @@
+TODO:
+Add Undo/Redo
+Add max flips strategy
+Add best position strategy
+Add minimax strategy
+
+Finished:
+Add Score

@@ -3,6 +3,8 @@ var canvas; // HTML canvas object, graphical representation of board
 var turn; // 1=white, -1=black
 var undoStack; // Array of game states
 var redoStack; // Array of games states
+var message;
+var alertMessage;
 
 function initReversi() {
   canvas = document.getElementById("myCanvas");
@@ -47,10 +49,13 @@ function newGame() {
   board[3][4] = -1;
   board[4][3] = -1;
   turn = 1;
-  displayMessage('White, your move.');
-  displayAlertMessage('&nbsp;');
+  message = 'White, your move';
+  alertMessage = '&nbsp;';
+  undoStack = new Array();
+  redoStack = new Array();
   drawBoard();
   updateScore();
+  displayMessages();
 }
 
 function drawPiece(ctx,x,y,color) {
@@ -71,31 +76,36 @@ function clearBoard() {
 
 
 function processMouseClick(event) {
-  displayAlertMessage('&nbsp;');
+  alertMessage = '&nbsp;';
   var x = Math.floor((event.pageX - canvas.offsetLeft - 3)/50);
   var y = Math.floor((event.pageY - canvas.offsetTop - 3)/50);
   if (legalMove(x, y)) {
+    var currentGameState = {
+      board:copyBoard(board),
+      turn:turn,
+      message:message,
+      alertMessage:alertMessage
+    };    
+    undoStack.push(currentGameState);
     board[x][y] = turn;
     flipPieces(x, y);
     // check for valid moves before switching players
     turn = -turn;
     if (turn == 1) {
-      displayMessage('White, your move.');
+      message = 'White, your move.';
     } else {
-      displayMessage('Black, your move.');
+      message = 'Black, your move.';
     }
     drawBoard();
   } else {
-    displayAlertMessage('Not a valid move!');
+    alertMessage = 'Not a valid move!';
   }
+  displayMessages();
 }
 
-function displayMessage(text) {
-  document.getElementById('message').innerHTML = text;
-}
-
-function displayAlertMessage(text) {
-  document.getElementById('alertMessage').innerHTML = text;
+function displayMessages() {
+  document.getElementById('message').innerHTML = message;
+  document.getElementById('alertMessage').innerHTML = alertMessage;
 }
 
 function flipPieces(x, y) {
@@ -514,10 +524,10 @@ function updateScore() {
   for (var i=0; i<8; i++) {
     for (var j=0; j<8; j++) {
       if (board[i][j] == 1) {
-        whiteScore++
+        whiteScore++;
       }
       if (board[i][j] == -1) {
-        blackScore++
+        blackScore++;
       }
     }
 	}
@@ -525,15 +535,31 @@ function updateScore() {
 }
 
 function undo() {
-  //Sample object, change to gameState
-  var person = {
-    firstName:"John",
-    lastName:"Doe",
-    age:50,
-    eyeColor:"blue"
-  }; 	
+  if (undoStack.length == 0) {
+    alertMessage = "Can't undo";
+    displayMessages();
+  } else {
+    var previousGameState = undoStack.pop();
+    board = previousGameState.board;
+    turn = previousGameState.turn;
+    message = previousGameState.message;
+    alertMessage = previousGameState.alertMessage;
+    drawBoard();
+    displayMessages();
+  }
 }
 
 function redo() {
 	
+}
+
+function copyBoard(b) {
+  var newBoard = new Array(8);
+  for (var i=0; i<8; i++) {
+    newBoard[i] = new Array(8);
+    for (var j=0; j<8; j++) {
+      newBoard[i][j] = b[i][j];
+    }
+  }
+  return newBoard;
 }
