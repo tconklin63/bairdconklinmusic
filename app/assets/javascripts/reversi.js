@@ -7,6 +7,8 @@ var message;
 var alertMessage;
 var lastX; // X coordinate of last piece placed for highlighting
 var lastY; // Y coordinate of last piece placed for highlighting
+var flippedX; // Array showing X coordinate of pieces just flipped
+var flippedY; // Array showing Y coordinate of pieces just flipped
 
 function initReversi() {
   canvas = document.getElementById("myCanvas");
@@ -71,6 +73,8 @@ function newGame() {
   alertMessage = '&nbsp;';
   undoStack = new Array();
   redoStack = new Array();
+  flippedX = new Array();
+  flippedY = new Array();
   updateScore();
   displayMessages();
   drawBoard();
@@ -83,6 +87,13 @@ function drawPiece(ctx,x,y,color) {
     if (color == '#000') highlightColor = '#0C0';
     ctx.fillStyle = highlightColor;
     ctx.fillRect(1+x*50,1+y*50,48,48);
+  }
+  if (flippedX.indexOf(x) > -1 && flippedY.indexOf(y) > -1) {
+    if (color == '#000') {
+      color = '#444';
+    } else {
+       color = '#CCC';
+    }
   }
   ctx.beginPath();
   ctx.arc(25+x*50,25+y*50,23,0,2*Math.PI);
@@ -110,12 +121,14 @@ function processMouseClick(event) {
       turn:turn,
       message:message,
       lastX:lastX,
-      lastY:lastY
+      lastY:lastY,
+      flippedX:flippedX.slice(),
+      flippedY:flippedY.slice()
     };    
     undoStack.push(currentGameState);
     // For highlighting last move
     lastX = x;
-    lastY = y
+    lastY = y;
     board[x][y] = turn;
     flipPieces(x, y);
     // check for terminal state
@@ -139,6 +152,8 @@ function displayMessages() {
 }
 
 function flipPieces(x, y) {
+  flippedX = new Array();
+  flippedY = new Array();
   if (checkN(x, y)) {
     flipN(x, y);
   }
@@ -400,6 +415,8 @@ function flipN(x, y) {
     }
     if (board[x][i] == -turn) {
       board[x][i] = turn;
+      flippedX.push(x);
+      flippedY.push(i);
     }
     i--;
   }
@@ -414,6 +431,8 @@ function flipNW(x, y) {
       }
       if (board[(x - i)][(y - i)] == -turn) {
         board[(x - i)][(y - i)] = turn;
+        flippedX.push(x-i);
+        flippedY.push(y-i);
       }
       i++;
     }
@@ -425,6 +444,8 @@ function flipNW(x, y) {
       }
       if (board[(x - i)][(y - i)] == -turn) {
         board[(x - i)][(y - i)] = turn;
+        flippedX.push(x-i);
+        flippedY.push(y-i);
       }
       i++;
     }
@@ -439,6 +460,8 @@ function flipW(x, y) {
     }
     if (board[i][y] == -turn) {
       board[i][y] = turn;
+      flippedX.push(i);
+      flippedY.push(y);
     }
     i--;
   }
@@ -453,6 +476,8 @@ function flipSW(x, y) {
       }
       if (board[(x - i)][(y + i)] == -turn) {
         board[(x - i)][(y + i)] = turn;
+        flippedX.push(x-i);
+        flippedY.push(y+i);
       }
       i++;
     }
@@ -464,6 +489,8 @@ function flipSW(x, y) {
       }
       if (board[(x - i)][(y + i)] == -turn) {
         board[(x - i)][(y + i)] = turn;
+        flippedX.push(x-i);
+        flippedY.push(y+i);
       }
       i++;
     }
@@ -478,6 +505,8 @@ function flipS(x, y) {
     }
     if (board[x][i] == -turn) {
       board[x][i] = turn;
+      flippedX.push(x);
+      flippedY.push(i);
     }
     i++;
   }
@@ -492,6 +521,8 @@ function flipSE(x, y) {
       }
       if (board[(x + i)][(y + i)] == -turn) {
         board[(x + i)][(y + i)] = turn;
+        flippedX.push(x+i);
+        flippedY.push(y+i);
       }
       i++;
     }
@@ -503,6 +534,8 @@ function flipSE(x, y) {
       }
       if (board[(x + i)][(y + i)] == -turn) {
         board[(x + i)][(y + i)] = turn;
+        flippedX.push(x+i);
+        flippedY.push(y+i);
       }
       i++;
     }
@@ -517,6 +550,8 @@ function flipE(x, y) {
     }
     if (board[i][y] == -turn) {
       board[i][y] = turn;
+      flippedX.push(i);
+      flippedY.push(y);
     }
     i++;
   }
@@ -531,6 +566,8 @@ function flipNE(x, y) {
       }
       if (board[(x + i)][(y - i)] == -turn) {
         board[(x + i)][(y - i)] = turn;
+        flippedX.push(x+i);
+        flippedY.push(y-i);
       }
       i++;
     }
@@ -542,6 +579,8 @@ function flipNE(x, y) {
       }
       if (board[(x + i)][(y - i)] == -turn) {
         board[(x + i)][(y - i)] = turn;
+        flippedX.push(x+i);
+        flippedY.push(y-i);
       }
       i++;
     }
@@ -575,15 +614,19 @@ function undo() {
       turn:turn,
       message:message,
       lastX:lastX,
-      lastY:lastY
+      lastY:lastY,
+      flippedX:flippedX.slice(),
+      flippedY:flippedY.slice()
     };    
     redoStack.push(currentGameState);
     var previousGameState = undoStack.pop();
     board = previousGameState.board;
     turn = previousGameState.turn;
     message = previousGameState.message;
-    lastX = previousGameState.lastX
-    lastY = previousGameState.lastY
+    lastX = previousGameState.lastX;
+    lastY = previousGameState.lastY;
+    flippedX = previousGameState.flippedX;
+    flippedY = previousGameState.flippedY;
     displayMessages();
     updateScore();
     drawBoard();
@@ -602,15 +645,19 @@ function redo() {
       turn:turn,
       message:message,
       lastX:lastX,
-      lastY:lastY
+      lastY:lastY,
+      flippedX:flippedX.slice(),
+      flippedY:flippedY.slice()
     };    
     undoStack.push(currentGameState);
     var nextGameState = redoStack.pop();
     board = nextGameState.board;
     turn = nextGameState.turn;
     message = nextGameState.message;
-    lastX = nextGameState.lastX
-    lastY = nextGameState.lastY
+    lastX = nextGameState.lastX;
+    lastY = nextGameState.lastY;
+    flippedX = nextGameState.flippedX;
+    flippedY = nextGameState.flippedY;
     displayMessages();
     updateScore();
     drawBoard();
