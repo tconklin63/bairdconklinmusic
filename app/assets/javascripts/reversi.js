@@ -5,6 +5,8 @@ var undoStack; // Array of game states
 var redoStack; // Array of games states
 var message;
 var alertMessage;
+var lastX; // X coordinate of last piece placed for highlighting
+var lastY; // Y coordinate of last piece placed for highlighting
 
 function initReversi() {
   canvas = document.getElementById("myCanvas");
@@ -59,6 +61,12 @@ function newGame() {
 }
 
 function drawPiece(ctx,x,y,color) {
+  if (x == lastX && y == lastY) {
+    var highlightColor = '#060';
+    if (color == '#000') highlightColor = '#0C0';
+    ctx.fillStyle = highlightColor;
+    ctx.fillRect(1+x*50,1+y*50,48,48);
+  }
   ctx.beginPath();
   ctx.arc(25+x*50,25+y*50,23,0,2*Math.PI);
   ctx.fillStyle = color;
@@ -84,10 +92,16 @@ function processMouseClick(event) {
       board:copyBoard(board),
       turn:turn,
       message:message,
+      lastX:lastX,
+      lastY:lastY
     };    
     undoStack.push(currentGameState);
+    // For highlighting last move
+    lastX = x;
+    lastY = y
     board[x][y] = turn;
     flipPieces(x, y);
+    // check for terminal state
     // check for valid moves before switching players
     turn = -turn;
     if (turn == 1) {
@@ -543,12 +557,16 @@ function undo() {
       board:copyBoard(board),
       turn:turn,
       message:message,
+      lastX:lastX,
+      lastY:lastY
     };    
     redoStack.push(currentGameState);
     var previousGameState = undoStack.pop();
     board = previousGameState.board;
     turn = previousGameState.turn;
     message = previousGameState.message;
+    lastX = previousGameState.lastX
+    lastY = previousGameState.lastY
     displayMessages();
     updateScore();
     drawBoard();
@@ -566,12 +584,16 @@ function redo() {
       board:copyBoard(board),
       turn:turn,
       message:message,
+      lastX:lastX,
+      lastY:lastY
     };    
     undoStack.push(currentGameState);
     var nextGameState = redoStack.pop();
     board = nextGameState.board;
     turn = nextGameState.turn;
     message = nextGameState.message;
+    lastX = nextGameState.lastX
+    lastY = nextGameState.lastY
     displayMessages();
     updateScore();
     drawBoard();
