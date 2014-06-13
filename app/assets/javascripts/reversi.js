@@ -11,8 +11,7 @@ function initReversi() {
   canvas.addEventListener("mousedown", processMouseClick, false);
   turn = 1;
   board = new Array(8);
-  clearBoard();
-  drawBoard();
+  newGame();
 }
 
 function drawBoard() {
@@ -53,9 +52,10 @@ function newGame() {
   alertMessage = '&nbsp;';
   undoStack = new Array();
   redoStack = new Array();
-  drawBoard();
   updateScore();
   displayMessages();
+  drawBoard();
+  drawBoard(); // To fix the phantom circle problem
 }
 
 function drawPiece(ctx,x,y,color) {
@@ -549,9 +549,10 @@ function undo() {
     board = previousGameState.board;
     turn = previousGameState.turn;
     message = previousGameState.message;
-    drawBoard();
     displayMessages();
     updateScore();
+    drawBoard();
+    drawBoard(); // To fix the phantom circle problem
   }
 }
 
@@ -571,9 +572,9 @@ function redo() {
     board = nextGameState.board;
     turn = nextGameState.turn;
     message = nextGameState.message;
-    drawBoard();
     displayMessages();
     updateScore();
+    drawBoard();
   }
 }
 

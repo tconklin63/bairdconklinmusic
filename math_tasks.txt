@@ -1,10 +1,13 @@
 TODO:
-Fix issue with clicking on board before starting a new game
-Fix issue with black circles left behind
+Add little circles
+Highlight last placed piece
+Add terminal state (winner, no moves)
 Add max flips strategy
 Add best position strategy
 Add minimax strategy
 
 Finished:
+*Fix issue with clicking on board before starting a new game
+*Fix issue with black circles left behind
 *Add Score
 *Add Undo/Redo
