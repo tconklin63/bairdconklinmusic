@@ -1,8 +1,10 @@
 TODO:
-Add Undo/Redo
+Fix issue with clicking on board before starting a new game
+Fix issue with black circles left behind
 Add max flips strategy
 Add best position strategy
 Add minimax strategy
 
 Finished:
-Add Score
+*Add Score
+*Add Undo/Redo

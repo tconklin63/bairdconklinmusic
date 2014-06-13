@@ -97,7 +97,7 @@ function processMouseClick(event) {
     }
     drawBoard();
   } else {
-    Message = 'Not a valid move!';
+    alertMessage = 'Not a valid move!';
   }
   displayMessages();
 }
@@ -551,6 +551,7 @@ function undo() {
     message = previousGameState.message;
     drawBoard();
     displayMessages();
+    updateScore();
   }
 }
 
@@ -572,6 +573,7 @@ function redo() {
     message = nextGameState.message;
     drawBoard();
     displayMessages();
+    updateScore();
   }
 }
 
