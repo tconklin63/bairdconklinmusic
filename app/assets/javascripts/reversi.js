@@ -9,6 +9,8 @@ var lastX; // X coordinate of last piece placed for highlighting
 var lastY; // Y coordinate of last piece placed for highlighting
 var flippedX; // Array showing X coordinate of pieces just flipped
 var flippedY; // Array showing Y coordinate of pieces just flipped
+var whiteScore;
+var blackScore;
 
 function initReversi() {
   canvas = document.getElementById("myCanvas");
@@ -131,9 +133,17 @@ function processMouseClick(event) {
     lastY = y;
     board[x][y] = turn;
     flipPieces(x, y);
-    // check for terminal state
-    // check for valid moves before switching players
     turn = -turn;
+    if (!hasMoves()) {
+      turn = -turn;
+      if (!hasMoves()) {
+        message = 'Game Over!';
+        updateScore();
+        displayMessages();
+        drawBoard();
+        return;
+      }
+    }
     if (turn == 1) {
       message = 'White, your move.';
     } else {
@@ -144,6 +154,17 @@ function processMouseClick(event) {
     alertMessage = 'Not a valid move!';
   }
   displayMessages();
+}
+
+function hasMoves() {
+  for (var i=0; i<8; i++) {
+    for (var j=0; j<8; j++) {
+      if (legalMove(i, j)) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 function displayMessages() {
@@ -588,8 +609,8 @@ function flipNE(x, y) {
 }
 
 function updateScore() {
-  var whiteScore = 0;
-  var blackScore = 0;
+  whiteScore = 0;
+  blackScore = 0;
   for (var i=0; i<8; i++) {
     for (var j=0; j<8; j++) {
       if (board[i][j] == 1) {
