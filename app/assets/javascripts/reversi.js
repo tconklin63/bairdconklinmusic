@@ -1,6 +1,8 @@
 var board; // 2D Array containing current game state
 var canvas; // HTML canvas object, graphical representation of board
 var turn; // 1=white, -1=black
+var undoStack; // Array of game states
+var redoStack; // Array of games states
 
 function initReversi() {
   canvas = document.getElementById("myCanvas");
@@ -507,17 +509,31 @@ function flipNE(x, y) {
 }
 
 function updateScore() {
-	var whiteScore = 0;
-	var blackScore = 0;
-	for (var i=0; i<8; i++) {
-		for (var j=0; j<8; j++) {
-			if (board[i][j] == 1) {
-				whiteScore++
-			}
-			if (board[i][j] == -1) {
-				blackScore++
-			}
-		}
+  var whiteScore = 0;
+  var blackScore = 0;
+  for (var i=0; i<8; i++) {
+    for (var j=0; j<8; j++) {
+      if (board[i][j] == 1) {
+        whiteScore++
+      }
+      if (board[i][j] == -1) {
+        blackScore++
+      }
+    }
 	}
 	document.getElementById('score').innerHTML = 'White='+whiteScore+', Black='+blackScore;
+}
+
+function undo() {
+  //Sample object, change to gameState
+  var person = {
+    firstName:"John",
+    lastName:"Doe",
+    age:50,
+    eyeColor:"blue"
+  }; 	
+}
+
+function redo() {
+	
 }
