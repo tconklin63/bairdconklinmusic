@@ -30,6 +30,23 @@ function drawBoard() {
     ctx.moveTo(50*i,0);
     ctx.lineTo(50*i,400);
     ctx.stroke();
+    // dots
+    ctx.beginPath();
+    ctx.arc(100,100,3,0,2*Math.PI);
+    ctx.fillStyle = '#000';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(100,300,3,0,2*Math.PI);
+    ctx.fillStyle = '#000';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(300,100,3,0,2*Math.PI);
+    ctx.fillStyle = '#000';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(300,300,3,0,2*Math.PI);
+    ctx.fillStyle = '#000';
+    ctx.fill();
   }
   // pieces
   for (var i=0; i<8; i++) {
