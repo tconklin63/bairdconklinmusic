@@ -84,7 +84,6 @@ function processMouseClick(event) {
       board:copyBoard(board),
       turn:turn,
       message:message,
-      alertMessage:alertMessage
     };    
     undoStack.push(currentGameState);
     board[x][y] = turn;
@@ -98,7 +97,7 @@ function processMouseClick(event) {
     }
     drawBoard();
   } else {
-    alertMessage = 'Not a valid move!';
+    Message = 'Not a valid move!';
   }
   displayMessages();
 }
@@ -539,18 +538,41 @@ function undo() {
     alertMessage = "Can't undo";
     displayMessages();
   } else {
+    alertMessage = '&nbsp;';
+    var currentGameState = {
+      board:copyBoard(board),
+      turn:turn,
+      message:message,
+    };    
+    redoStack.push(currentGameState);
     var previousGameState = undoStack.pop();
     board = previousGameState.board;
     turn = previousGameState.turn;
     message = previousGameState.message;
-    alertMessage = previousGameState.alertMessage;
     drawBoard();
     displayMessages();
   }
 }
 
 function redo() {
-	
+  if (redoStack.length == 0) {
+    alertMessage = "Can't redo";
+    displayMessages();
+  } else {
+    alertMessage = '&nbsp;';
+    var currentGameState = {
+      board:copyBoard(board),
+      turn:turn,
+      message:message,
+    };    
+    undoStack.push(currentGameState);
+    var nextGameState = redoStack.pop();
+    board = nextGameState.board;
+    turn = nextGameState.turn;
+    message = nextGameState.message;
+    drawBoard();
+    displayMessages();
+  }
 }
 
 function copyBoard(b) {

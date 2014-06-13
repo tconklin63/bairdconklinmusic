@@ -3,7 +3,9 @@
     <%= render :partial => 'shared/flash_messages'%>
     <h2 class="text-center">Reversi</h2>
     <a href="javascript:void(0);" onclick='newGame();'>new</a> | 
-    <a href="javascript:void(0);" onclick='undo();' class='text-right'>undo</a><br/>
+    <a href="javascript:void(0);" onclick='undo();'>undo</a> | 
+    <a href="javascript:void(0);" onclick='redo();'>redo</a>
+    <br/>
     <div class='message text-center' id='message'>&nbsp;</div>
     <div class='error text-center' id='alertMessage'>&nbsp;</div>
     <div class="text-center">
