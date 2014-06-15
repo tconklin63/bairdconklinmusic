@@ -1,11 +1,11 @@
 TODO:
-Add terminal state (winner, no moves)
 Add max flips strategy
 Add best position strategy
 Add minimax strategy
 
 Finished:
-*Highlight pieces that were just flipped 
+*Add terminal state (winner, no moves)
+*Add random strategy
 *Add little circles
 *Highlight last placed piece
 *Fix issue with clicking on board before starting a new game

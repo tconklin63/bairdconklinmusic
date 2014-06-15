@@ -7,8 +7,6 @@ var message;
 var alertMessage;
 var lastX; // X coordinate of last piece placed for highlighting
 var lastY; // Y coordinate of last piece placed for highlighting
-var flippedX; // Array showing X coordinate of pieces just flipped
-var flippedY; // Array showing Y coordinate of pieces just flipped
 var whiteScore;
 var blackScore;
 
@@ -75,8 +73,6 @@ function newGame() {
   alertMessage = '&nbsp;';
   undoStack = new Array();
   redoStack = new Array();
-  flippedX = new Array();
-  flippedY = new Array();
   updateScore();
   displayMessages();
   drawBoard();
@@ -90,14 +86,6 @@ function drawPiece(ctx,x,y,color) {
     if (color == '#000') highlightColor = '#0C0';
     ctx.fillStyle = highlightColor;
     ctx.fillRect(1+x*50,1+y*50,48,48);
-  }
-  // Make flipped pieces slightly off-color
-  if (flippedX.indexOf(x) > -1 && flippedY.indexOf(y) > -1) {
-    if (color == '#000') {
-      color = '#333';
-    } else {
-       color = '#CCC';
-    }
   }
   ctx.beginPath();
   ctx.arc(25+x*50,25+y*50,23,0,2*Math.PI);
@@ -116,18 +104,20 @@ function clearBoard() {
 
 
 function processMouseClick(event) {
-  alertMessage = '&nbsp;';
   var x = Math.floor((event.pageX - canvas.offsetLeft - 3)/50);
   var y = Math.floor((event.pageY - canvas.offsetTop - 3)/50);
+  makeMove(x, y);
+}
+
+function makeMove(x, y) {
+  alertMessage = '&nbsp;';
   if (legalMove(x, y)) {
     var currentGameState = {
       board:copyBoard(board),
       turn:turn,
       message:message,
       lastX:lastX,
-      lastY:lastY,
-      flippedX:flippedX.slice(),
-      flippedY:flippedY.slice()
+      lastY:lastY
     };    
     undoStack.push(currentGameState);
     // For highlighting last move
@@ -143,26 +133,25 @@ function processMouseClick(event) {
         message = 'Game over,';
         updateScore();
         if (whiteScore > blackScore) {
-          message += ' White wins!'
+          message += ' white wins!';
         } else if (blackScore > whiteScore) {
-          message += ' Black wins!'
+          message += ' black wins!';
         } else {
-          message += " It's a draw!"
+          message += " it's a draw!";
         }
         displayMessages();
         drawBoard();
         return;
       } else {
-        turn = -turn
         samePlayerAgain = true;
       }
     }
     if (turn == 1) {
       message = 'White, your move.';
-      if (samePlayerAgain) alertMessage = 'Black hos no moves!'
+      if (samePlayerAgain) alertMessage = 'Black has no moves!';
     } else {
       message = 'Black, your move.';
-      if (samePlayerAgain) alertMessage = 'White hos no moves!'
+      if (samePlayerAgain) alertMessage = 'White has no moves!';
     }
     drawBoard();
   } else {
@@ -188,8 +177,6 @@ function displayMessages() {
 }
 
 function flipPieces(x, y) {
-  flippedX = new Array();
-  flippedY = new Array();
   if (checkN(x, y)) {
     flipN(x, y);
   }
@@ -451,8 +438,6 @@ function flipN(x, y) {
     }
     if (board[x][i] == -turn) {
       board[x][i] = turn;
-      flippedX.push(x);
-      flippedY.push(i);
     }
     i--;
   }
@@ -467,8 +452,6 @@ function flipNW(x, y) {
       }
       if (board[(x - i)][(y - i)] == -turn) {
         board[(x - i)][(y - i)] = turn;
-        flippedX.push(x-i);
-        flippedY.push(y-i);
       }
       i++;
     }
@@ -480,8 +463,6 @@ function flipNW(x, y) {
       }
       if (board[(x - i)][(y - i)] == -turn) {
         board[(x - i)][(y - i)] = turn;
-        flippedX.push(x-i);
-        flippedY.push(y-i);
       }
       i++;
     }
@@ -496,8 +477,6 @@ function flipW(x, y) {
     }
     if (board[i][y] == -turn) {
       board[i][y] = turn;
-      flippedX.push(i);
-      flippedY.push(y);
     }
     i--;
   }
@@ -512,8 +491,6 @@ function flipSW(x, y) {
       }
       if (board[(x - i)][(y + i)] == -turn) {
         board[(x - i)][(y + i)] = turn;
-        flippedX.push(x-i);
-        flippedY.push(y+i);
       }
       i++;
     }
@@ -525,8 +502,6 @@ function flipSW(x, y) {
       }
       if (board[(x - i)][(y + i)] == -turn) {
         board[(x - i)][(y + i)] = turn;
-        flippedX.push(x-i);
-        flippedY.push(y+i);
       }
       i++;
     }
@@ -541,8 +516,6 @@ function flipS(x, y) {
     }
     if (board[x][i] == -turn) {
       board[x][i] = turn;
-      flippedX.push(x);
-      flippedY.push(i);
     }
     i++;
   }
@@ -557,8 +530,6 @@ function flipSE(x, y) {
       }
       if (board[(x + i)][(y + i)] == -turn) {
         board[(x + i)][(y + i)] = turn;
-        flippedX.push(x+i);
-        flippedY.push(y+i);
       }
       i++;
     }
@@ -570,8 +541,6 @@ function flipSE(x, y) {
       }
       if (board[(x + i)][(y + i)] == -turn) {
         board[(x + i)][(y + i)] = turn;
-        flippedX.push(x+i);
-        flippedY.push(y+i);
       }
       i++;
     }
@@ -586,8 +555,6 @@ function flipE(x, y) {
     }
     if (board[i][y] == -turn) {
       board[i][y] = turn;
-      flippedX.push(i);
-      flippedY.push(y);
     }
     i++;
   }
@@ -602,8 +569,6 @@ function flipNE(x, y) {
       }
       if (board[(x + i)][(y - i)] == -turn) {
         board[(x + i)][(y - i)] = turn;
-        flippedX.push(x+i);
-        flippedY.push(y-i);
       }
       i++;
     }
@@ -615,8 +580,6 @@ function flipNE(x, y) {
       }
       if (board[(x + i)][(y - i)] == -turn) {
         board[(x + i)][(y - i)] = turn;
-        flippedX.push(x+i);
-        flippedY.push(y-i);
       }
       i++;
     }
@@ -650,9 +613,7 @@ function undo() {
       turn:turn,
       message:message,
       lastX:lastX,
-      lastY:lastY,
-      flippedX:flippedX.slice(),
-      flippedY:flippedY.slice()
+      lastY:lastY
     };    
     redoStack.push(currentGameState);
     var previousGameState = undoStack.pop();
@@ -661,8 +622,6 @@ function undo() {
     message = previousGameState.message;
     lastX = previousGameState.lastX;
     lastY = previousGameState.lastY;
-    flippedX = previousGameState.flippedX;
-    flippedY = previousGameState.flippedY;
     displayMessages();
     updateScore();
     drawBoard();
@@ -681,9 +640,7 @@ function redo() {
       turn:turn,
       message:message,
       lastX:lastX,
-      lastY:lastY,
-      flippedX:flippedX.slice(),
-      flippedY:flippedY.slice()
+      lastY:lastY
     };    
     undoStack.push(currentGameState);
     var nextGameState = redoStack.pop();
@@ -692,8 +649,6 @@ function redo() {
     message = nextGameState.message;
     lastX = nextGameState.lastX;
     lastY = nextGameState.lastY;
-    flippedX = nextGameState.flippedX;
-    flippedY = nextGameState.flippedY;
     displayMessages();
     updateScore();
     drawBoard();
@@ -710,3 +665,23 @@ function copyBoard(b) {
   }
   return newBoard;
 }
+
+function getValidMoves() {
+  var validMoves = new Array();
+  for (var i = 0; i < 8; i++) {
+    for (var j = 0; j < 8; j++) {
+      if (legalMove(i, j)) {
+        validMoves.push([i,j]);
+      }
+    }
+  }
+  return validMoves;
+}
+
+function randomMove() {
+  var validMoves = getValidMoves();
+  var move = Math.floor((Math.random() * validMoves.length)); 
+  makeMove(validMoves[move][0], validMoves[move][1]);
+}
+
+
