@@ -84,15 +84,17 @@ function newGame() {
 }
 
 function drawPiece(ctx,x,y,color) {
+  // Highlight last piece plahed
   if (x == lastX && y == lastY) {
     var highlightColor = '#060';
     if (color == '#000') highlightColor = '#0C0';
     ctx.fillStyle = highlightColor;
     ctx.fillRect(1+x*50,1+y*50,48,48);
   }
+  // Make flipped pieces slightly off-color
   if (flippedX.indexOf(x) > -1 && flippedY.indexOf(y) > -1) {
     if (color == '#000') {
-      color = '#444';
+      color = '#333';
     } else {
        color = '#CCC';
     }
@@ -134,20 +136,33 @@ function processMouseClick(event) {
     board[x][y] = turn;
     flipPieces(x, y);
     turn = -turn;
+    var samePlayerAgain = false;
     if (!hasMoves()) {
       turn = -turn;
       if (!hasMoves()) {
-        message = 'Game Over!';
+        message = 'Game over,';
         updateScore();
+        if (whiteScore > blackScore) {
+          message += ' White wins!'
+        } else if (blackScore > whiteScore) {
+          message += ' Black wins!'
+        } else {
+          message += " It's a draw!"
+        }
         displayMessages();
         drawBoard();
         return;
+      } else {
+        turn = -turn
+        samePlayerAgain = true;
       }
     }
     if (turn == 1) {
       message = 'White, your move.';
+      if (samePlayerAgain) alertMessage = 'Black hos no moves!'
     } else {
       message = 'Black, your move.';
+      if (samePlayerAgain) alertMessage = 'White hos no moves!'
     }
     drawBoard();
   } else {
