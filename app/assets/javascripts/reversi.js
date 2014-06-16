@@ -73,7 +73,7 @@ function newGame() {
   alertMessage = '&nbsp;';
   undoStack = new Array();
   redoStack = new Array();
-  updateScore();
+  updateScore(true);
   displayMessages();
   drawBoard();
   drawBoard(); // To fix the phantom circle problem
@@ -125,13 +125,14 @@ function makeMove(x, y) {
     lastY = y;
     board[x][y] = turn;
     flipPieces(x, y);
+    updateScore(true);
     turn = -turn;
     var samePlayerAgain = false;
     if (!hasMoves()) {
       turn = -turn;
       if (!hasMoves()) {
         message = 'Game over,';
-        updateScore();
+        updateScore(true);
         if (whiteScore > blackScore) {
           message += ' white wins!';
         } else if (blackScore > whiteScore) {
@@ -201,7 +202,6 @@ function flipPieces(x, y) {
   if (checkNE(x, y)) {
     flipNE(x, y);
   }
-  updateScore();
 }
 
 function legalMove(x, y) {
@@ -586,7 +586,7 @@ function flipNE(x, y) {
   }
 }
 
-function updateScore() {
+function updateScore(print) {
   whiteScore = 0;
   blackScore = 0;
   for (var i=0; i<8; i++) {
@@ -599,7 +599,9 @@ function updateScore() {
       }
     }
 	}
-	document.getElementById('score').innerHTML = 'White='+whiteScore+', Black='+blackScore;
+	if (print) {
+    document.getElementById('score').innerHTML = 'White='+whiteScore+', Black='+blackScore;
+  }
 }
 
 function undo() {
@@ -684,4 +686,34 @@ function randomMove() {
   makeMove(validMoves[move][0], validMoves[move][1]);
 }
 
+function maxFlips() {
+  var validMoves = getValidMoves();
+  var bestMoves = new Array();
+  // Store current game state in order to restore it before actually making the move
+  var currentScoreDiff = whiteScore - blackScore;
+  var currentBoard = copyBoard(board);
+  var maxFlips = 0;
+  // First get numFlips for each move and maxFlips
+  for (var i=0; i<validMoves.length; i++) {
+    // try each valid move
+    flipPieces(validMoves[i][0], validMoves[i][1]);
+    updateScore(false);
+    scoreDiff = whiteScore - blackScore;
+    var numFlips = (scoreDiff*turn - currentScoreDiff*turn)/2;
+    validMoves[i][2] = numFlips; // store numFlips with each validMove
+    maxFlips = Math.max(maxFlips, numFlips);
+    // Reset board
+    board = copyBoard(currentBoard);
+    updateScore(false);
+  }
+  // Now store all moves that equal maxFlips
+  for (var i=0; i<validMoves.length; i++) {
+    if (validMoves[i][2] == maxFlips) {
+      bestMoves.push(validMoves[i]);
+    }
+  }
+  // Randomly select a move in the case of a tie
+  var move = Math.floor((Math.random() *bestMoves.length)); 
+  makeMove(bestMoves[move][0], bestMoves[move][1]);
+}
 
