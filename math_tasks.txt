@@ -1,10 +1,10 @@
 TODO:
-Add best position strategy
 Add minimax strategy
 Implement radical simplification
 Start hex game
 
 Finished:
+*Add best position strategy
 *Add max flips strategy
 *Add terminal state (winner, no moves)
 *Add random strategy

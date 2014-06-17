@@ -9,6 +9,7 @@ var lastX; // X coordinate of last piece placed for highlighting
 var lastY; // Y coordinate of last piece placed for highlighting
 var whiteScore;
 var blackScore;
+var positionScore;
 
 function initReversi() {
   canvas = document.getElementById("myCanvas");
@@ -16,6 +17,74 @@ function initReversi() {
   turn = 1;
   board = new Array(8);
   newGame();
+  positionScore = new Array(8);
+  for (var i=0; i<8; i++) {
+    positionScore[i] = new Array(8);
+  }
+  positionScore[0][0] = 10.0;
+  positionScore[1][0] = 0.1;
+  positionScore[2][0] = 0.5;
+  positionScore[3][0] = 0.25;
+  positionScore[4][0] = 0.25;
+  positionScore[5][0] = 0.5;
+  positionScore[6][0] = 0.1;
+  positionScore[7][0] = 10.0;
+  positionScore[0][1] = 0.1;
+  positionScore[1][1] = 0.01;
+  positionScore[2][1] = 0.03;
+  positionScore[3][1] = 0.05;
+  positionScore[4][1] = 0.05;
+  positionScore[5][1] = 0.03;
+  positionScore[6][1] = 0.01;
+  positionScore[7][1] = 0.1;
+  positionScore[0][2] = 0.5;
+  positionScore[1][2] = 0.03;
+  positionScore[2][2] = 0.2;
+  positionScore[3][2] = 0.15;
+  positionScore[4][2] = 0.15;
+  positionScore[5][2] = 0.2;
+  positionScore[6][2] = 0.03;
+  positionScore[7][2] = 0.5;
+  positionScore[0][3] = 0.25;
+  positionScore[1][3] = 0.05;
+  positionScore[2][3] = 0.15;
+  positionScore[3][3] = 0.0;
+  positionScore[4][3] = 0.0;
+  positionScore[5][3] = 0.15;
+  positionScore[6][3] = 0.05;
+  positionScore[7][3] = 0.25;
+  positionScore[0][4] = 0.25;
+  positionScore[1][4] = 0.05;
+  positionScore[2][4] = 0.15;
+  positionScore[3][4] = 0.0;
+  positionScore[4][4] = 0.0;
+  positionScore[5][4] = 0.15;
+  positionScore[6][4] = 0.05;
+  positionScore[7][4] = 0.25;
+  positionScore[0][5] = 0.5;
+  positionScore[1][5] = 0.03;
+  positionScore[2][5] = 0.2;
+  positionScore[3][5] = 0.15;
+  positionScore[4][5] = 0.15;
+  positionScore[5][5] = 0.2;
+  positionScore[6][5] = 0.03;
+  positionScore[7][5] = 0.5;
+  positionScore[0][6] = 0.1;
+  positionScore[1][6] = 0.01;
+  positionScore[2][6] = 0.03;
+  positionScore[3][6] = 0.05;
+  positionScore[4][6] = 0.05;
+  positionScore[5][6] = 0.03;
+  positionScore[6][6] = 0.01;
+  positionScore[7][6] = 0.1;
+  positionScore[0][7] = 10.0;
+  positionScore[1][7] = 0.1;
+  positionScore[2][7] = 0.5;
+  positionScore[3][7] = 0.15;
+  positionScore[4][7] = 0.15;
+  positionScore[5][7] = 0.5;
+  positionScore[6][7] = 0.1;
+  positionScore[7][7] = 10.0;
 }
 
 function drawBoard() {
@@ -688,6 +757,10 @@ function randomMove() {
 
 function maxFlips() {
   var validMoves = getValidMoves();
+  maxFlipsMove(validMoves);
+}
+
+function maxFlipsMove(validMoves) {
   var bestMoves = new Array();
   // Store current game state in order to restore it before actually making the move
   var currentScoreDiff = whiteScore - blackScore;
@@ -713,7 +786,29 @@ function maxFlips() {
     }
   }
   // Randomly select a move in the case of a tie
-  var move = Math.floor((Math.random() *bestMoves.length)); 
+  var move = Math.floor(Math.random()*bestMoves.length);
   makeMove(bestMoves[move][0], bestMoves[move][1]);
+}
+
+function bestPosition() {
+  var validMoves = getValidMoves();
+  var bestMoves = new Array();
+  var bestPositionScore = 0.0;
+  // Get position scores for all valid moves
+  for (var i=0; i<validMoves.length; i++) {
+    var x = validMoves[i][0];
+    var y = validMoves[i][1];
+    var ps = positionScore[x][y];
+    bestPositionScore = Math.max(bestPositionScore, ps);
+    validMoves[i][2] = ps;
+  }
+  // Build array of best position moves
+  for (var i=0; i<validMoves.length; i++) {
+    if (validMoves[i][2] == bestPositionScore) {
+      bestMoves.push(validMoves[i]);
+    }
+  }
+  // Choose the maxFlips among the ties for best position
+  maxFlipsMove(bestMoves);
 }
 
