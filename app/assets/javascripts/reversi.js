@@ -142,20 +142,21 @@ function newGame() {
   alertMessage = '&nbsp;';
   undoStack = new Array();
   redoStack = new Array();
-  updateScore(true);
+  updateScore(board, true);
   displayMessages();
   drawBoard();
   drawBoard(); // To fix the phantom circle problem
 }
 
 function drawPiece(ctx,x,y,color) {
-  // Highlight last piece plahed
+  // Highlight board where last piece was placed
   if (x == lastX && y == lastY) {
     var highlightColor = '#060';
     if (color == '#000') highlightColor = '#0C0';
     ctx.fillStyle = highlightColor;
     ctx.fillRect(1+x*50,1+y*50,48,48);
   }
+  // Draw piece
   ctx.beginPath();
   ctx.arc(25+x*50,25+y*50,23,0,2*Math.PI);
   ctx.fillStyle = color;
@@ -178,9 +179,10 @@ function processMouseClick(event) {
   makeMove(x, y);
 }
 
+// This method is only used for the actual move.  To test a move with one of the strategy algorithms, call flip pieces directly
 function makeMove(x, y) {
   alertMessage = '&nbsp;';
-  if (legalMove(x, y)) {
+  if (legalMove(x, y, board, turn)) {
     var currentGameState = {
       board:copyBoard(board),
       turn:turn,
@@ -193,15 +195,15 @@ function makeMove(x, y) {
     lastX = x;
     lastY = y;
     board[x][y] = turn;
-    flipPieces(x, y);
-    updateScore(true);
+    flipPieces(x, y, board, turn);
+    updateScore(board, true);
     turn = -turn;
     var samePlayerAgain = false;
-    if (!hasMoves()) {
+    if (!hasMoves(board, turn)) {
       turn = -turn;
-      if (!hasMoves()) {
+      if (!hasMoves(board, turn)) {
         message = 'Game over,';
-        updateScore(true);
+        updateScore(board, true);
         if (whiteScore > blackScore) {
           message += ' white wins!';
         } else if (blackScore > whiteScore) {
@@ -230,10 +232,10 @@ function makeMove(x, y) {
   displayMessages();
 }
 
-function hasMoves() {
+function hasMoves(tmpBoard, tmpTurn) {
   for (var i=0; i<8; i++) {
     for (var j=0; j<8; j++) {
-      if (legalMove(i, j)) {
+      if (legalMove(i, j, tmpBoard, tmpTurn)) {
         return true;
       }
     }
@@ -246,60 +248,61 @@ function displayMessages() {
   document.getElementById('alertMessage').innerHTML = alertMessage;
 }
 
-function flipPieces(x, y) {
-  if (checkN(x, y)) {
-    flipN(x, y);
+// For actual moves
+function flipPieces(x, y, tmpBoard, tmpTurn) {
+  if (checkN(x, y, tmpBoard, tmpTurn)) {
+    flipN(x, y, tmpBoard, tmpTurn);
   }
-  if (checkNW(x, y)) {
-    flipNW(x, y);
+  if (checkNW(x, y, tmpBoard, tmpTurn)) {
+    flipNW(x, y, tmpBoard, tmpTurn);
   }
-  if (checkW(x, y)) {
-    flipW(x, y);
+  if (checkW(x, y, tmpBoard, tmpTurn)) {
+    flipW(x, y, tmpBoard, tmpTurn);
   }
-  if (checkSW(x, y)) {
-    flipSW(x, y);
+  if (checkSW(x, y, tmpBoard, tmpTurn)) {
+    flipSW(x, y, tmpBoard, tmpTurn);
   }
-  if (checkS(x, y)) {
-    flipS(x, y);
+  if (checkS(x, y, tmpBoard, tmpTurn)) {
+    flipS(x, y, tmpBoard, tmpTurn);
   }
-  if (checkSE(x, y)) {
-    flipSE(x, y);
+  if (checkSE(x, y, tmpBoard, tmpTurn)) {
+    flipSE(x, y, tmpBoard, tmpTurn);
   }
-  if (checkE(x, y)) {
-    flipE(x, y);
+  if (checkE(x, y, tmpBoard, tmpTurn)) {
+    flipE(x, y, tmpBoard, tmpTurn);
   }
-  if (checkNE(x, y)) {
-    flipNE(x, y);
+  if (checkNE(x, y, tmpBoard, tmpTurn)) {
+    flipNE(x, y, tmpBoard, tmpTurn);
   }
 }
 
-function legalMove(x, y) {
-  if (board[x][y] != 0) {
+function legalMove(x, y, tmpBoard, tmpTurn) {
+  if (tmpBoard[x][y] != 0) {
     return false;
   }
-  return checkN(x, y) ||
-         checkNW(x, y) ||
-         checkW(x, y) ||
-         checkSW(x, y) ||
-         checkS(x, y) ||
-         checkSE(x, y) ||
-         checkE(x, y) ||
-         checkNE(x, y);
+  return checkN(x, y, tmpBoard, tmpTurn) ||
+         checkNW(x, y, tmpBoard, tmpTurn) ||
+         checkW(x, y, tmpBoard, tmpTurn) ||
+         checkSW(x, y, tmpBoard, tmpTurn) ||
+         checkS(x, y, tmpBoard, tmpTurn) ||
+         checkSE(x, y, tmpBoard, tmpTurn) ||
+         checkE(x, y, tmpBoard, tmpTurn) ||
+         checkNE(x, y, tmpBoard, tmpTurn);
 }
 
-function checkN(x, y) {
+function checkN(x, y, tmpBoard, tmpTurn) {
   if (y < 2) {
     return false;
   }
-  if (board[x][(y - 1)] != -turn) {
+  if (tmpBoard[x][(y - 1)] != -tmpTurn) {
     return false;
   }
   var i = 2;
   while (i < y + 1) {
-    if (board[x][(y - i)] == turn) {
+    if (tmpBoard[x][(y - i)] == tmpTurn) {
       return true;
     }
-    if (board[x][(y - i)] == 0) {
+    if (tmpBoard[x][(y - i)] == 0) {
       return false;
     }
     i++;
@@ -307,20 +310,20 @@ function checkN(x, y) {
   return false;
 }
 
-function checkNW(x, y) {
+function checkNW(x, y, tmpBoard, tmpTurn) {
   if ((x < 2) || (y < 2)) {
     return false;
   }
-  if (board[(x - 1)][(y - 1)] != -turn) {
+  if (tmpBoard[(x - 1)][(y - 1)] != -tmpTurn) {
     return false;
   }
   if (x < y) {
     var i = 2;
     while (i < x + 1) {
-      if (board[(x - i)][(y - i)] == turn) {
+      if (tmpBoard[(x - i)][(y - i)] == tmpTurn) {
         return true;
       }
-      if (board[(x - i)][(y - i)] == 0) {
+      if (tmpBoard[(x - i)][(y - i)] == 0) {
         return false;
       }
       i++;
@@ -328,10 +331,10 @@ function checkNW(x, y) {
   } else {
     var i = 2;
     while (i < y + 1) {
-      if (board[(x - i)][(y - i)] == turn) {
+      if (tmpBoard[(x - i)][(y - i)] == tmpTurn) {
         return true;
       }
-      if (board[(x - i)][(y - i)] == 0) {
+      if (tmpBoard[(x - i)][(y - i)] == 0) {
         return false;
       }
       i++;
@@ -340,19 +343,19 @@ function checkNW(x, y) {
   return false;
 }
 
-function checkW(x, y) {
+function checkW(x, y, tmpBoard, tmpTurn) {
   if (x < 2) {
     return false;
   }
-  if (board[(x - 1)][y] != -turn) {
+  if (tmpBoard[(x - 1)][y] != -tmpTurn) {
     return false;
   }
   var i = 2;
   while (i < x + 1) {
-    if (board[(x - i)][y] == turn) {
+    if (tmpBoard[(x - i)][y] == tmpTurn) {
       return true;
     }
-    if (board[(x - i)][y] == 0) {
+    if (tmpBoard[(x - i)][y] == 0) {
       return false;
     }
     i++;
@@ -360,20 +363,20 @@ function checkW(x, y) {
   return false;
 }
 
-function checkSW(x, y) {
+function checkSW(x, y, tmpBoard, tmpTurn) {
   if ((x < 2) || (y > 5)) {
     return false;
   }
-  if (board[(x - 1)][(y + 1)] != -turn) {
+  if (tmpBoard[(x - 1)][(y + 1)] != -tmpTurn) {
     return false;
   }
   if (x < 7 - y) {
     var i = 2;
     while (i < x + 1) {
-      if (board[(x - i)][(y + i)] == turn) {
+      if (tmpBoard[(x - i)][(y + i)] == tmpTurn) {
         return true;
       }
-      if (board[(x - i)][(y + i)] == 0) {
+      if (tmpBoard[(x - i)][(y + i)] == 0) {
         return false;
       }
       i++;
@@ -381,10 +384,10 @@ function checkSW(x, y) {
   } else {
     var i = 2;
     while (i < 8 - y) {
-      if (board[(x - i)][(y + i)] == turn) {
+      if (tmpBoard[(x - i)][(y + i)] == tmpTurn) {
         return true;
       }
-      if (board[(x - i)][(y + i)] == 0) {
+      if (tmpBoard[(x - i)][(y + i)] == 0) {
         return false;
       }
       i++;
@@ -393,19 +396,19 @@ function checkSW(x, y) {
   return false;
 }
 
-function checkS(x, y) {
+function checkS(x, y, tmpBoard, tmpTurn) {
   if (y > 5) {
     return false;
   }
-  if (board[x][(y + 1)] != -turn) {
+  if (tmpBoard[x][(y + 1)] != -tmpTurn) {
     return false;
   }
   var i = 2;
   while (i < 8 - y) {
-    if (board[x][(y + i)] == turn) {
+    if (tmpBoard[x][(y + i)] == tmpTurn) {
       return true;
     }
-    if (board[x][(y + i)] == 0) {
+    if (tmpBoard[x][(y + i)] == 0) {
       return false;
     }
     i++;
@@ -413,20 +416,20 @@ function checkS(x, y) {
   return false;
 }
 
-function checkSE(x, y) {
+function checkSE(x, y, tmpBoard, tmpTurn) {
   if ((x > 5) || (y > 5)) {
     return false;
   }
-  if (board[(x + 1)][(y + 1)] != -turn) {
+  if (tmpBoard[(x + 1)][(y + 1)] != -tmpTurn) {
     return false;
   }
   if (x > y) {
     var i = 2;
     while (i < 8 - x) {
-      if (board[(x + i)][(y + i)] == turn) {
+      if (tmpBoard[(x + i)][(y + i)] == tmpTurn) {
         return true;
       }
-      if (board[(x + i)][(y + i)] == 0) {
+      if (tmpBoard[(x + i)][(y + i)] == 0) {
         return false;
       }
       i++;
@@ -434,10 +437,10 @@ function checkSE(x, y) {
   } else {
     var i = 2;
     while (i < 8 - y) {
-      if (board[(x + i)][(y + i)] == turn) {
+      if (tmpBoard[(x + i)][(y + i)] == tmpTurn) {
         return true;
       }
-      if (board[(x + i)][(y + i)] == 0) {
+      if (tmpBoard[(x + i)][(y + i)] == 0) {
         return false;
       }
       i++;
@@ -446,19 +449,19 @@ function checkSE(x, y) {
   return false;
 }
 
-function checkE(x, y) {
+function checkE(x, y, tmpBoard, tmpTurn) {
   if (x > 5) {
     return false;
   }
-  if (board[(x + 1)][y] != -turn) {
+  if (tmpBoard[(x + 1)][y] != -tmpTurn) {
     return false;
   }
   var i = 2;
   while (i < 8 - x) {
-    if (board[(x + i)][y] == turn) {
+    if (tmpBoard[(x + i)][y] == tmpTurn) {
       return true;
     }
-    if (board[(x + i)][y] == 0) {
+    if (tmpBoard[(x + i)][y] == 0) {
       return false;
     }
     i++;
@@ -466,20 +469,20 @@ function checkE(x, y) {
   return false;
 }
 
-function checkNE(x, y) {
+function checkNE(x, y, tmpBoard, tmpTurn) {
   if ((x > 5) || (y < 2)) {
     return false;
   }
-  if (board[(x + 1)][(y - 1)] != -turn) {
+  if (tmpBoard[(x + 1)][(y - 1)] != -tmpTurn) {
     return false;
   }
   if (7 - x < y) {
     var i = 2;
     while (i < 8 - x) {
-      if (board[(x + i)][(y - i)] == turn) {
+      if (tmpBoard[(x + i)][(y - i)] == tmpTurn) {
         return true;
       }
-      if (board[(x + i)][(y - i)] == 0) {
+      if (tmpBoard[(x + i)][(y - i)] == 0) {
         return false;
       }
       i++;
@@ -487,10 +490,10 @@ function checkNE(x, y) {
   } else {
     var i = 2;
     while (i < y + 1) {
-      if (board[(x + i)][(y - i)] == turn) {
+      if (tmpBoard[(x + i)][(y - i)] == tmpTurn) {
         return true;
       }
-      if (board[(x + i)][(y - i)] == 0) {
+      if (tmpBoard[(x + i)][(y - i)] == 0) {
         return false;
       }
       i++;
@@ -499,171 +502,171 @@ function checkNE(x, y) {
   return false;
 }
 
-function flipN(x, y) {
+function flipN(x, y, tmpBoard, tmpTurn) {
   var i = y - 1;
   while (i > 0) {
-    if (board[x][i] == turn) {
+    if (tmpBoard[x][i] == tmpTurn) {
       break;
     }
-    if (board[x][i] == -turn) {
-      board[x][i] = turn;
+    if (tmpBoard[x][i] == -tmpTurn) {
+      tmpBoard[x][i] = tmpTurn;
     }
     i--;
   }
 }
 
-function flipNW(x, y) {
+function flipNW(x, y, tmpBoard, tmpTurn) {
   if (x < y) {
     var i = 1;
     while (i < x) {
-      if (board[(x - i)][(y - i)] == turn) {
+      if (tmpBoard[(x - i)][(y - i)] == tmpTurn) {
         break;
       }
-      if (board[(x - i)][(y - i)] == -turn) {
-        board[(x - i)][(y - i)] = turn;
+      if (tmpBoard[(x - i)][(y - i)] == -tmpTurn) {
+        tmpBoard[(x - i)][(y - i)] = tmpTurn;
       }
       i++;
     }
   } else {
     var i = 1;
     while (i < y) {
-      if (board[(x - i)][(y - i)] == turn) {
+      if (tmpBoard[(x - i)][(y - i)] == tmpTurn) {
         break;
       }
-      if (board[(x - i)][(y - i)] == -turn) {
-        board[(x - i)][(y - i)] = turn;
+      if (tmpBoard[(x - i)][(y - i)] == -tmpTurn) {
+        tmpBoard[(x - i)][(y - i)] = tmpTurn;
       }
       i++;
     }
   }
 }
 
-function flipW(x, y) {
+function flipW(x, y, tmpBoard, tmpTurn) {
   var i = x - 1;
   while (i > 0) {
-    if (board[i][y] == turn) {
+    if (tmpBoard[i][y] == tmpTurn) {
       break;
     }
-    if (board[i][y] == -turn) {
-      board[i][y] = turn;
+    if (tmpBoard[i][y] == -tmpTurn) {
+      tmpBoard[i][y] = tmpTurn;
     }
     i--;
   }
 }
 
-function flipSW(x, y) {
+function flipSW(x, y, tmpBoard, tmpTurn) {
   if (x < 7 - y) {
     var i = 1;
     while (i < x) {
-      if (board[(x - i)][(y + i)] == turn) {
+      if (tmpBoard[(x - i)][(y + i)] == tmpTurn) {
         break;
       }
-      if (board[(x - i)][(y + i)] == -turn) {
-        board[(x - i)][(y + i)] = turn;
+      if (tmpBoard[(x - i)][(y + i)] == -tmpTurn) {
+        tmpBoard[(x - i)][(y + i)] = tmpTurn;
       }
       i++;
     }
   } else {
     var i = 1;
     while (i < 8 - y) {
-      if (board[(x - i)][(y + i)] == turn) {
+      if (tmpBoard[(x - i)][(y + i)] == tmpTurn) {
         break;
       }
-      if (board[(x - i)][(y + i)] == -turn) {
-        board[(x - i)][(y + i)] = turn;
+      if (tmpBoard[(x - i)][(y + i)] == -tmpTurn) {
+        tmpBoard[(x - i)][(y + i)] = tmpTurn;
       }
       i++;
     }
   }
 }
 
-function flipS(x, y) {
+function flipS(x, y, tmpBoard, tmpTurn) {
   var i = y + 1;
   while (i < 8) {
-    if (board[x][i] == turn) {
+    if (tmpBoard[x][i] == tmpTurn) {
       break;
     }
-    if (board[x][i] == -turn) {
-      board[x][i] = turn;
+    if (tmpBoard[x][i] == -tmpTurn) {
+      tmpBoard[x][i] = tmpTurn;
     }
     i++;
   }
 }
 
-function flipSE(x, y) {
+function flipSE(x, y, tmpBoard, tmpTurn) {
   if (x > y) {
     var i = 1;
     while (i < 8 - x) {
-      if (board[(x + i)][(y + i)] == turn) {
+      if (tmpBoard[(x + i)][(y + i)] == tmpTurn) {
         break;
       }
-      if (board[(x + i)][(y + i)] == -turn) {
-        board[(x + i)][(y + i)] = turn;
+      if (tmpBoard[(x + i)][(y + i)] == -tmpTurn) {
+        tmpBoard[(x + i)][(y + i)] = tmpTurn;
       }
       i++;
     }
   } else {
     var i = 1;
     while (i < 8 - y) {
-      if (board[(x + i)][(y + i)] == turn) {
+      if (tmpBoard[(x + i)][(y + i)] == tmpTurn) {
         break;
       }
-      if (board[(x + i)][(y + i)] == -turn) {
-        board[(x + i)][(y + i)] = turn;
+      if (tmpBoard[(x + i)][(y + i)] == -tmpTurn) {
+        tmpBoard[(x + i)][(y + i)] = tmpTurn;
       }
       i++;
     }
   }
 }
 
-function flipE(x, y) {
+function flipE(x, y, tmpBoard, tmpTurn) {
   var i = x + 1;
   while (i < 8) {
-    if (board[i][y] == turn) {
+    if (tmpBoard[i][y] == tmpTurn) {
       break;
     }
-    if (board[i][y] == -turn) {
-      board[i][y] = turn;
+    if (tmpBoard[i][y] == -tmpTurn) {
+      tmpBoard[i][y] = tmpTurn;
     }
     i++;
   }
 }
 
-function flipNE(x, y) {
+function flipNE(x, y, tmpBoard, tmpTurn) {
   if (7 - x < y) {
     var i = 1;
     while (i < 8 - x) {
-      if (board[(x + i)][(y - i)] == turn) {
+      if (tmpBoard[(x + i)][(y - i)] == tmpTurn) {
         break;
       }
-      if (board[(x + i)][(y - i)] == -turn) {
-        board[(x + i)][(y - i)] = turn;
+      if (tmpBoard[(x + i)][(y - i)] == -tmpTurn) {
+        tmpBoard[(x + i)][(y - i)] = tmpTurn;
       }
       i++;
     }
   } else {
     var i = 1;
     while (i < y) {
-      if (board[(x + i)][(y - i)] == turn) {
+      if (tmpBoard[(x + i)][(y - i)] == tmpTurn) {
         break;
       }
-      if (board[(x + i)][(y - i)] == -turn) {
-        board[(x + i)][(y - i)] = turn;
+      if (tmpBoard[(x + i)][(y - i)] == -tmpTurn) {
+        tmpBoard[(x + i)][(y - i)] = tmpTurn;
       }
       i++;
     }
   }
 }
 
-function updateScore(print) {
+function updateScore(tmpBoard, print) {
   whiteScore = 0;
   blackScore = 0;
   for (var i=0; i<8; i++) {
     for (var j=0; j<8; j++) {
-      if (board[i][j] == 1) {
+      if (tmpBoard[i][j] == 1) {
         whiteScore++;
       }
-      if (board[i][j] == -1) {
+      if (tmpBoard[i][j] == -1) {
         blackScore++;
       }
     }
@@ -694,7 +697,7 @@ function undo() {
     lastX = previousGameState.lastX;
     lastY = previousGameState.lastY;
     displayMessages();
-    updateScore();
+    updateScore(board, true);
     drawBoard();
     drawBoard(); // To fix the phantom circle problem
   }
@@ -721,7 +724,7 @@ function redo() {
     lastX = nextGameState.lastX;
     lastY = nextGameState.lastY;
     displayMessages();
-    updateScore();
+    updateScore(board, true);
     drawBoard();
   }
 }
@@ -737,11 +740,11 @@ function copyBoard(b) {
   return newBoard;
 }
 
-function getValidMoves() {
+function getValidMoves(tmpBoard, tmpTurn) {
   var validMoves = new Array();
   for (var i = 0; i < 8; i++) {
     for (var j = 0; j < 8; j++) {
-      if (legalMove(i, j)) {
+      if (legalMove(i, j, tmpBoard, tmpTurn)) {
         validMoves.push([i,j]);
       }
     }
@@ -750,13 +753,13 @@ function getValidMoves() {
 }
 
 function randomMove() {
-  var validMoves = getValidMoves();
+  var validMoves = getValidMoves(board, turn);
   var move = Math.floor((Math.random() * validMoves.length)); 
   makeMove(validMoves[move][0], validMoves[move][1]);
 }
 
 function maxFlips() {
-  var validMoves = getValidMoves();
+  var validMoves = getValidMoves(board, turn);
   maxFlipsMove(validMoves);
 }
 
@@ -764,20 +767,20 @@ function maxFlipsMove(validMoves) {
   var bestMoves = new Array();
   // Store current game state in order to restore it before actually making the move
   var currentScoreDiff = whiteScore - blackScore;
-  var currentBoard = copyBoard(board);
+  var tmpBoard = copyBoard(board);
   var maxFlips = 0;
   // First get numFlips for each move and maxFlips
   for (var i=0; i<validMoves.length; i++) {
     // try each valid move
-    flipPieces(validMoves[i][0], validMoves[i][1]);
-    updateScore(false);
+    flipPieces(validMoves[i][0], validMoves[i][1], tmpBoard, turn);
+    updateScore(tmpBoard, false);
     scoreDiff = whiteScore - blackScore;
     var numFlips = (scoreDiff*turn - currentScoreDiff*turn)/2;
     validMoves[i][2] = numFlips; // store numFlips with each validMove
     maxFlips = Math.max(maxFlips, numFlips);
     // Reset board
-    board = copyBoard(currentBoard);
-    updateScore(false);
+    //board = copyBoard(currentBoard);
+    //updateScore(false);
   }
   // Now store all moves that equal maxFlips
   for (var i=0; i<validMoves.length; i++) {
@@ -791,7 +794,7 @@ function maxFlipsMove(validMoves) {
 }
 
 function bestPosition() {
-  var validMoves = getValidMoves();
+  var validMoves = getValidMoves(board, turn);
   var bestMoves = new Array();
   var bestPositionScore = 0.0;
   // Get position scores for all valid moves
@@ -812,3 +815,10 @@ function bestPosition() {
   maxFlipsMove(bestMoves);
 }
 
+function heuristic() {
+  alert('heuristic not yet implemented')
+}
+
+function minimax() {
+  alert('minimax not yet implemented');
+}
