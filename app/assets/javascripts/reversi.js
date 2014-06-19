@@ -765,22 +765,18 @@ function maxFlips() {
 
 function maxFlipsMove(validMoves) {
   var bestMoves = new Array();
-  // Store current game state in order to restore it before actually making the move
   var currentScoreDiff = whiteScore - blackScore;
-  var tmpBoard = copyBoard(board);
   var maxFlips = 0;
   // First get numFlips for each move and maxFlips
   for (var i=0; i<validMoves.length; i++) {
     // try each valid move
+    var tmpBoard = copyBoard(board);
     flipPieces(validMoves[i][0], validMoves[i][1], tmpBoard, turn);
     updateScore(tmpBoard, false);
-    scoreDiff = whiteScore - blackScore;
+    var scoreDiff = whiteScore - blackScore;
     var numFlips = (scoreDiff*turn - currentScoreDiff*turn)/2;
     validMoves[i][2] = numFlips; // store numFlips with each validMove
     maxFlips = Math.max(maxFlips, numFlips);
-    // Reset board
-    //board = copyBoard(currentBoard);
-    //updateScore(false);
   }
   // Now store all moves that equal maxFlips
   for (var i=0; i<validMoves.length; i++) {
@@ -815,10 +811,94 @@ function bestPosition() {
   maxFlipsMove(bestMoves);
 }
 
-function heuristic() {
-  alert('heuristic not yet implemented')
+function minimax() {
+  var validMoves = getValidMoves(board, turn);
+  var maxDepth = 5;
+  if (validMoves.length > 8) {
+    maxDepth--;
+  }
+  if (validMoves.length > 15) {
+    maxDepth--;
+  }
+  var bestMoves = new Array();
+  var bestScore = -1000000;
+  // Call recursive minimax function on each move to get best scores for each valid move
+  for (var i=0; i<validMoves.length; i++) {
+    var tmpBoard = copyBoard(board);
+    flipPieces(validMoves[i][0], validMoves[i][1], tmpBoard, turn);
+    var score = -1000000;
+    if (!hasMoves(tmpBoard, turn) && !hasMoves(tmpBoard, -turn)) {
+      // if neither player has moves simply calculate the heuristic
+      score = calculateHeuristic(tmpBoard, turn);
+    } else if (!hasMoves(tmpBoard, -turn)) {
+      // Add bonus if move leads to opponent having no moves
+      score = calculateHeuristic(tmpBoard, turn) + 100.0;
+    } else {
+      score = -minimaxRecursive(tmpBoard, -turn, 0, maxDepth, -1000000, 1000000);
+    }
+    bestScore = Math.max(score, bestScore);
+    validMoves[i][2] = score;
+  }
+  // Store all moves within 0.2 of bestScore
+  for (var i=0; i<validMoves.length; i++) {
+    if (validMoves[i][2] == bestScore) {
+      bestMoves.push(validMoves[i]);
+    }
+  }
+  // Randomly select from among the best moves
+  var move = Math.floor(Math.random()*bestMoves.length);
+  makeMove(bestMoves[move][0], bestMoves[move][1]);
 }
 
-function minimax() {
-  alert('minimax not yet implemented');
+function minimaxRecursive(tmpBoard, tmpTurn, depth, maxDepth, alpha, beta) {
+  var validMoves = getValidMoves(tmpBoard, tmpTurn);
+  // Terminal condition, reached maxDepth or no valid moves
+  if ((depth == maxDepth) || (validMoves.length == 0)) {
+    return calculateHeuristic(tmpBoard, tmpTurn);
+  }
+  for (var i=0; i<validMoves.length; i++) {
+    var nextBoard = copyBoard(tmpBoard);
+    flipPieces(validMoves[i][0], validMoves[i][1], nextBoard, tmpTurn);
+    if (!hasMoves(nextBoard, -tmpTurn)) {
+      // Add bonus if move leads to opponent having no moves
+      alpha = Math.max(alpha, calculateHeuristic(nextBoard, tmpTurn) + 100.0);
+    } else {
+      alpha = Math.max(alpha, -minimaxRecursive(nextBoard, -tmpTurn, depth + 1, maxDepth, -beta, -alpha));
+    }
+    // Pruning
+    if (alpha >= beta) {
+      break;
+    }
+  }
+  return alpha;
 }
+
+function calculateHeuristic(tmpBoard, turn) {
+  var value = 0.0;
+  var numEmpty = 0;
+  var opponentCount = 0;
+  for (var i = 0; i < 8; i++) {
+    for (var j = 0; j < 8; j++) {
+      if (tmpBoard[i][j] == 0) {
+        numEmpty++;
+      }
+      if (tmpBoard[i][j] == -turn) {
+        opponentCount++;
+      }
+    }
+  }
+  for (var i = 0; i < 8; i++) {
+    for (var j = 0; j < 8; j++) {
+      if (tmpBoard[i][j] == turn) {
+        value += positionScore[i][j] * (numEmpty / 64.0) + 1.0;
+      } else if (tmpBoard[i][j] == -turn) {
+        value -= positionScore[i][j] * (numEmpty / 64.0) + 1.0;
+      }
+    }
+  }
+  if (opponentCount == 0) {
+    value += 1000.0;
+  }
+  return value;
+}
+
