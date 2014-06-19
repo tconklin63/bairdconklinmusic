@@ -873,7 +873,7 @@ function minimaxRecursive(tmpBoard, tmpTurn, depth, maxDepth, alpha, beta) {
   return alpha;
 }
 
-function calculateHeuristic(tmpBoard, turn) {
+function calculateHeuristic(tmpBoard, tmpTurn) {
   var value = 0.0;
   var numEmpty = 0;
   var opponentCount = 0;
@@ -882,16 +882,16 @@ function calculateHeuristic(tmpBoard, turn) {
       if (tmpBoard[i][j] == 0) {
         numEmpty++;
       }
-      if (tmpBoard[i][j] == -turn) {
+      if (tmpBoard[i][j] == -tmpTurn) {
         opponentCount++;
       }
     }
   }
   for (var i = 0; i < 8; i++) {
     for (var j = 0; j < 8; j++) {
-      if (tmpBoard[i][j] == turn) {
+      if (tmpBoard[i][j] == tmpTurn) {
         value += positionScore[i][j] * (numEmpty / 64.0) + 1.0;
-      } else if (tmpBoard[i][j] == -turn) {
+      } else if (tmpBoard[i][j] == -tmpTurn) {
         value -= positionScore[i][j] * (numEmpty / 64.0) + 1.0;
       }
     }
