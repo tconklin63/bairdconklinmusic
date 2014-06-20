@@ -80,8 +80,8 @@ function initReversi() {
   positionScore[0][7] = 10.0;
   positionScore[1][7] = 0.1;
   positionScore[2][7] = 0.5;
-  positionScore[3][7] = 0.15;
-  positionScore[4][7] = 0.15;
+  positionScore[3][7] = 0.25;
+  positionScore[4][7] = 0.25;
   positionScore[5][7] = 0.5;
   positionScore[6][7] = 0.1;
   positionScore[7][7] = 10.0;
@@ -179,7 +179,7 @@ function processMouseClick(event) {
   makeMove(x, y);
 }
 
-// This method is only used for the actual move.  To test a move with one of the strategy algorithms, call flip pieces directly
+// This method is only used for the actual move.  To test a move with one of the strategy algorithms, call flipPieces directly
 function makeMove(x, y) {
   alertMessage = '&nbsp;';
   if (legalMove(x, y, board, turn)) {
@@ -194,7 +194,6 @@ function makeMove(x, y) {
     // For highlighting last move
     lastX = x;
     lastY = y;
-    board[x][y] = turn;
     flipPieces(x, y, board, turn);
     updateScore(board, true);
     turn = -turn;
@@ -248,8 +247,9 @@ function displayMessages() {
   document.getElementById('alertMessage').innerHTML = alertMessage;
 }
 
-// For actual moves
+// For actual moves, call makeMove(x, y)
 function flipPieces(x, y, tmpBoard, tmpTurn) {
+  tmpBoard[x][y] = tmpTurn;
   if (checkN(x, y, tmpBoard, tmpTurn)) {
     flipN(x, y, tmpBoard, tmpTurn);
   }
@@ -813,12 +813,12 @@ function bestPosition() {
 
 function minimax() {
   var validMoves = getValidMoves(board, turn);
-  var maxDepth = 5;
+  var depth = 5;
   if (validMoves.length > 8) {
-    maxDepth--;
+    depth--;
   }
   if (validMoves.length > 15) {
-    maxDepth--;
+    depth--;
   }
   var bestMoves = new Array();
   var bestScore = -1000000;
@@ -827,44 +827,35 @@ function minimax() {
     var tmpBoard = copyBoard(board);
     flipPieces(validMoves[i][0], validMoves[i][1], tmpBoard, turn);
     var score = -1000000;
-    if (!hasMoves(tmpBoard, turn) && !hasMoves(tmpBoard, -turn)) {
-      // if neither player has moves simply calculate the heuristic
-      score = calculateHeuristic(tmpBoard, turn);
-    } else if (!hasMoves(tmpBoard, -turn)) {
-      // Add bonus if move leads to opponent having no moves
-      score = calculateHeuristic(tmpBoard, turn) + 100.0;
-    } else {
-      score = -minimaxRecursive(tmpBoard, -turn, 0, maxDepth, -1000000, 1000000);
-    }
+    score = -minimaxRecursive(tmpBoard, -turn, depth, -1000000, 1000000, validMoves[i][0], validMoves[i][1]);
+    console.log(validMoves[i][0] + ',' + validMoves[i][1] + '=' + score);
     bestScore = Math.max(score, bestScore);
     validMoves[i][2] = score;
   }
   // Store all moves within 0.2 of bestScore
   for (var i=0; i<validMoves.length; i++) {
-    if (validMoves[i][2] == bestScore) {
+    if (validMoves[i][2] >= (bestScore - 0.2)) {
       bestMoves.push(validMoves[i]);
     }
   }
   // Randomly select from among the best moves
   var move = Math.floor(Math.random()*bestMoves.length);
+  console.log('selected move: ' + bestMoves[move][0] + ',' + bestMoves[move][1]);
   makeMove(bestMoves[move][0], bestMoves[move][1]);
 }
 
-function minimaxRecursive(tmpBoard, tmpTurn, depth, maxDepth, alpha, beta) {
+function minimaxRecursive(tmpBoard, tmpTurn, depth, alpha, beta, x, y) {
+  // Terminal condition: reached maxDepth or no valid moves
   var validMoves = getValidMoves(tmpBoard, tmpTurn);
-  // Terminal condition, reached maxDepth or no valid moves
-  if ((depth == maxDepth) || (validMoves.length == 0)) {
-    return calculateHeuristic(tmpBoard, tmpTurn);
+  if ((depth == 0) || (validMoves.length == 0)) {
+    var score = calculateHeuristic(tmpBoard, tmpTurn, x, y);
+    if (validMoves.length == 0) score += 100.0;
+    return score;
   }
   for (var i=0; i<validMoves.length; i++) {
     var nextBoard = copyBoard(tmpBoard);
     flipPieces(validMoves[i][0], validMoves[i][1], nextBoard, tmpTurn);
-    if (!hasMoves(nextBoard, -tmpTurn)) {
-      // Add bonus if move leads to opponent having no moves
-      alpha = Math.max(alpha, calculateHeuristic(nextBoard, tmpTurn) + 100.0);
-    } else {
-      alpha = Math.max(alpha, -minimaxRecursive(nextBoard, -tmpTurn, depth + 1, maxDepth, -beta, -alpha));
-    }
+    alpha = Math.max(alpha, -minimaxRecursive(nextBoard, -tmpTurn, depth - 1, -beta, -alpha, validMoves[i][0], validMoves[i][1]));
     // Pruning
     if (alpha >= beta) {
       break;
@@ -873,7 +864,7 @@ function minimaxRecursive(tmpBoard, tmpTurn, depth, maxDepth, alpha, beta) {
   return alpha;
 }
 
-function calculateHeuristic(tmpBoard, tmpTurn) {
+function calculateHeuristic(tmpBoard, tmpTurn, x, y) {
   var value = 0.0;
   var numEmpty = 0;
   var opponentCount = 0;
@@ -890,15 +881,15 @@ function calculateHeuristic(tmpBoard, tmpTurn) {
   for (var i = 0; i < 8; i++) {
     for (var j = 0; j < 8; j++) {
       if (tmpBoard[i][j] == tmpTurn) {
-        value += positionScore[i][j] * (numEmpty / 64.0) + 1.0;
+        value += positionScore[i][j] * (numEmpty / 32.0) + 1.0;
       } else if (tmpBoard[i][j] == -tmpTurn) {
-        value -= positionScore[i][j] * (numEmpty / 64.0) + 1.0;
+        value -= positionScore[i][j] * (numEmpty / 32.0) + 1.0;
       }
     }
   }
   if (opponentCount == 0) {
     value += 1000.0;
   }
-  return value;
+  return value + positionScore[x][y]*numEmpty;
 }
 
