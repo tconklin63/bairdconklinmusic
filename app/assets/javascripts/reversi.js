@@ -881,15 +881,15 @@ function calculateHeuristic(tmpBoard, tmpTurn, x, y) {
   for (var i = 0; i < 8; i++) {
     for (var j = 0; j < 8; j++) {
       if (tmpBoard[i][j] == tmpTurn) {
-        value += positionScore[i][j] * (numEmpty / 32.0) + 1.0;
+        value += positionScore[i][j]*numEmpty/32.0 + 1.0;
       } else if (tmpBoard[i][j] == -tmpTurn) {
-        value -= positionScore[i][j] * (numEmpty / 32.0) + 1.0;
+        value -= positionScore[i][j]*numEmpty/32.0 + 1.0;
       }
     }
   }
   if (opponentCount == 0) {
     value += 1000.0;
   }
-  return value + positionScore[x][y]*numEmpty;
+  return value + positionScore[x][y]*numEmpty/16.0;
 }
 
