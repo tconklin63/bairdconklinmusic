@@ -821,7 +821,7 @@ function bestPosition() {
 }
 
 function minimax() {
-  disableClics();
+  disableClicks();
   var validMoves = getValidMoves(board, turn);
   var depth = 5;
   if (validMoves.length > 8) {
