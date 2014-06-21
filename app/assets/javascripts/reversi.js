@@ -12,8 +12,7 @@ var blackScore;
 var positionScore;
 
 function initReversi() {
-  canvas = document.getElementById("myCanvas");
-  canvas.addEventListener("mousedown", processMouseClick, false);
+  enableClicks();
   turn = 1;
   board = new Array(8);
   newGame();
@@ -85,6 +84,16 @@ function initReversi() {
   positionScore[5][7] = 0.5;
   positionScore[6][7] = 0.1;
   positionScore[7][7] = 10.0;
+}
+
+function enableClicks() {
+  canvas = document.getElementById("myCanvas");
+  canvas.addEventListener("mousedown", processMouseClick, false);
+}
+
+function disableClicks() {
+  canvas = document.getElementById("myCanvas");
+  canvas.removeEventListener("mousedown", processMouseClick);
 }
 
 function drawBoard() {
@@ -812,6 +821,7 @@ function bestPosition() {
 }
 
 function minimax() {
+  disableClics();
   var validMoves = getValidMoves(board, turn);
   var depth = 5;
   if (validMoves.length > 8) {
@@ -842,6 +852,7 @@ function minimax() {
   var move = Math.floor(Math.random()*bestMoves.length);
   console.log('selected move: ' + bestMoves[move][0] + ',' + bestMoves[move][1]);
   makeMove(bestMoves[move][0], bestMoves[move][1]);
+  enableClicks();
 }
 
 function minimaxRecursive(tmpBoard, tmpTurn, depth, alpha, beta, x, y) {
