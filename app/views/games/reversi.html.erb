@@ -4,8 +4,19 @@
     <h1 class="text-center">Reversi</h1>
     <button class="btn btn-warning" type="button" onclick="newGame();">new game</button>
     <button class="btn btn-danger" type="button" onclick="undo();">undo</button>
-    <button class="btn btn-info" type="button" onclick="redo();">redo</button>
-    <br>
+    <button class="btn btn-info" type="button" onclick="redo();">redo</button><br/>
+    <strong>opponent:</strong> 
+    <input type="radio" name="opponent" onclick="selectOpponent(1);" value="1"/> white
+    <input type="radio" name="opponent" onclick="selectOpponent(-1);" value="-1" checked/> black
+    <input type="radio" name="opponent" onclick="selectOpponent(0)" value="0"/> human
+    <select id="level" onchange="selectLevel()">
+      <option value="1">level 1 - newbie</option>
+      <option value="2">level 2 - amateur</option>
+      <option value="3">level 3 - pro </option>
+      <option value="4">level 4 - expert</option>
+      <option value="5">level 5 - master</option>
+    </select>
+    <br/>
     <br/>
     <div class='message text-center large-text' id='message'>&nbsp;</div>
     <div class='error text-center large-text' id='alertMessage'>&nbsp;</div>

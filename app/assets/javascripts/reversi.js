@@ -10,6 +10,8 @@ var lastY; // Y coordinate of last piece placed for highlighting
 var whiteScore;
 var blackScore;
 var positionScore;
+var opponent = -1; // 1=white, -1=black, 0=human
+var level = 1; // 1=random, 2=maxFlips, 3=best position, 4=minimax level 3, 4=minimax level 5
 
 function initReversi() {
   enableClicks();
@@ -147,7 +149,11 @@ function newGame() {
   board[3][4] = -1;
   board[4][3] = -1;
   turn = 1;
-  message = 'White, your move';
+  if (opponent == 1) {
+    message = 'White is thinking...';
+  } else {
+    message = 'White, your move';
+  }
   alertMessage = '&nbsp;';
   undoStack = new Array();
   redoStack = new Array();
@@ -155,7 +161,41 @@ function newGame() {
   displayMessages();
   drawBoard();
   drawBoard(); // To fix the phantom circle problem
-  setInterval(function(){if (turn == -1) minimax();}, 2000);
+  setInterval(function(){
+    if (opponent == 0) {
+      return false;
+    }
+    if (turn == opponent) {
+      switch(level) {
+        case 1:
+          randomMove();
+          break;
+        case 2:
+          maxFlips();
+          break;
+        case 3:
+          bestPosition();
+          break;
+        case 4:
+          minimax(3);
+          break;
+        case 5:
+          minimax(5);
+          break;
+        default:
+          return false;
+      }
+    }
+  },
+  2000);
+}
+
+function selectOpponent(value) {
+  opponent = value;
+}
+
+function selectLevel() {
+  level = document.getElementById("level").selectedIndex + 1;
 }
 
 function drawPiece(ctx,x,y,color) {
@@ -228,11 +268,18 @@ function makeMove(x, y) {
       }
     }
     if (turn == 1) {
-      message = 'White, your move.';
+      if (opponent == 1) {
+        message = 'White is thinking...';
+      } else {
+        message = 'White, your move.';
+      }
       if (samePlayerAgain) alertMessage = 'Black has no moves!';
     } else {
-      //message = 'Black, your move.';
-      message = 'Black is thinking...';
+      if (opponent == -1) {
+        message = 'Black is thinking...';
+      } else {
+        message = 'Black, your move.';
+      }
       if (samePlayerAgain) alertMessage = 'White has no moves!';
     }
     drawBoard();
@@ -822,10 +869,9 @@ function bestPosition() {
   maxFlipsMove(bestMoves);
 }
 
-function minimax() {
+function minimax(depth) {
   disableClicks();
   var validMoves = getValidMoves(board, turn);
-  var depth = 5;
   if (validMoves.length > 8) {
     depth--;
   }
