@@ -1,22 +1,18 @@
 <div class="row-fluid">
   <div class="span6 offset3 well">
     <%= render :partial => 'shared/flash_messages'%>
-    <h2 class="text-center">Reversi</h2>
-    <%= link_to 'new', "javascript:newGame();", :confirm => 'Are you sure you want to start a new game?'%> | 
-    <a href="javascript:void(0);" onclick='undo();'>undo</a> | 
-    <a href="javascript:void(0);" onclick='redo();'>redo</a> | 
-    <a href="javascript:void(0);" onclick='randomMove();'>random move</a> | 
-    <a href="javascript:void(0);" onclick='maxFlips();'>max flips</a> | 
-    <a href="javascript:void(0);" onclick='bestPosition();'>best position</a> | 
-    <a href="javascript:void(0);" onclick='minimax();'>minimax</a>
+    <h1 class="text-center">Reversi</h1>
+    <button class="btn btn-warning" type="button" onclick="newGame();">new game</button>
+    <button class="btn btn-danger" type="button" onclick="undo();">undo</button>
+    <button class="btn btn-info" type="button" onclick="redo();">redo</button>
     <br>
     <br/>
-    <div class='message text-center' id='message'>&nbsp;</div>
-    <div class='error text-center' id='alertMessage'>&nbsp;</div>
+    <div class='message text-center large-text' id='message'>&nbsp;</div>
+    <div class='error text-center large-text' id='alertMessage'>&nbsp;</div>
     <div class="text-center">
       <canvas id="myCanvas" width="400" height="400" style="border:2px solid #000000;"></canvas>
     </div>
-    <div class='message text-center' id='score'>&nbsp;</div>
+    <div class='message text-center large-text' id='score'>&nbsp;</div>
     <%= link_to 'back', '/bairdconklinmath' %>
   </div>
 </div>

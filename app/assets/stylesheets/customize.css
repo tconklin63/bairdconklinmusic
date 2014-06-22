@@ -141,3 +141,7 @@ body {
 .message {
   color: green;
 }
+
+.large-text {
+    font-size: 20px;
+}

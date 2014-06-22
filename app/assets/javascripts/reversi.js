@@ -155,6 +155,7 @@ function newGame() {
   displayMessages();
   drawBoard();
   drawBoard(); // To fix the phantom circle problem
+  setInterval(function(){if (turn == -1) minimax();}, 2000);
 }
 
 function drawPiece(ctx,x,y,color) {
@@ -230,7 +231,8 @@ function makeMove(x, y) {
       message = 'White, your move.';
       if (samePlayerAgain) alertMessage = 'Black has no moves!';
     } else {
-      message = 'Black, your move.';
+      //message = 'Black, your move.';
+      message = 'Black is thinking...';
       if (samePlayerAgain) alertMessage = 'White has no moves!';
     }
     drawBoard();

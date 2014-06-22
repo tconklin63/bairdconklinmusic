@@ -5,6 +5,7 @@ Bairdconklinmusic::Application.routes.draw do
   match '/bairdconklinmath/mathtools/primes' => 'mathtools#primes'
   match '/bairdconklinmath/mathtools/factor' => 'mathtools#factor'
   match '/bairdconklinmath/games/reversi' => 'games#reversi'
+  match '/bairdconklinmath/games/test_reversi' => 'games#test_reversi'
   
   # Baird-Conklin Music
   match '/' => 'static_pages#home'
