@@ -14,7 +14,8 @@ var opponent = -1; // 1=white, -1=black, 0=human
 var level = 1; // 1=random, 2=maxFlips, 3=best position, 4=minimax level 3, 4=minimax level 5
 
 function initReversi() {
-  enableClicks();
+  canvas = document.getElementById("myCanvas");
+  canvas.addEventListener("mousedown", processMouseClick, false);
   turn = 1;
   board = new Array(8);
   newGame();
@@ -86,11 +87,6 @@ function initReversi() {
   positionScore[5][7] = 0.5;
   positionScore[6][7] = 0.1;
   positionScore[7][7] = 10.0;
-}
-
-function enableClicks() {
-  canvas = document.getElementById("myCanvas");
-  canvas.addEventListener("mousedown", processMouseClick, false);
 }
 
 function disableClicks() {
@@ -177,7 +173,7 @@ function newGame() {
           bestPosition();
           break;
         case 4:
-          minimax(3);
+          minimax(4);
           break;
         case 5:
           minimax(5);
@@ -734,6 +730,11 @@ function updateScore(tmpBoard, print) {
   }
 }
 
+function undo2() {
+  undo();
+  undo();
+}
+
 function undo() {
   if (undoStack.length == 0) {
     alertMessage = "Can't undo";
@@ -759,6 +760,11 @@ function undo() {
     drawBoard();
     drawBoard(); // To fix the phantom circle problem
   }
+}
+
+function redo2() {
+  redo();
+  redo();
 }
 
 function redo() {
@@ -870,7 +876,6 @@ function bestPosition() {
 }
 
 function minimax(depth) {
-  disableClicks();
   var validMoves = getValidMoves(board, turn);
   if (validMoves.length > 8) {
     depth--;
@@ -900,7 +905,6 @@ function minimax(depth) {
   var move = Math.floor(Math.random()*bestMoves.length);
   console.log('selected move: ' + bestMoves[move][0] + ',' + bestMoves[move][1]);
   makeMove(bestMoves[move][0], bestMoves[move][1]);
-  enableClicks();
 }
 
 function minimaxRecursive(tmpBoard, tmpTurn, depth, alpha, beta, x, y) {

@@ -2,9 +2,11 @@
   <div class="span6 offset3 well">
     <%= render :partial => 'shared/flash_messages'%>
     <h1 class="text-center">Reversi</h1>
-    <button class="btn btn-warning" type="button" onclick="newGame();">new game</button>
-    <button class="btn btn-danger" type="button" onclick="undo();">undo</button>
-    <button class="btn btn-info" type="button" onclick="redo();">redo</button><br/>
+    <button class="btn btn-success" type="button" onclick="newGame();">new game</button>
+    <button class="btn btn-warning" type="button" onclick="undo();">undo</button>
+    <button class="btn btn-danger" type="button" onclick="undo2();">undo x 2</button>
+    <button class="btn btn-info" type="button" onclick="redo();">redo</button>
+    <button class="btn btn-primary" type="button" onclick="redo2();">redo x 2</button><br/>
     <strong>opponent:</strong> 
     <input type="radio" name="opponent" onclick="selectOpponent(1);" value="1"/> white
     <input type="radio" name="opponent" onclick="selectOpponent(-1);" value="-1" checked/> black
