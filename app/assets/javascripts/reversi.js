@@ -87,6 +87,10 @@ function initReversi() {
   positionScore[5][7] = 0.5;
   positionScore[6][7] = 0.1;
   positionScore[7][7] = 10.0;
+  if (document.getElementById("white").checked) opponent = 1;
+  if (document.getElementbyId("black").checked) opponent = -1;
+  if (document.getElementbyId("human").checked) opponent = 0;
+  selectLevel();
 }
 
 function disableClicks() {
@@ -930,14 +934,16 @@ function minimaxRecursive(tmpBoard, tmpTurn, depth, alpha, beta, x, y) {
 function calculateHeuristic(tmpBoard, tmpTurn, x, y) {
   var value = 0.0;
   var numEmpty = 0;
+  var playerCount = 0;
   var opponentCount = 0;
   for (var i = 0; i < 8; i++) {
     for (var j = 0; j < 8; j++) {
-      if (tmpBoard[i][j] == 0) {
-        numEmpty++;
-      }
       if (tmpBoard[i][j] == -tmpTurn) {
         opponentCount++;
+      } else if (tmpBoard[i][j] == tmpTurn) {
+        playerCount++
+      } else {
+        numEmpty++
       }
     }
   }
@@ -952,6 +958,9 @@ function calculateHeuristic(tmpBoard, tmpTurn, x, y) {
   }
   if (opponentCount == 0) {
     value += 1000.0;
+  }
+  if (playerCount == 0) {
+    value -= 1000.0;
   }
   return value + positionScore[x][y]*numEmpty/16.0;
 }
