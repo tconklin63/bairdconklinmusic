@@ -13,6 +13,33 @@ var positionScore;
 var opponent = -1; // 1=white, -1=black, 0=human
 var level = 1; // 1=random, 2=maxFlips, 3=best position, 4=minimax level 3, 4=minimax level 5
 
+// heuristic constants
+var THRESHOLD = 0.1; // For minimax all scores within THRESHOLD of max are randomly selected from
+var WINNING_BONUS = 1000.0;
+var DOUBLE_MOVE_BONUS = 200.0;
+
+// Position Scores
+var CORNER = 10.0;
+var BEST_SIDE = 0.5; // side 2 away from corner
+var MIDDLE_SIDE = 0.25; // middle 2 side squares
+var INNER_CORNER = 0.2; // corner just inside dots
+var INNER_SIDE = 0.15; // side just inside dots
+var ADJACENT_SIDE = 0.1; // side right next to corner
+var PRE_MIDDLE_SIDE = 0.05; // can give opponent a middle side
+var PRE_SIDE = 0.03; // can give opponent a best side
+var PRE_CORNER = 0.01; // can give opponent a corner
+var START = 0.0; // middle 4 squares where starting pieces are
+
+// Board coordinates
+// 00,10,20,30,40,50,60,70
+// 01,11,21,31,41,51,61,71
+// 02,12,22,32,42,52,62,72
+// 03,13,23,33,43,53,63,73
+// 04,14,24,34,44,54,64,74
+// 05,15,25,35,45,55,65,75
+// 06,16,26,36,46,56,66,76
+// 07,17,27,37,47,57,67,77
+
 function initReversi() {
   canvas = document.getElementById("myCanvas");
   canvas.addEventListener("mousedown", processMouseClick, false);
@@ -23,70 +50,70 @@ function initReversi() {
   for (var i=0; i<8; i++) {
     positionScore[i] = new Array(8);
   }
-  positionScore[0][0] = 10.0;
-  positionScore[1][0] = 0.1;
-  positionScore[2][0] = 0.5;
-  positionScore[3][0] = 0.25;
-  positionScore[4][0] = 0.25;
-  positionScore[5][0] = 0.5;
-  positionScore[6][0] = 0.1;
-  positionScore[7][0] = 10.0;
-  positionScore[0][1] = 0.1;
-  positionScore[1][1] = 0.01;
-  positionScore[2][1] = 0.03;
-  positionScore[3][1] = 0.05;
-  positionScore[4][1] = 0.05;
-  positionScore[5][1] = 0.03;
-  positionScore[6][1] = 0.01;
-  positionScore[7][1] = 0.1;
-  positionScore[0][2] = 0.5;
-  positionScore[1][2] = 0.03;
-  positionScore[2][2] = 0.2;
-  positionScore[3][2] = 0.15;
-  positionScore[4][2] = 0.15;
-  positionScore[5][2] = 0.2;
-  positionScore[6][2] = 0.03;
-  positionScore[7][2] = 0.5;
-  positionScore[0][3] = 0.25;
-  positionScore[1][3] = 0.05;
-  positionScore[2][3] = 0.15;
-  positionScore[3][3] = 0.0;
-  positionScore[4][3] = 0.0;
-  positionScore[5][3] = 0.15;
-  positionScore[6][3] = 0.05;
-  positionScore[7][3] = 0.25;
-  positionScore[0][4] = 0.25;
-  positionScore[1][4] = 0.05;
-  positionScore[2][4] = 0.15;
-  positionScore[3][4] = 0.0;
-  positionScore[4][4] = 0.0;
-  positionScore[5][4] = 0.15;
-  positionScore[6][4] = 0.05;
-  positionScore[7][4] = 0.25;
-  positionScore[0][5] = 0.5;
-  positionScore[1][5] = 0.03;
-  positionScore[2][5] = 0.2;
-  positionScore[3][5] = 0.15;
-  positionScore[4][5] = 0.15;
-  positionScore[5][5] = 0.2;
-  positionScore[6][5] = 0.03;
-  positionScore[7][5] = 0.5;
-  positionScore[0][6] = 0.1;
-  positionScore[1][6] = 0.01;
-  positionScore[2][6] = 0.03;
-  positionScore[3][6] = 0.05;
-  positionScore[4][6] = 0.05;
-  positionScore[5][6] = 0.03;
-  positionScore[6][6] = 0.01;
-  positionScore[7][6] = 0.1;
-  positionScore[0][7] = 10.0;
-  positionScore[1][7] = 0.1;
-  positionScore[2][7] = 0.5;
-  positionScore[3][7] = 0.25;
-  positionScore[4][7] = 0.25;
-  positionScore[5][7] = 0.5;
-  positionScore[6][7] = 0.1;
-  positionScore[7][7] = 10.0;
+  positionScore[0][0] = CORNER;
+  positionScore[1][0] = ADJACENT_SIDE;
+  positionScore[2][0] = BEST_SIDE;
+  positionScore[3][0] = MIDDLE_SIDE;
+  positionScore[4][0] = MIDDLE_SIDE;
+  positionScore[5][0] = BEST_SIDE;
+  positionScore[6][0] = ADJACENT_SIDE;
+  positionScore[7][0] = CORNER;
+  positionScore[0][1] = ADJACENT_SIDE;
+  positionScore[1][1] = PRE_CORNER;
+  positionScore[2][1] = PRE_SIDE;
+  positionScore[3][1] = PRE_MIDDLE_SIDE;
+  positionScore[4][1] = PRE_MIDDLE_SIDE;
+  positionScore[5][1] = PRE_SIDE;
+  positionScore[6][1] = PRE_CORNER;
+  positionScore[7][1] = ADJACENT_SIDE;
+  positionScore[0][2] = BEST_SIDE;
+  positionScore[1][2] = PRE_SIDE;
+  positionScore[2][2] = INNER_CORNER;
+  positionScore[3][2] = INNER_SIDE;
+  positionScore[4][2] = INNER_SIDE;
+  positionScore[5][2] = INNER_CORNER;
+  positionScore[6][2] = PRE_SIDE;
+  positionScore[7][2] = BEST_SIDE;
+  positionScore[0][3] = MIDDLE_SIDE;
+  positionScore[1][3] = PRE_MIDDLE_SIDE;
+  positionScore[2][3] = INNER_SIDE;
+  positionScore[3][3] = START;
+  positionScore[4][3] = START;
+  positionScore[5][3] = INNER_SIDE;
+  positionScore[6][3] = PRE_MIDDLE_SIDE;
+  positionScore[7][3] = MIDDLE_SIDE;
+  positionScore[0][4] = MIDDLE_SIDE;
+  positionScore[1][4] = PRE_MIDDLE_SIDE;
+  positionScore[2][4] = INNER_SIDE;
+  positionScore[3][4] = START;
+  positionScore[4][4] = START;
+  positionScore[5][4] = INNER_SIDE;
+  positionScore[6][4] = PRE_MIDDLE_SIDE;
+  positionScore[7][4] = MIDDLE_SIDE;
+  positionScore[0][5] = BEST_SIDE;
+  positionScore[1][5] = PRE_SIDE;
+  positionScore[2][5] = INNER_CORNER;
+  positionScore[3][5] = INNER_SIDE;
+  positionScore[4][5] = INNER_SIDE;
+  positionScore[5][5] = INNER_CORNER;
+  positionScore[6][5] = PRE_SIDE;
+  positionScore[7][5] = BEST_SIDE;
+  positionScore[0][6] = ADJACENT_SIDE;
+  positionScore[1][6] = PRE_CORNER;
+  positionScore[2][6] = PRE_SIDE;
+  positionScore[3][6] = PRE_MIDDLE_SIDE;
+  positionScore[4][6] = PRE_MIDDLE_SIDE;
+  positionScore[5][6] = PRE_SIDE;
+  positionScore[6][6] = PRE_CORNER;
+  positionScore[7][6] = ADJACENT_SIDE;
+  positionScore[0][7] = CORNER;
+  positionScore[1][7] = ADJACENT_SIDE;
+  positionScore[2][7] = BEST_SIDE;
+  positionScore[3][7] = MIDDLE_SIDE;
+  positionScore[4][7] = MIDDLE_SIDE;
+  positionScore[5][7] = BEST_SIDE;
+  positionScore[6][7] = ADJACENT_SIDE;
+  positionScore[7][7] = CORNER;
   if (document.getElementById("white").checked) opponent = 1;
   if (document.getElementbyId("black").checked) opponent = -1;
   if (document.getElementbyId("human").checked) opponent = 0;
@@ -881,6 +908,9 @@ function bestPosition() {
 
 function minimax(depth) {
   var validMoves = getValidMoves(board, turn);
+  if (validMoves.length < 5) {
+    depth++;
+  }
   if (validMoves.length > 8) {
     depth--;
   }
@@ -899,9 +929,9 @@ function minimax(depth) {
     bestScore = Math.max(score, bestScore);
     validMoves[i][2] = score;
   }
-  // Store all moves within 0.2 of bestScore
+  // Store all moves within THRESHOLD of bestScore
   for (var i=0; i<validMoves.length; i++) {
-    if (validMoves[i][2] >= (bestScore - 0.2)) {
+    if (validMoves[i][2] >= (bestScore - THRESHOLD)) {
       bestMoves.push(validMoves[i]);
     }
   }
@@ -916,7 +946,7 @@ function minimaxRecursive(tmpBoard, tmpTurn, depth, alpha, beta, x, y) {
   var validMoves = getValidMoves(tmpBoard, tmpTurn);
   if ((depth == 0) || (validMoves.length == 0)) {
     var score = calculateHeuristic(tmpBoard, tmpTurn, x, y);
-    if (validMoves.length == 0) score += 100.0;
+    if (validMoves.length == 0) score += DOUBLE_MOVE_BONUS;
     return score;
   }
   for (var i=0; i<validMoves.length; i++) {
@@ -956,12 +986,16 @@ function calculateHeuristic(tmpBoard, tmpTurn, x, y) {
       }
     }
   }
-  if (opponentCount == 0) {
-    value += 1000.0;
+  if (opponentCount == 0 || (numEmpty == 0 && playerCount > opponentCount)) {
+    value += WINNING_BONUS;
   }
-  if (playerCount == 0) {
-    value -= 1000.0;
+  if (playerCount == 0 || (numEmpty == 0 && playerCount < opponentCount)) {
+    value -= WINNING_BONUS;
   }
-  return value + positionScore[x][y]*numEmpty/16.0;
+  var currentPieceBonus = 0.0;
+  if (numEmpty > 8) {
+    currentPieceBonus = positionScore[x][y]*numEmpty/16.0;
+  }
+  return value + currentPieceBonus
 }
 
