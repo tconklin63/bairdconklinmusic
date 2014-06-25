@@ -16,7 +16,7 @@ var level = 1; // 1=random, 2=maxFlips, 3=best position, 4=minimax level 3, 4=mi
 // heuristic constants
 var THRESHOLD = 0.1; // For minimax all scores within THRESHOLD of max are randomly selected from
 var WINNING_BONUS = 1000.0;
-var DOUBLE_MOVE_BONUS = 200.0;
+var DOUBLE_MOVE_BONUS = 100.0;
 
 // Position Scores
 var CORNER = 10.0;
@@ -946,7 +946,7 @@ function minimaxRecursive(tmpBoard, tmpTurn, depth, alpha, beta, x, y) {
   var validMoves = getValidMoves(tmpBoard, tmpTurn);
   if ((depth == 0) || (validMoves.length == 0)) {
     var score = calculateHeuristic(tmpBoard, tmpTurn, x, y);
-    if (validMoves.length == 0) score += DOUBLE_MOVE_BONUS;
+    if (validMoves.length == 0) score -= DOUBLE_MOVE_BONUS;
     return score;
   }
   for (var i=0; i<validMoves.length; i++) {
