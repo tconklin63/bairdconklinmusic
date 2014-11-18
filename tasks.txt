@@ -1,4 +1,7 @@
 TODO:
+Create file upload page
+On composition page, select already uploaded file
+Files can be attached to multiple compositions
 Flesh out composition update method
 Fix edit composition to work for uploaded files
 Allow multiple voicings for each composition
