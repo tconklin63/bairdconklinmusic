@@ -10,6 +10,8 @@ Bairdconklinmusic::Application.routes.draw do
   # Baird-Conklin Music
   match '/' => 'static_pages#home'
   match '/files' => 'files#index'
+  match '/files/upload' => 'files#upload'
+  match '/files/delete' => 'files#delete'
   
   resources :users do
     collection do

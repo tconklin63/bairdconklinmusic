@@ -1,9 +1,30 @@
 <div class="row-fluid">
-  <div class="span8 offset2 well">
+  <div class="span6 offset3 well">
+    <%= @upload_dir %>
     <h2 class="text-center">Manage Files</h2>
+    <%= render :partial => 'shared/flash_messages'%>
+    <table class='table table-striped table-bordered'>
+      <tr>
+        <th>Name</th>
+        <th>Action</th>
+      </tr>
+      <% for file in @files %>
+      <tr>
+        <td><%= File.basename(file) %></td>
+        <td>
+          <%= link_to "delete", { :action => "delete", :file => file },
+            :confirm => "Are you sure you want to delete this file?", :method => :delete %>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+    <br/>
     <div class="controls text-right">
-      <%= link_to "cancel", "/" %>
-      <%= link_to "Upload File", "/", :class => "btn btn-primary" %>
+      <%= form_tag("files/upload", multipart: true) do |form| %>
+        <%= file_field_tag "file"%>
+        <%= link_to "cancel", "/" %>
+        <%= submit_tag "Upload File", :class => "btn btn-primary" %>
+      <% end %>
     </div>
   </div>
 </div>
