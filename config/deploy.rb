@@ -39,11 +39,11 @@ namespace :deploy do
   end
   
   task :migrate do
-    run "cd /home3/#{user}/rails_apps/#{application}/current; bundle exec rake db:migrate "
+    run "cd /home3/#{user}/rails_apps/#{application}/current; bundle exec rake db:migrate RAILS_ENV=production "
   end
   
   task :precompile do
-    run "cd /home3/#{user}/rails_apps/#{application}/current; bundle exec rake assets:precompile "
+    run "cd /home3/#{user}/rails_apps/#{application}/current; bundle exec rake assets:precompile RAILS_ENV=production "
   end
 end
 
@@ -61,7 +61,7 @@ end
 
 
 # Clean-up old releases
-after "deploy:restart", "deploy:cleanup", "deploy:migrate", "deploy:precompile", "shared:database"
+after "deploy:restart", "deploy:cleanup", "deploy:precompile", "shared:database", "deploy:migrate"
 
 #set :application, "set your application name here"
 #set :repository,  "set your repository location here"
