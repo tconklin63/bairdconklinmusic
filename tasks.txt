@@ -1,9 +1,7 @@
 TODO:
-Add "no files found" message on files page
 On composition page, select already uploaded file
 Files can be attached to multiple compositions
 Flesh out composition update method
-Fix edit composition to work for uploaded files
 Allow multiple voicings for each composition
 Use icons for edit and delete
 Don't allow overwriting a file for a composision (maybe use directory structure)
@@ -17,6 +15,8 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*N/A Fix edit composition to work for uploaded files
+*Add "no files found" message on files page
 *Create file upload page
 *Add Edit Composition page
 *Format index page for compositions

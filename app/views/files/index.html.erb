@@ -3,21 +3,25 @@
     <%= @upload_dir %>
     <h2 class="text-center">Manage Files</h2>
     <%= render :partial => 'shared/flash_messages'%>
-    <table class='table table-striped table-bordered'>
-      <tr>
-        <th>Name</th>
-        <th>Action</th>
-      </tr>
-      <% for file in @files %>
-      <tr>
-        <td><%= File.basename(file) %></td>
-        <td>
-          <%= link_to "delete", { :action => "delete", :file => file },
-            :confirm => "Are you sure you want to delete this file?", :method => :delete %>
-        </td>
-      </tr>
-      <% end %>
-    </table>
+    <% if @files && @files.size > 0 %>
+      <table class='table table-striped table-bordered'>
+        <tr>
+          <th>Name</th>
+          <th>Action</th>
+        </tr>
+        <% for file in @files %>
+          <tr>
+            <td><%= File.basename(file) %></td>
+            <td>
+              <%= link_to "delete", { :action => "delete", :file => file },
+                :confirm => "Are you sure you want to delete this file?", :method => :delete %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+      No Files Found
+    <% end %>
     <br/>
     <div class="controls text-right">
       <%= form_tag("files/upload", multipart: true) do |form| %>
