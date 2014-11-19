@@ -1,5 +1,5 @@
 TODO:
-Create file upload page
+Add "no files found" message on files page
 On composition page, select already uploaded file
 Files can be attached to multiple compositions
 Flesh out composition update method
@@ -17,8 +17,7 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
-*Extract JavaScript from prime number generator
-*Add prime factorization page
+*Create file upload page
 *Add Edit Composition page
 *Format index page for compositions
 *Make voicing a drop down list like categories

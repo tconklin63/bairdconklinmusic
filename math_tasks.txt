@@ -1,12 +1,12 @@
 TODO:
-Make Reversi play like a normal game
- -1 or 2 players
- -level (1-4)
- -color
 Implement radical simplification
 Start hex game
 
 Finished:
+*Make Reversi play like a normal game
+ -1 or 2 players
+ -level (1-4)
+ -color
 *Add minimax strategy
 *Add best position strategy
 *Add max flips strategy
@@ -18,3 +18,5 @@ Finished:
 *Fix issue with black circles left behind
 *Add Score
 *Add Undo/Redo
+*Extract JavaScript from prime number generator
+*Add prime factorization page
