@@ -18,8 +18,8 @@
           <td><%= composition.description %></td>
           <td><%= Category.find(composition.category).name %></td>
           <td><%= Voicing.find(composition.voicing).name %></td>
-          <td><%= link_to 'sheet music', '/uploads/' + composition.sheet_music_url %></td>
-          <td><%= link_to 'recording', '/uploads/' + composition.recording_url %></td>
+          <td><%= link_to 'sheet music', composition.sheet_music_url %></td>
+          <td><%= link_to 'recording', composition.recording_url %></td>
           <td>
             <%= link_to "edit", { :action => "edit", :id => composition.id } %>
             <%= link_to "delete", { :action => "delete", :id => composition.id },

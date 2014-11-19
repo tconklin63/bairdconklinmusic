@@ -9,22 +9,12 @@ class CompositionsController < ApplicationController
   
   def new
     @composition = Composition.new
+    @pdf_files = Dir.glob(UPLOAD_DIR+'/*.pdf').sort
+    @audio_files = Dir.glob(UPLOAD_DIR+'/*.m4a').sort
   end
   
   def create
     @composition = Composition.new(params[:composition])
-    if params[:composition][:sheet_music]
-      File.open(File.join(UPLOAD_DIR, params[:composition][:sheet_music].original_filename), 'wb') do |file|
-        file.write(params[:composition][:sheet_music].read)
-      end
-    end
-    if params[:composition][:recording]
-      File.open(File.join(UPLOAD_DIR, params[:composition][:recording].original_filename), 'wb') do |file|
-        file.write(params[:composition][:recording].read)
-      end
-    end
-    @composition.sheet_music_url = params[:composition][:sheet_music].original_filename
-    @composition.recording_url = params[:composition][:recording].original_filename
     if @composition.save
       flash[:message] = "Composition created"
     else
@@ -35,17 +25,19 @@ class CompositionsController < ApplicationController
   
   def edit
     @composition = Composition.find(params[:id])
+    @pdf_files = Dir.glob(UPLOAD_DIR+'/*.pdf').sort
+    @audio_files = Dir.glob(UPLOAD_DIR+'/*.m4a').sort
   end
   
   def update
+    composition = Composition.find(params[:id])
+    composition.update_attributes(params[:composition])
     redirect_to :compositions
   end
   
   def delete
     if current_user.admin
       composition = Composition.find(params[:id])
-      FileUtils.rm_f(File.join(UPLOAD_DIR, composition.sheet_music_url))
-      FileUtils.rm_f(File.join(UPLOAD_DIR, composition.recording_url))
       composition.destroy
       redirect_to :compositions
     else

@@ -1,7 +1,9 @@
 TODO:
-On composition page, select already uploaded file
-Files can be attached to multiple compositions
-Flesh out composition update method
+Fix issue: files not selected on composition update page
+Implement publish method
+Create User-facing search results page
+Create User-facing browse pages
+Add search button to search field
 Allow multiple voicings for each composition
 Use icons for edit and delete
 Don't allow overwriting a file for a composision (maybe use directory structure)
@@ -15,6 +17,9 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Flesh out composition update method
+*On composition page, select already uploaded file
+*Files can be attached to multiple compositions
 *N/A Fix edit composition to work for uploaded files
 *Add "no files found" message on files page
 *Create file upload page
