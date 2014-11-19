@@ -4,7 +4,7 @@ class FilesController < ApplicationController
   before_filter :admin_required
   
   def index
-    @files = Dir.glob(UPLOAD_DIR+'/*')
+    @files = Dir.glob(UPLOAD_DIR+'/*').sort
   end
   
   def upload
