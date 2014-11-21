@@ -150,3 +150,8 @@ body {
   max-width: 100%;
   overflow: auto;
 }
+
+div.manage_compositions {
+  width: 95%;
+  margin: auto;
+}
