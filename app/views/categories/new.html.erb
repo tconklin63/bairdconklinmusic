@@ -3,7 +3,7 @@
     <h2 class="text-center">Create Category</h2>
     <%= form_for @category do |f| %>
       <%= f.error_messages %><br/>
-      <%= f.text_field :name, :placeholder => "Category Name", :class => "input-xxlarge" %>
+      <%= f.text_field :name, :placeholder => "Category Name", :class => "input-xxlarge stay_within_well" %>
       <div class="controls text-right">
         <%= link_to "cancel", categories_path %>
         <%= f.submit "Save", :class => "btn btn-primary" %>

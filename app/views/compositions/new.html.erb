@@ -3,10 +3,10 @@
     <h2 class="text-center">Create Composition</h2>
     <%= form_for @composition do |f| %>
       <%= f.error_messages %><br/>
-      <%= f.text_field :name, :placeholder => "Title", :class => "input-xxlarge" %>
-      <%= f.text_field :composer, :placeholder => "Composer", :class => "input-xxlarge" %>
-      <%= f.text_field :lyricist, :placeholder => "Lyricist", :class => "input-xxlarge" %>
-      <%= f.text_area :description, :placeholder => "Description", :class => "input-xxlarge", :rows => 5 %>
+      <%= f.text_field :name, :placeholder => "Title", :class => "input-xxlarge stay_within_well" %>
+      <%= f.text_field :composer, :placeholder => "Composer", :class => "input-xxlarge stay_within_well" %>
+      <%= f.text_field :lyricist, :placeholder => "Lyricist", :class => "input-xxlarge stay_within_well" %>
+      <%= f.text_area :description, :placeholder => "Description", :class => "input-xxlarge stay_within_well", :rows => 5 %>
       <%= f.label :category, "Category "%>
       <%= f.select :category, options_from_collection_for_select(Category.find(:all, :order => :name), :id, :name) %>
       <%= f.label :voicing, "Voicing or Instrumentation "%>

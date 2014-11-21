@@ -145,3 +145,8 @@ body {
 .large-text {
     font-size: 20px;
 }
+
+.stay_within_well {
+  max-width: 100%;
+  overflow: auto;
+}
