@@ -57,11 +57,14 @@ namespace :shared do
       done
     }
   end
+  task :uploads do
+    run 'ln -sf #{shared_path}/uploads #{release_path}/public/uploads'
+  end
 end
 
 
 # Clean-up old releases
-after "deploy:restart", "deploy:cleanup", "deploy:precompile", "shared:database", "deploy:migrate"
+after "deploy:restart", "deploy:cleanup", "deploy:precompile", "shared:database", "shared:uploads", "deploy:migrate"
 
 #set :application, "set your application name here"
 #set :repository,  "set your repository location here"

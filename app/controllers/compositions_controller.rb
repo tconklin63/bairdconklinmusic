@@ -9,8 +9,7 @@ class CompositionsController < ApplicationController
   
   def new
     @composition = Composition.new
-    @pdf_files = Dir.glob(UPLOAD_DIR+'/*.pdf').sort
-    @audio_files = Dir.glob(UPLOAD_DIR+'/*.m4a').sort
+    get_files
   end
   
   def create
@@ -25,8 +24,7 @@ class CompositionsController < ApplicationController
   
   def edit
     @composition = Composition.find(params[:id])
-    @pdf_files = Dir.glob(UPLOAD_DIR+'/*.pdf').sort
-    @audio_files = Dir.glob(UPLOAD_DIR+'/*.m4a').sort
+    get_files
   end
   
   def update
@@ -43,6 +41,21 @@ class CompositionsController < ApplicationController
     else
       flash[:error] = "Unauthorized!"
       redirect_to "/"
+    end
+  end
+  
+  private
+  
+  def get_files
+    uploaded_pdf_files = Dir.glob(UPLOAD_DIR+'/*.pdf').sort
+    @pdf_files = Array.new
+    uploaded_pdf_files.each do |file|
+      @pdf_files << File.basename(file)
+    end
+    uploaded_audio_files = Dir.glob(UPLOAD_DIR+'/*.m4a').sort
+    @audio_files = Array.new
+    uploaded_audio_files.each do |file|
+      @audio_files << File.basename(file)
     end
   end
 
