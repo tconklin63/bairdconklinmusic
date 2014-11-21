@@ -58,7 +58,7 @@ namespace :shared do
     }
   end
   task :uploads do
-    run 'ln -sf #{shared_path}/uploads #{release_path}/public/uploads'
+    run "ln -s #{shared_path}/uploads #{release_path}/public/uploads "
   end
 end
 

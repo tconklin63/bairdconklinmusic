@@ -12,10 +12,10 @@
       <%= f.label :voicing, "Voicing or Instrumentation "%>
       <%= f.select :voicing, options_from_collection_for_select(Voicing.find(:all, :order => :name), :id, :name, @composition.voicing) %>
       <br/>
-      <%= f.label :sheet_music_url, "Sheet Music File"%>
-      <%= f.select :sheet_music_url, options_for_select(@pdf_files) %>
-      <%= f.label :recording_url, "Audio File"%>
-      <%= f.select :recording_url, options_for_select(@audio_files) %>
+      <%= f.label :sheet_music_file, "Sheet Music File"%>
+      <%= f.select :sheet_music_file, options_for_select(@pdf_files, @composition.sheet_music_file) %>
+      <%= f.label :recording_file, "Audio File"%>
+      <%= f.select :recording_file, options_for_select(@audio_files, @composition.recording_file) %>
       <div class="controls text-right">
         <%= link_to "cancel", compositions_path %>
         <%= f.submit "Save", :class => "btn btn-primary" %>

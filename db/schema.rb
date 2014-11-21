@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140331200638) do
+ActiveRecord::Schema.define(:version => 20141121202532) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -23,10 +23,10 @@ ActiveRecord::Schema.define(:version => 20140331200638) do
     t.string   "name"
     t.text     "description"
     t.string   "voicing"
-    t.string   "sheet_music_url"
-    t.string   "recording_url"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.string   "sheet_music_file"
+    t.string   "recording_file"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.string   "composer"
     t.string   "lyricist"
     t.string   "category"
