@@ -8,6 +8,7 @@ class FilesController < ApplicationController
   end
   
   def upload
+    Dir.mkdir(UPLOAD_DIR) unless File.exists?(UPLOAD_DIR)
     if params[:file]
       File.open(File.join(UPLOAD_DIR, params[:file].original_filename), 'wb') do |file|
         file.write(params[:file].read)

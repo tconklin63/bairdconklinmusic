@@ -16,6 +16,7 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Add Arranger field
 *Fix issue with tables and inputs spilling out of the well on ipad
 *Add more fields to Manage Compositions page
 *Fix issue: files not selected on composition update page

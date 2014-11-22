@@ -7,6 +7,7 @@
         <th>Name</th>
         <th>Description</th>
         <th>Composer</th>
+        <th>Arranger</th>
         <th>Lyricist</th>
         <th>Category</th>
         <th>Voicing</th>
@@ -19,6 +20,7 @@
           <td><%= composition.name %></td>
           <td><%= composition.description %></td>
           <td><%= composition.composer %></td>
+          <td><%= composition.arranger %></td>
           <td><%= composition.lyricist %></td>
           <td><%= Category.find(composition.category).name %></td>
           <td><%= Voicing.find(composition.voicing).name %></td>
