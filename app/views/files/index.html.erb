@@ -13,8 +13,8 @@
           <tr>
             <td><%= File.basename(file) %></td>
             <td>
-              <%= link_to "delete", { :action => "delete", :file => file },
-                :confirm => "Are you sure you want to delete this file?", :method => :delete %>
+              <%= link_to raw('<i class="icon-trash"></i>'), { :action => "delete", :file => file },
+                :title => "Delete File", :confirm => "Are you sure you want to delete this file?", :method => :delete %>
             </td>
           </tr>
         <% end %>

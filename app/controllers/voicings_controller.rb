@@ -39,7 +39,7 @@ class VoicingsController < ApplicationController
   def update
     @voicing = Voicing.find(params[:id])
     if @voicing.update_attributes(params[:voicing])
-      redirect_to :voicing
+      redirect_to :voicings
     else
       render 'edit'
     end
