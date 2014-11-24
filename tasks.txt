@@ -1,5 +1,6 @@
 TODO:
 Implement publish method
+Log user out after inactivity
 Create User-facing search results page
 Create User-facing browse pages
 Add search button to search field
