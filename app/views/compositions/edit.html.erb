@@ -20,7 +20,11 @@
       <div class="controls text-right">
         <%= link_to "cancel", compositions_path %>
         <%= f.submit "Save", :class => "btn btn-primary" %>
-        <%= f.submit "Publish", :class => "btn btn-success" %>
+        <% if @composition.published %>
+          <%= f.submit "Un-Publish", :class => "btn btn-danger" %>
+        <% else %>
+          <%= f.submit "Publish", :class => "btn btn-success" %>
+        <% end %>
       </div>
     <% end %>
   </div>

@@ -14,6 +14,9 @@ class CompositionsController < ApplicationController
   
   def create
     @composition = Composition.new(params[:composition])
+    if params[:commit] == 'Publish'
+      @composition.published = true
+    end
     if @composition.save
       flash[:message] = "Composition created"
     else
@@ -29,6 +32,14 @@ class CompositionsController < ApplicationController
   
   def update
     composition = Composition.find(params[:id])
+    if params[:commit] == 'Publish'
+      composition.published = true
+      composition.save
+    end
+    if params[:commit] == 'Un-Publish'
+      composition.published = false
+      composition.save
+    end
     composition.update_attributes(params[:composition])
     redirect_to :compositions
   end

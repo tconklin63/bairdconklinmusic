@@ -155,3 +155,11 @@ div.manage_compositions {
   width: 95%;
   margin: auto;
 }
+
+.published {
+  color:#356635;
+}
+
+.unpublished {
+  color:#C43C35;
+}
