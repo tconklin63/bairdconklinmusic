@@ -1,0 +1,29 @@
+<div class="row-fluid">
+  <div class="span8 offset2 well">
+    <h2 class="text-center">Search Results</h2>
+    <% if @compositions && @compositions.size > 0 %>
+    <table class="table table-striped table-bordered stay_within_well">
+      <tr>
+        <th>Title</th>
+        <th>Composer</th>
+        <th>Arranger</th>
+        <th>Lyricist</th>
+        <th>Category</th>
+        <th>Voicing</th>
+      </tr>
+      <% @compositions.each do |composition| %>
+        <tr>
+          <td><%= composition.name %></td>
+          <td><%= composition.composer %></td>
+          <td><%= composition.arranger %></td>
+          <td><%= composition.lyricist %></td>
+          <td><%= Category.find(composition.category).name %></td>
+          <td><%= Voicing.find(composition.voicing).name %></td>
+        </tr>
+      <% end %>
+    </table>
+    <% else %>
+      No Results Found
+    <% end %>
+  </div>
+</div>

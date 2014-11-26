@@ -1,13 +1,8 @@
 TODO:
-Implement publish method
+Create composition page (show)
 Log user out after inactivity
-Create User-facing search results page
 Create User-facing browse pages
-Add search button to search field
 Allow multiple voicings for each composition
-Use icons for edit and delete
-Don't allow overwriting a file for a composision (maybe use directory structure)
-Change sign in to link
 Add create account button to home page
 Add forgot password functionality (http://www.aidanf.net/rails_user_authentication_tutorial)
 Add "What's New" section to home page.
@@ -17,6 +12,11 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Create User-facing search results page
+*Change sign in to link
+*Use icons for edit and delete
+*Add search button to search field
+*Implement publish method
 *Add Arranger field
 *Fix issue with tables and inputs spilling out of the well on ipad
 *Add more fields to Manage Compositions page

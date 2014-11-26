@@ -17,6 +17,8 @@ class CompositionsController < ApplicationController
     if params[:commit] == 'Publish'
       @composition.published = true
     end
+    @composition.category_text = Category.find(@composition.category).name
+    @composition.voicing_text = Voicing.find(@composition.voicing).name
     if @composition.save
       flash[:message] = "Composition created"
     else
@@ -34,13 +36,14 @@ class CompositionsController < ApplicationController
     composition = Composition.find(params[:id])
     if params[:commit] == 'Publish'
       composition.published = true
-      composition.save
     end
     if params[:commit] == 'Un-Publish'
       composition.published = false
-      composition.save
     end
     composition.update_attributes(params[:composition])
+    composition.category_text = Category.find(composition.category).name
+    composition.voicing_text = Voicing.find(composition.voicing).name
+    composition.save
     redirect_to :compositions
   end
   

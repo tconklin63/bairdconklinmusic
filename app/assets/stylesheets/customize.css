@@ -158,8 +158,19 @@ div.manage_compositions {
 
 .published {
   color:#356635;
+  font-weight: bold;
 }
 
 .unpublished {
   color:#C43C35;
+  font-weight: bold;
+}
+
+.search-button {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline: none;
 }

@@ -1,8 +1,9 @@
 <div class="navbar">
   <div class="navbar-inner">
     <a class="brand" href="/">Baird-Conklin Music</a>
-    <form class="navbar-search pull-left">
-      <input type="text" class="search-query" placeholder="Search">
+    <form class="navbar-search pull-left" action="search" method="get">
+      <input type="text" class="search-query" placeholder="Search" name="search"/>
+      <button type="submit" class="search-button" title="search"><i class="icon-white icon-search"></i></button>
     </form>
     <ul class="nav pull-left">
       <li><a href="#">Browse</a></li>
@@ -49,20 +50,11 @@
           </ul>
         </li>
       <% else %>
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            Account
-            <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <a href="<%=new_user_path%>">Create</a>
-            </li>
-            <li>
-              <a href="<%=login_users_path%>">Sign In</a>
-            </li>
-          </ul>
-        </li>
+        <ul class="nav pull-left">
+          <li>
+            <a href="<%=login_users_path%>">Sign In</a>
+          </li>
+        </ul>
       <% end %>
       <li><a href="#">Contact Us</a></li>
     </ul>

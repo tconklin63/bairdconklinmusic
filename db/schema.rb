@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141122215454) do
+ActiveRecord::Schema.define(:version => 20141125234415) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(:version => 20141122215454) do
     t.string   "category"
     t.boolean  "published"
     t.string   "arranger"
+    t.string   "category_text"
+    t.string   "voicing_text"
   end
 
   create_table "users", :force => true do |t|
