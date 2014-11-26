@@ -23,8 +23,20 @@
           <td><%= composition.lyricist %></td>
           <td><%= Category.find(composition.category).name %></td>
           <td><%= Voicing.find(composition.voicing).name %></td>
-          <td><%= link_to composition.sheet_music_file, '/uploads/'+composition.sheet_music_file %></td>
-          <td><%= link_to composition.recording_file, '/uploads/'+composition.recording_file %></td>
+          <td>
+            <% if composition.sheet_music_file == 'Select File'%>
+              No Sheet Music Available
+            <% else %>
+              <%= link_to composition.sheet_music_file, '/uploads/'+composition.sheet_music_file, :target => '_blank' %>
+            <% end %>
+          </td>
+          <td>
+            <% if composition.recording_file == 'Select File'%>
+              No Recording Available
+            <% else %>
+              <%= link_to composition.recording_file, '/uploads/'+composition.recording_file, :target => '_blank' %>
+            <% end %>
+          </td>
           <td class='<%= composition.published ? "published" : "unpublished" %>'></strong><%= composition.published ? 'YES' : 'NO'%></td>
           <td>
             <%= link_to edit_composition_path(composition.id), :title => "Edit Composition" do %>

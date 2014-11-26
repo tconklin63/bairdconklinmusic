@@ -63,11 +63,13 @@ class CompositionsController < ApplicationController
   def get_files
     uploaded_pdf_files = Dir.glob(UPLOAD_DIR+'/*.pdf').sort
     @pdf_files = Array.new
+    @pdf_files << "Select File"
     uploaded_pdf_files.each do |file|
       @pdf_files << File.basename(file)
     end
     uploaded_audio_files = Dir.glob(UPLOAD_DIR+'/*.m4a').sort
     @audio_files = Array.new
+    @audio_files << 'Select File'
     uploaded_audio_files.each do |file|
       @audio_files << File.basename(file)
     end
