@@ -1,5 +1,6 @@
 TODO:
 Create composition page (show)
+Add options for no PDF or no recording
 Log user out after inactivity
 Create User-facing browse pages
 Allow multiple voicings for each composition
