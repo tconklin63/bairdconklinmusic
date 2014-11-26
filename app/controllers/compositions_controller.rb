@@ -1,10 +1,14 @@
 class CompositionsController < ApplicationController
   
-  before_filter :login_required
-  before_filter :admin_required
+  before_filter :login_required, :except => :show
+  before_filter :admin_required, :except => :show
   
   def index
     @compositions = Composition.find(:all)
+  end
+  
+  def show
+    @composition = Composition.find(params[:id])
   end
   
   def new
@@ -67,7 +71,7 @@ class CompositionsController < ApplicationController
     uploaded_pdf_files.each do |file|
       @pdf_files << File.basename(file)
     end
-    uploaded_audio_files = Dir.glob(UPLOAD_DIR+'/*.m4a').sort
+    uploaded_audio_files = Dir.glob(UPLOAD_DIR+'/*.mp3').sort
     @audio_files = Array.new
     @audio_files << 'Select File'
     uploaded_audio_files.each do |file|

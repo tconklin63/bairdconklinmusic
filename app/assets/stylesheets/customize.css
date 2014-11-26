@@ -174,3 +174,12 @@ div.manage_compositions {
   overflow: hidden;
   outline: none;
 }
+
+.text-small {
+  font-size: smaller;
+  font-weight: normal;
+}
+
+.text-bold {
+  font-weight: bold;
+}

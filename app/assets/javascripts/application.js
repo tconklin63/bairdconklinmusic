@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
 //= require bootstrap
 //= require mathtools
-//= require reversi.js
+//= require reversi
+//= require_tree .
