@@ -8,9 +8,11 @@
       <span class="pull-left"><span class="text-bold">Instrumentation/Voicing: </span> <%= Voicing.find(@composition.voicing).name %></span>
     </div>
     <br/>
-    <div class="row-fluid">
-      <span class="pull-left"><span class="text-bold">Words by: </span> <%= @composition.lyricist %></span>
-    </div>
+    <% if @composition.lyricist.present? %>
+      <div class="row-fluid">
+        <span class="pull-left"><span class="text-bold">Words by: </span> <%= @composition.lyricist %></span>
+      </div>
+    <% end %>
     <div class="row-fluid">
       <span class="pull-left"><span class="text-bold">Music by: </span> <%= @composition.composer %></span>
     </div>
