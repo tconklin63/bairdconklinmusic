@@ -26,6 +26,11 @@
       </div>
     </div>
     <br/>
-    <div class="row-fluid text-center"><a href="<%=new_user_path%>">Create Account</a> | <a href="<%=login_users_path%>">Sign In</a></div>
+    <% if @current_user.blank? %>
+      <div class="row-fluid text-center">
+        <a href="<%=new_user_path%>">Create Account</a> |
+        <a href="<%=login_users_path%>">Sign In</a>
+      </div>
+    <% end %>
   </div>
 </div>
