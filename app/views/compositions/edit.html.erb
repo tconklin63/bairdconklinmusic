@@ -10,7 +10,7 @@
       <%= f.text_area :description, :placeholder => "Description", :class => "input-xxlarge stay_within_well", :rows => 5 %>
       <%= f.label :category, "Category "%>
       <%= f.select :category, options_from_collection_for_select(Category.find(:all, :order => :name), :id, :name, @composition.category) %>
-      <%= f.label :voicing, "Voicing or Instrumentation "%>
+      <%= f.label :voicing, "Instrumentation/Voicing"%>
       <%= f.select :voicing, options_from_collection_for_select(Voicing.find(:all, :order => :name), :id, :name, @composition.voicing) %>
       <br/>
       <%= f.label :sheet_music_file, "Sheet Music File"%>
