@@ -1,5 +1,4 @@
 TODO:
-Create composition page (show)
 Log user out after inactivity
 Create User-facing browse pages
 Allow multiple voicings for each composition
@@ -12,6 +11,7 @@ Create contact us page
 Create browse page or add browsing to bottom of home page
 
 Finished:
+*Create composition page (show)
 *Add options for no PDF or no recording
 *Create User-facing search results page
 *Change sign in to link

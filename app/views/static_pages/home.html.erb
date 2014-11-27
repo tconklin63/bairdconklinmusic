@@ -2,6 +2,7 @@
   <div class="span8 offset2 well">
     <%= render :partial => 'shared/flash_messages'%>
     <h2 class="text-center">Music for Church, School, Home, and Liturgy</h2>
+    <br/>
     <div class="row-fluid">
       <div class="span6">
         <h4 class="text-center">Thank you for visiting our site</h4>
@@ -11,14 +12,20 @@
         write commissioned pieces specifically suited to your needs for an additional fee.</p>
         <br/>
         <h4 class="text-center">What's New?</h4>
-        <p>This website is currently in progress. I am currently creating the functionality for us to upload our compositions so
-          they will be viewable and searchable.  The only thing you can do right now is to create an account.  Please check back later.
-          I hope to have our music up soon.</p>
-          <p>--Thomas Conklin</p>
+        <p>Compositions are now searchable using the search field on the top menu bar.  You can view printed music and listen to recordings.
+           It is not necessary to create an account, but having an account will allow you to purchase music later once that functionality 
+           is implemented and give you unlimited access to purchased music.
+        </p>
+        <br/>
+        <h4 class="text-center">Coming Soon</h4>
+        <p>The browse button is not yet functional.  We will be adding browse capabilities and uploading more compositions soon.
+        </p>
       </div>
       <div class="span6">
         <img src="assets/circle_staff.jpg"/>
       </div>
     </div>
+    <br/>
+    <div class="row-fluid text-center"><a href="<%=new_user_path%>">Create Account</a> | <a href="<%=login_users_path%>">Sign In</a></div>
   </div>
 </div>

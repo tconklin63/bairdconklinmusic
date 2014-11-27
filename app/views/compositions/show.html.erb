@@ -41,7 +41,7 @@
           <br/>
           <audio controls>
             <source src="<%= '/uploads/'+@composition.recording_file %>" type="audio/mpeg">
-            <a href="<%= '/uploads/'+@composition.recording_file %>">Download Audio File</a> (your browser does not support the HTML5 inline player)
+            <a href="<%= '/uploads/'+@composition.recording_file %>" target="_blank">Download Audio File</a> (your browser does not support the HTML5 inline player)
           </audio>
         <% end %>
       </span>
