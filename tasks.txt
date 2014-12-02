@@ -1,16 +1,19 @@
 TODO:
+Add Performer to Composition
 Log user out after inactivity
-Create User-facing browse pages
+Add pagination and sorting on search results and composition list
+Make voicings and categories links to browse by in search results list
 Allow multiple voicings for each composition
-Add create account button to home page
 Add forgot password functionality (http://www.aidanf.net/rails_user_authentication_tutorial)
 Add "What's New" section to home page.
+Make "What's New" editable by an Admin user
 Add "About Us" section to home page.
 Add more to home page
-Create contact us page
-Create browse page or add browsing to bottom of home page
 
 Finished:
+*Add create account button to home page
+*Create User-facing browse pages
+*Create contact us page
 *Create composition page (show)
 *Add options for no PDF or no recording
 *Create User-facing search results page

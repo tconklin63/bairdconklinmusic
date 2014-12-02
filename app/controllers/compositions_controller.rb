@@ -4,7 +4,7 @@ class CompositionsController < ApplicationController
   before_filter :admin_required, :except => :show
   
   def index
-    @compositions = Composition.find(:all)
+    @compositions = Composition.find(:all, :order => :name)
   end
   
   def show

@@ -183,3 +183,7 @@ div.manage_compositions {
 .text-bold {
   font-weight: bold;
 }
+
+a {
+  white-space: nowrap;
+}

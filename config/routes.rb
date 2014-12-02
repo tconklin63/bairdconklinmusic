@@ -14,6 +14,9 @@ Bairdconklinmusic::Application.routes.draw do
   match '/files/upload' => 'files#upload'
   match '/files/delete' => 'files#delete'
   match '/search' => 'search#index'
+  match '/search/browse' => 'search#browse'
+  match '/search/by_category' => 'search#by_category'
+  match '/search/by_voicing' => 'search#by_voicing'
   
   resources :users do
     collection do
