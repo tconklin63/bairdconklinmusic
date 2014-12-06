@@ -13,13 +13,13 @@ class SearchController < ApplicationController
 
   def by_category
     category = params[:category]
-    @compositions = Composition.where("category_text LIKE ? AND published = ?","%#{category}%",true)
+    @compositions = Composition.where("category_text = ? AND published = ?","#{category}",true)
     render 'index'
   end
   
   def by_voicing
     voicing = params[:voicing]
-    @compositions = Composition.where("voicing_text LIKE ? AND published = ?","%#{voicing}%",true)
+    @compositions = Composition.where("voicing_text = ? AND published = ?","#{voicing}",true)
     render 'index'
   end
   

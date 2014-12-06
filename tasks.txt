@@ -1,4 +1,5 @@
 TODO:
+Empty search should not return results (min 2 letters)
 Add Performer to Composition
 Log user out after inactivity
 Add pagination and sorting on search results and composition list
