@@ -66,5 +66,5 @@ Bairdconklinmusic::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   
   UPLOAD_DIR = '/home3/bairdcon/rails_apps/bairdconklinmusic/shared/uploads'
-  HOST_NAME = 'bairdconklinmusic.com'
+  HOST_NAME = 'bairdconklinmusic.herokuapp.com'
 end
