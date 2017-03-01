@@ -1,6 +1,7 @@
 TODO:
 Implement radical simplification
 Start hex game
+Extract bairdconklinmath into its own app
 
 Finished:
 *Make Reversi play like a normal game

@@ -1,4 +1,5 @@
 TODO:
+Store PDFs and MP3s in database because Heroku does not allow file system storage
 Empty search should not return results (min 2 letters)
 Add Performer to Composition
 Log user out after inactivity
