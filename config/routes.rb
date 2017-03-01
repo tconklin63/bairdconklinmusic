@@ -13,6 +13,7 @@ Bairdconklinmusic::Application.routes.draw do
   match '/files' => 'files#index'
   match '/files/upload' => 'files#upload'
   match '/files/delete' => 'files#delete'
+  match '/uploads/:filename' => 'files#uploads'
   match '/search' => 'search#index'
   match '/search/browse' => 'search#browse'
   match '/search/by_category' => 'search#by_category'

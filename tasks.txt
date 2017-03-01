@@ -1,11 +1,8 @@
 TODO:
-Store PDFs and MP3s in database because Heroku does not allow file system storage
 Change views to slim
 Empty search should not return results (min 2 letters)
-Add Performer to Composition
 Log user out after inactivity
 Add pagination and sorting on search results and composition list
-Make voicings and categories links to browse by in search results list
 Allow multiple voicings for each composition
 Add forgot password functionality (http://www.aidanf.net/rails_user_authentication_tutorial)
 Add "What's New" section to home page.
@@ -14,6 +11,10 @@ Add "About Us" section to home page.
 Add more to home page
 
 Finished:
+*Make voicings and categories links to browse by in search results list
+*Add Performer to Composition
+*Read files from database
+*Store PDFs and MP3s in database because Heroku does not allow file system storage
 *Add create account button to home page
 *Create User-facing browse pages
 *Create contact us page
