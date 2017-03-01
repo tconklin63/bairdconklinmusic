@@ -8,6 +8,7 @@ gem 'rails', '3.2.11'
 #gem 'sqlite3'
 gem 'pg'
 gem 'dynamic_form'
+gem 'test-unit'
 gem 'capistrano', '2.15.5'
 
 group :production do

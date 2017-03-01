@@ -4,15 +4,12 @@ class FilesController < ApplicationController
   before_filter :admin_required
   
   def index
-    @files = Dir.glob(UPLOAD_DIR+'/*').sort
+    @files = UploadedFile.all
   end
   
   def upload
-    Dir.mkdir(UPLOAD_DIR) unless File.exists?(UPLOAD_DIR)
     if params[:file]
-      File.open(File.join(UPLOAD_DIR, params[:file].original_filename), 'wb') do |file|
-        file.write(params[:file].read)
-      end
+      UploadedFile.create(filename: params[:file].original_filename, data: params[:file].read)
     else
       flash[:warning] = "No file selected"
     end
@@ -20,7 +17,7 @@ class FilesController < ApplicationController
   end
   
   def delete
-    File.delete(params[:file])
+    UploadedFile.where(filename: params[:filename]).first.delete
     redirect_to :files
   end
   
