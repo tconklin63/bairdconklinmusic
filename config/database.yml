@@ -1,6 +1,6 @@
 development:
   adapter: 'postgresql'
-  database: 'bairdconklinmusic'
+  database: 'bairdconklinmusic_dev'
   pool: 5
   timeout: 5000
 
@@ -12,6 +12,6 @@ test:
 
 production:
   adapter: 'postgresql'
-  database: 'bairdconklinmusic_test'
+  database: 'bairdconklinmusic'
   pool: 5
   timeout: 5000
