@@ -1,7 +1,7 @@
 class FilesController < ApplicationController
   
-  before_filter :login_required
-  before_filter :admin_required
+  before_filter :login_required, except: :uploads
+  before_filter :admin_required, except: :uploads
   
   def index
     @files = UploadedFile.all.sort{|a,b| a.filename.downcase <=> b.filename.downcase}
