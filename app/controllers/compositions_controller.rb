@@ -33,6 +33,7 @@ class CompositionsController < ApplicationController
   
   def edit
     @composition = Composition.find(params[:id])
+    @source = params[:source]
     get_files
   end
   
@@ -48,7 +49,11 @@ class CompositionsController < ApplicationController
     composition.category_text = Category.find(composition.category).name
     composition.voicing_text = Voicing.find(composition.voicing).name
     composition.save
-    redirect_to composition_path(composition)
+    if params[:source] == 'show'
+      redirect_to composition_path(composition)
+    else
+      redirect_to compositions_path
+    end
   end
   
   def delete

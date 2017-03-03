@@ -57,8 +57,8 @@
     <div class="row-fluid">
       <a href="javascript:history.go(-1)">Back</a>
       <% if @current_user && @current_user.admin? %>
-        <%= link_to 'Edit', edit_composition_path(@composition), class: "btn btn-primary" %>
-        <%= link_to 'All Compositions', compositions_path, class: 'btn btn-success' %>
+        <%= link_to 'Edit', edit_composition_path(@composition, source: 'show'), class: "btn btn-primary" %>
+        <%= link_to 'All Compositions', compositions_path, class: 'btn btn-warning' %>
       <% end %>
     </div>
   </div>

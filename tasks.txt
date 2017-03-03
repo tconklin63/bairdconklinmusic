@@ -1,4 +1,5 @@
 TODO:
+Add create composition button to the top of the compositions page, keep the bottom one also
 Empty search should not return results (min 2 letters)
 Log user out after inactivity
 Make voicings and categories links to browse by in search results list
@@ -13,6 +14,7 @@ Change views to slim - heroku seems to have an issue with this
 Allow multiple voicings for each composition - for now we can just create separate compositions
 
 Finished:
+*When editing a composition go back to index or show depending on where you came from
 *Add edit button on composition show page
 *Add "What's New" section to home page.
 *Add Performer to Composition
