@@ -7,6 +7,7 @@
       <%= f.text_field :composer, :placeholder => "Composer", :class => "input-xxlarge stay_within_well" %>
       <%= f.text_field :arranger, :placeholder => "Arranger", :class => "input-xxlarge stay_within_well" %>
       <%= f.text_field :lyricist, :placeholder => "Lyricist", :class => "input-xxlarge stay_within_well" %>
+      <%= f.text_field :performer, :placeholder => "Performer", :class => "input-xxlarge stay_within_well" %>
       <%= f.text_area :description, :placeholder => "Description", :class => "input-xxlarge stay_within_well", :rows => 5 %>
       <%= f.label :category, "Category "%>
       <%= f.select :category, options_from_collection_for_select(Category.find(:all, :order => :name), :id, :name, @composition.category) %>
@@ -18,7 +19,7 @@
       <%= f.label :recording_file, "Audio File"%>
       <%= f.select :recording_file, options_for_select(@audio_files, @composition.recording_file) %>
       <div class="controls text-right">
-        <%= link_to "cancel", compositions_path %>
+        <%= link_to "cancel", composition_path(@composition) %>
         <%= f.submit "Save", :class => "btn btn-primary" %>
         <% if @composition.published %>
           <%= f.submit "Un-Publish", :class => "btn btn-danger" %>

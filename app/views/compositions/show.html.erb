@@ -21,6 +21,11 @@
         <span class="pull-left"><span class="text-bold">Arranged by: </span><%= @composition.arranger %> </span>
       </div>
     <% end %>
+    <% if @composition.performer.present? %>
+      <div class="row-fluid">
+        <span class="pull-left"><span class="text-bold">Performed by: </span> <%= @composition.performer %></span>
+      </div>
+    <% end %>
     <br/>
     <div class="row-fluid">
       <span class="pull-left"><span class="text-bold">Details: </span> <%= @composition.description %></span>
@@ -51,6 +56,10 @@
     <br/>
     <div class="row-fluid">
       <a href="javascript:history.go(-1)">Back</a>
+      <% if @current_user && @current_user.admin? %>
+        <%= link_to 'Edit', edit_composition_path(@composition), class: "btn btn-primary" %>
+        <%= link_to 'All Compositions', compositions_path, class: 'btn btn-success' %>
+      <% end %>
     </div>
   </div>
   <div class="span2 offset1 text-center">

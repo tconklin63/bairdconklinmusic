@@ -28,7 +28,7 @@ class CompositionsController < ApplicationController
     else
       flash[:warning] = "Composition not created"
     end
-    redirect_to :compositions
+    redirect_to composition_path(@composition)
   end
   
   def edit
@@ -48,7 +48,7 @@ class CompositionsController < ApplicationController
     composition.category_text = Category.find(composition.category).name
     composition.voicing_text = Voicing.find(composition.voicing).name
     composition.save
-    redirect_to :compositions
+    redirect_to composition_path(composition)
   end
   
   def delete

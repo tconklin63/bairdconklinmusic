@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170301041529) do
+ActiveRecord::Schema.define(:version => 20170303172601) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20170301041529) do
     t.string   "arranger"
     t.string   "category_text"
     t.string   "voicing_text"
+    t.string   "performer"
   end
 
   create_table "uploaded_files", :force => true do |t|

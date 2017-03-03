@@ -8,6 +8,7 @@
         <th>Composer</th>
         <th>Arranger</th>
         <th>Lyricist</th>
+        <th>Performer</th>
         <th>Category</th>
         <th>Instrumentation/Voicing</th>
         <th>Sheet Music</th>
@@ -21,6 +22,7 @@
           <td><%= composition.composer %></td>
           <td><%= composition.arranger %></td>
           <td><%= composition.lyricist %></td>
+          <td><%= composition.performer %></td>
           <td><%= Category.find(composition.category).name %></td>
           <td><%= Voicing.find(composition.voicing).name %></td>
           <td>

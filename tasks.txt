@@ -1,17 +1,20 @@
 TODO:
-Change views to slim
 Empty search should not return results (min 2 letters)
 Log user out after inactivity
+Make voicings and categories links to browse by in search results list
 Add pagination and sorting on search results and composition list
-Allow multiple voicings for each composition
 Add forgot password functionality (http://www.aidanf.net/rails_user_authentication_tutorial)
-Add "What's New" section to home page.
 Make "What's New" editable by an Admin user
 Add "About Us" section to home page.
 Add more to home page
 
+Postponed:
+Change views to slim - heroku seems to have an issue with this
+Allow multiple voicings for each composition - for now we can just create separate compositions
+
 Finished:
-*Make voicings and categories links to browse by in search results list
+*Add edit button on composition show page
+*Add "What's New" section to home page.
 *Add Performer to Composition
 *Read files from database
 *Store PDFs and MP3s in database because Heroku does not allow file system storage
