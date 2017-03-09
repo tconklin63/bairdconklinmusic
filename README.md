@@ -1,29 +1,17 @@
+### Baird-Conklin Music
+This application is currently deployed to https://bairdconklinmusic.herokuapp.com. I have temporarily made this repository public to show code to prospective employers.
+
 ### Deployment Process
 
-From the local project run:
+From the local project directory run:
 
 ```
-$ cap deploy
-
-$ cap deploy:migrate
+$ git push heroku master
 ```
 
-Login to Blue Host using:
+If database migrations are needed run:
 
 ```
-$ ssh bairdcon@bairdconklinmusic.com
+$ heroku run rake db:migrate
 ```
-
-From the ssh commandline on Blue Host run the following:
-
-```
-$ cd rails_apps/bairdcoinklinmusic/current
-
-$ bundle install
-
-$ bundle exec rake db:migrate RAILS_ENV=production
-
-$ bundle exec rake assets:precompile RAILS_ENV=production
-```
-
 
